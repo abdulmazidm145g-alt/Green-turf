@@ -27,7 +27,6 @@ button,.chip,.sb,.bot a{user-select:none;-webkit-user-select:none}
 .ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .wrap{max-width:1200px;margin:auto;padding:0 18px}
 .mo{display:none}
-/* header */
 header{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--ln);padding-top:env(safe-area-inset-top,0px);transition:transform .35s}
 .prog{position:absolute;bottom:-1px;inset-inline-start:0;height:2px;background:var(--g);width:0}
 .hb{display:flex;align-items:center;gap:12px;height:68px}
@@ -71,7 +70,6 @@ kbd{font:11px Oswald;border:1px solid var(--ln);border-radius:6px;padding:1px 6p
 .bot a .rp{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:2px solid var(--g);opacity:.8;pointer-events:none;animation:rp .6s ease-out forwards}
 @keyframes rp{from{transform:scale(.3);opacity:.9}to{transform:scale(1.6);opacity:0}}
 .bot a.fab{background:var(--g);color:var(--ink)!important;width:58px;height:58px;border-radius:50%;margin-top:-26px;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.4);border:4px solid var(--bg);min-width:0}.bot a.fab:after,.bot a.fab .rp{display:none}.bot a.fab svg.ic{transform:none;filter:none;width:30px;height:30px}
-/* hero + poster slideshow */
 .hero{position:relative;padding:36px 0 0;overflow:hidden}
 .hero:before{content:"";position:absolute;inset:-20% -10% auto auto;width:60%;height:120%;background:radial-gradient(closest-side,color-mix(in srgb,var(--g) 18%,transparent),transparent);pointer-events:none}
 .hg{position:relative;display:grid;grid-template-columns:1fr 1.1fr;gap:42px;align-items:center}
@@ -144,7 +142,6 @@ input[type=range]{accent-color:var(--g);width:100%}
 .toast{position:fixed;left:50%;bottom:30px;z-index:120;transform:translate(-50%,30px);background:var(--g);color:var(--ink);font-weight:700;padding:11px 20px;border-radius:99px;opacity:0;transition:.35s;pointer-events:none;max-width:90vw;text-align:center}.toast.on{opacity:1;transform:translate(-50%,0)}
 .up{position:fixed;bottom:92px;inset-inline-end:20px;z-index:35;opacity:0;visibility:hidden;transition:.3s}.up.on{opacity:1;visibility:visible}
 .wab{position:fixed;bottom:24px;inset-inline-end:20px;z-index:35;width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 10px 28px rgba(0,0,0,.4);transition:transform .2s}.wab:hover{transform:scale(1.08)}.wab .ic{width:26px;height:26px}
-/* neumorphic auth */
 .am{position:fixed;inset:0;z-index:90;display:none;place-items:center;padding:16px;background:var(--nb);overflow:hidden;perspective:1200px}.am.on{display:grid;animation:fade .35s}
 .bgc{position:absolute;border-radius:50%;background:var(--nb);box-shadow:inset 12px 12px 24px var(--nd),inset -12px -12px 24px var(--nl);animation:flt 9s ease-in-out infinite}
 .nc{position:relative;width:100%;max-width:380px;padding:34px 28px 24px;border-radius:32px;background:var(--nb);box-shadow:18px 18px 40px var(--nd),-18px -18px 40px var(--nl);text-align:center;max-height:96vh;overflow:auto}.nc.d0{animation:drop .7s cubic-bezier(.2,.9,.3,1.15)}
@@ -160,7 +157,6 @@ input[type=range]{accent-color:var(--g);width:100%}
 .nsw{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:18px;color:var(--mu);font-size:.85em}
 .cx{position:absolute;top:14px;inset-inline-end:14px;width:36px;height:36px}.cx .ic{width:18px;height:18px}
 .orl{display:flex;align-items:center;gap:10px;color:var(--mu);font-size:.85em;margin:16px 0 0}.orl:before,.orl:after{content:"";flex:1;height:1px;background:var(--ln)}.gbt{width:100%;margin-top:12px;padding:13px;border-radius:14px;font-weight:600;color:inherit;background:var(--nb);box-shadow:6px 6px 14px var(--nd),-4px -4px 10px var(--nl);display:flex;justify-content:center;align-items:center;gap:10px;transition:.2s}.gbt:active{box-shadow:inset 4px 4px 8px var(--nd),inset -4px -4px 8px var(--nl)}.gbt svg{width:20px;height:20px;flex:none}.dm2{display:block;margin:10px auto 0;color:var(--mu);font-size:.85em;text-decoration:underline;cursor:pointer}
-/* loader */
 #ld{position:fixed;inset:0;z-index:200;background:#04100a;display:grid;place-items:center;transition:opacity .5s,visibility .5s}#ld.h{opacity:0;visibility:hidden}
 .ls{text-align:center;color:#fff}.lr{width:104px;height:104px;margin:0 auto;position:relative;display:grid;place-items:center}.lr:before{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid #1f3526;border-top-color:#b6f23a;animation:spin 1.1s linear infinite}.lr img{width:68px;height:68px;object-fit:contain}
 .ltx{font:700 24px Oswald,sans-serif;letter-spacing:.12em;margin-top:18px}.ltx .gr{color:#b6f23a}.ls i{display:block;height:3px;width:150px;margin:14px auto 0;background:#1f3526;border-radius:3px;overflow:hidden}.ls i:after{content:"";display:block;height:100%;background:#b6f23a;animation:ldb 1.3s ease forwards}
@@ -179,12 +175,21 @@ input[type=range]{accent-color:var(--g);width:100%}
 @keyframes flt{50%{transform:translateY(-24px) scale(1.04)}}
 .rise{opacity:0;transform:translateY(16px);transition:.6s}.rise.v{opacity:1;transform:none}
 .noanim *,.noanim *:before,.noanim *:after{animation:none!important;transition:none!important}.noanim .rise{opacity:1;transform:none}
-/* desktop only */
+/* payment helpers */
+.paybox{background:var(--nb);border-radius:14px;padding:14px;margin:12px 0;box-shadow:inset 4px 4px 8px var(--nd),inset -4px -4px 8px var(--nl)}
+.paynum{font:700 24px Oswald;letter-spacing:.06em;color:var(--g);text-align:center;margin:6px 0}
+.paystep{font-size:.85em;color:var(--mu);margin:8px 0}
+.paytype{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.paytype b{border-radius:6px;padding:3px 8px;color:#fff;font-size:.8em}
+.stbadge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78em;font-weight:700}
+.stbadge.pending{background:rgba(245,158,11,.18);color:#d99a1c}
+.stbadge.paid{background:rgba(34,197,94,.18);color:#22c55e}
+.stbadge.free{background:var(--sf2);color:var(--mu)}
+.stbadge.rejected{background:rgba(239,68,68,.18);color:#ef4444}
 @media(min-width:861px){
  .ov.b{align-items:center;padding:14px}.ov.b .box{border-radius:20px}.ov.b .box:before{display:none}
  .toast{bottom:30px}
 }
-/* tablet + mobile = app-like */
 @media(max-width:860px){
  body{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
  nav.d,.dk2,.wab,.up{display:none!important}.mo{display:grid!important}.bot{display:flex}#nbg{display:block}
@@ -265,14 +270,15 @@ input[type=range]{accent-color:var(--g);width:100%}
 <div class="am" id="am"></div>
 <div class="toast" id="ts"></div>
 <script>
-/* ====== CONFIG: এখানে নিজের তথ্য বসান ====== */
+/* ====== CONFIG ====== */
 const CFG={
  logo:'https://i.postimg.cc/wvPVf1NX/24986-removebg-preview-(1).png',
- slides:['https://i.postimg.cc/zBMyT816/FB-IMG-1793015031191.jpg','https://i.postimg.cc/rsrKJ3Vz/Screenshot-20261026-174402-Facebook.jpg'], // নতুন পোস্টার যোগ করতে এখানে লিংক বসান
- tel:'01700000000',telShow:'01700-000000',   // আসল ফোন নম্বর দিন
- wa:'8801700000000',                          // হোয়াটসঅ্যাপ (দেশের কোডসহ, + ছাড়া)
+ slides:['https://i.postimg.cc/zBMyT816/FB-IMG-1793015031191.jpg','https://i.postimg.cc/rsrKJ3Vz/Screenshot-20261026-174402-Facebook.jpg'],
+ tel:'01700000000',telShow:'01700-000000',
+ wa:'8801700000000',
  map:'Miar Pole, Sonaimuri, Noakhali, Bangladesh'
 };
+const DEFAULT_PAY={bkash:'01892002275',nagad:'01892002275',upay:'01892002275',rocket:'01892002275'};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
@@ -309,31 +315,42 @@ eFill:'সব ঘর পূরণ করুন|Please fill in every field|امل
 needLogin:'বুকিং দেখতে সাইন ইন করুন|Sign in to see your bookings|سجّل الدخول لعرض حجوزاتك|बुकिंग देखने के लिए साइन इन करें|بکنگ دیکھنے کے لیے سائن ان کریں',lvN:'নতুন|Rookie|مبتدئ|नया|نیا',lvS:'সিলভার|Silver|فضي|सिल्वर|سلور',lvG:'গোল্ড|Gold|ذهبي|गोल्ड|گولڈ',plat:'প্লাটিনাম|Platinum|بلاتيني|प्लेटिनम|پلاٹینم',member:'সদস্য|member|عضو|सदस्य|رکن',st1:'মোট বুকিং|Bookings|الحجوزات|बुकिंग|بکنگز',st2:'খেলার ঘণ্টা|Hours played|ساعات اللعب|खेले घंटे|کھیلے گھنٹے',st3:'মোট খরচ|Total spent|إجمالي الإنفاق|कुल खर्च|کل خرچ',myBk:'আমার বুকিং|My bookings|حجوزاتي|मेरी बुकिंग|میری بکنگز',none:'এখনো কোনো বুকিং নেই|No bookings yet|لا توجد حجوزات|अभी कोई बुकिंग नहीं|ابھی کوئی بکنگ نہیں',cancel:'বাতিল|Cancel|إلغاء|रद्द|منسوخ',canceled:'বুকিং বাতিল হয়েছে|Booking cancelled|تم إلغاء الحجز|बुकिंग रद्द हुई|بکنگ منسوخ ہو گئی',share:'শেয়ার|Share|مشاركة|शेयर|شیئر',copied:'কপি হয়েছে|Copied to clipboard|تم النسخ|कॉपी हुआ|کاپی ہو گیا',firstBk:'প্রথম স্লট বুক করুন|Book your first slot|احجز أول موعد|पहला स्लॉट बुक करें|پہلا سلاٹ بک کریں',outDone:'সাইন আউট হয়েছে|Signed out|تم تسجيل الخروج|साइन आउट हुआ|سائن آؤٹ ہو گیا',curPlan:'বর্তমান প্ল্যান|Current plan|الخطة الحالية|वर्तमान प्लान|موجودہ پلان',
 setS:'আপনার পছন্দ অনুযায়ী সাইট সাজান।|Make the site work your way.|خصّص الموقع كما تحب.|साइट अपनी पसंद से सेट करें।|سائٹ اپنی پسند سے سیٹ کریں۔',lang:'ভাষা|Language|اللغة|भाषा|زبان',theme:'থিম|Theme|المظهر|थीम|تھیم',sys:'সিস্টেম (অটো)|System (auto)|النظام (تلقائي)|सिस्टम (ऑटो)|سسٹم (آٹو)',light:'লাইট|Light|فاتح|लाइट|لائٹ',dark:'ডার্ক|Dark|داكن|डार्क|ڈارک',accent:'অ্যাকসেন্ট রঙ|Accent colour|لون التمييز|एक्सेंट रंग|ایکسنٹ رنگ',tsize:'লেখার সাইজ|Text size|حجم الخط|टेक्स्ट साइज़|ٹیکسٹ سائز',anim:'অ্যানিমেশন|Animations|الحركات|एनिमेशन|اینیمیشن',notif:'নোটিফিকেশন|Notifications|الإشعارات|नोटिफिकेशन|نوٹیفکیشن',accS:'অ্যাকাউন্ট|Account|الحساب|अकाउंट|اکاؤنٹ',reset:'সেটিংস রিসেট|Reset settings|إعادة الضبط|सेटिंग्स रीसेट|سیٹنگز ری سیٹ',clr:'সব ডেটা মুছুন|Clear all data|مسح كل البيانات|सारा डेटा मिटाएँ|تمام ڈیٹا مٹائیں',rDone:'রিসেট হয়েছে|Settings reset|تمت إعادة الضبط|रीसेट हो गया|ری سیٹ ہو گیا',cDone:'ডেটা মুছে ফেলা হয়েছে|Data cleared|تم مسح البيانات|डेटा मिटाया गया|ڈیٹا مٹا دیا گیا',saved:'সেভ হয়েছে|Saved|تم الحفظ|सेव हुआ|محفوظ ہو گیا',on:'চালু|On|تشغيل|चालू|آن',off:'বন্ধ|Off|إيقاف|बंद|آف',
 evS:'দল নিয়ে অংশ নিন, ট্রফি জিতুন।|Bring your squad and chase the trophy.|شارك مع فريقك واربح الكأس.|अपनी टीम के साथ भाग लें और ट्रॉफी जीतें।|اپنی ٹیم کے ساتھ حصہ لیں اور ٹرافی جیتیں۔',e1:'ফ্রাইডে নাইট ৫ v ৫ কাপ|Friday Night 5v5 Cup|كأس الجمعة 5 ضد 5|फ्राइडे नाइट 5v5 कप|فرائیڈے نائٹ 5v5 کپ',e2:'বক্স ক্রিকেট লিগ|Box Cricket League|دوري كريكيت الصندوق|बॉक्स क्रिकेट लीग|باکس کرکٹ لیگ',e3:'ব্যাডমিন্টন ডাবলস ওপেন|Badminton Doubles Open|بطولة الزوجي المفتوحة|बैडमिंटन डबल्स ओपन|بیڈمنٹن ڈبلز اوپن',reg:'নিবন্ধন করুন|Register|سجّل|रजिस्टर करें|رجسٹر کریں',regd:'নিবন্ধিত|Registered|مسجّل|रजिस्टर्ड|رجسٹرڈ',spots:'আসন বাকি|spots left|مقاعد متبقية|सीटें बाकी|نشستیں باقی',fee:'এন্ট্রি ফি|Entry fee|رسوم الدخول|एंट्री फ़ीस|انٹری فیس',regOk:'নিবন্ধন সম্পন্ন|You’re registered|تم التسجيل|रजिस्ट्रेशन हो गया|رجسٹریشن مکمل',
-plS:'বেশি খেললে বেশি ছাড়।|Play more, pay less.|العب أكثر وادفع أقل.|ज़्यादा खेलें, कम दें।|زیادہ کھیلیں، کم دیں۔',mo:'/ মাস|/ month|/شهر|/ माह|/ ماہ',join:'যোগ দিন|Join|انضم|जुड़ें|شامل ہوں',joined:'মেম্বারশিপ চালু হয়েছে|Membership active|تم تفعيل العضوية|मेंबरशिप चालू|ممبرشپ فعال',offT:'% ছাড় সব বুকিংয়ে|% off every booking|% خصم على كل حجز|% छूट हर बुकिंग पर|% رعایت ہر بکنگ پر',pfPri:'সন্ধ্যার অগ্রাধিকার স্লট|Priority evening slots|أولوية مواعيد المساء|शाम के प्राथमिकता स्लॉट|شام کے ترجیحی سلاٹ',pfGuest:'২টি গেস্ট পাস|2 guest passes|تصريحا ضيف|2 गेस्ट पास|2 گیسٹ پاس',pfFix:'নির্দিষ্ট সাপ্তাহিক স্লট|Fixed weekly slot|موعد أسبوعي ثابت|तय साप्ताहिक स्लॉट|مقررہ ہفتہ وار سلاٹ',pfJer:'জার্সি প্রিন্ট ফ্রি|Free printed jerseys|قمصان مطبوعة مجاناً|जर्सी प्रिंट फ्री|جرسی پرنٹ مفت',pfWat:'ফ্রি মিনারেল ওয়াটার|Free mineral water|مياه معدنية مجانية|फ्री मिनरल वाटर|مفت منرل واٹر',
+plS:'বেশি খেললে বেশি ছাড়।|Play more, pay less.|العب أكثر وادفع أقل.|ज़्यादा खेलें, कम दें।|زیادہ کھیلیں، کم دیں۔',mo:'/ মাস|/ month|/شهر|/ माह|/ ماہ',join:'যোগ দিন|Join|انضم|जुड़ें|شامل ہوں',joined:'মেম্বারশিপ চালু হয়েছে|Membership active|تم تفعيل العضوية|मेंबरशिप चालू|ممبرشپ فعال',offT:'% ছাড় সব বুকিংয়ে|% off every booking|% خصم على كل حجز|% छूट हर बुकिंग पर|% رعایت ہر بکنگ',pfPri:'সন্ধ্যার অগ্রাধিকার স্লট|Priority evening slots|أولوية مواعيد المساء|शाम के प्राथमिकता स्लॉट|شام کے ترجیحی سلاٹ',pfGuest:'২টি গেস্ট পাস|2 guest passes|تصريحا ضيف|2 गेस्ट पास|2 گیسٹ پاس',pfFix:'নির্দিষ্ট সাপ্তাহিক স্লট|Fixed weekly slot|موعد أسبوعي ثابت|तय साप्ताहिक स्लॉट|مقررہ ہفتہ وار سلاٹ',pfJer:'জার্সি প্রিন্ট ফ্রি|Free printed jerseys|قمصان مطبوعة مجاناً|जर्सी प्रिंट फ्री|جرسی پرنٹ مفت',pfWat:'ফ্রি মিনারেল ওয়াটার|Free mineral water|مياه معدنية مجانية|फ्री मिनरल वाटर|مفت منرل واٹر',
 hlpS:'আমরা সাহায্যে প্রস্তুত।|We’re here to help.|نحن هنا للمساعدة.|हम मदद के लिए तैयार हैं।|ہم مدد کے لیے حاضر ہیں۔',yname:'আপনার নাম|Your name|اسمك|आपका नाम|آپ کا نام',ymsg:'আপনার বার্তা|Your message|رسالتك|आपका संदेश|آپ کا پیغام',send:'পাঠান|Send message|إرسال|भेजें|بھیجیں',sent:'বার্তা পাঠানো হয়েছে (ডেমো)|Message sent (demo)|تم إرسال الرسالة (تجريبي)|संदेश भेजा गया (डेमो)|پیغام بھیج دیا (ڈیمو)',wa:'হোয়াটসঅ্যাপ|WhatsApp|واتساب|व्हाट्सऐप|واٹس ایپ',calling:'কল শুরু হচ্ছে (ডেমো)|Starting call (demo)|بدء الاتصال (تجريبي)|कॉल शुरू (डेमो)|کال شروع (ڈیمو)',
 nT:'নোটিফিকেশন|Notifications|الإشعارات|नोटिफिकेशन|نوٹیفکیشن',n1:'আজ রাতের স্লট ফুরিয়ে আসছে|Tonight’s slots are filling up|مواعيد الليلة تقترب من النفاد|आज रात के स्लॉट भर रहे हैं|آج رات کے سلاٹ بھر رہے ہیں',n2:'কুপন GREEN10 দিয়ে ১০% ছাড়|Use GREEN10 for 10% off|استخدم GREEN10 لخصم 10%|GREEN10 से 10% छूट पाएँ|GREEN10 سے 10% رعایت',n3:'নতুন টুর্নামেন্ট নিবন্ধন চলছে|New tournament registrations are open|التسجيل في بطولة جديدة مفتوح|नए टूर्नामेंट का रजिस्ट्रेशन खुला|نئے ٹورنامنٹ کی رجسٹریشن کھلی',markAll:'সব পড়া হয়েছে|Mark all read|تعيين الكل كمقروء|सब पढ़ा हुआ|سب پڑھا ہوا',noN:'কোনো নোটিফিকেশন নেই|No notifications|لا إشعارات|कोई नोटिफिकेशन नहीं|کوئی نوٹیفکیشن نہیں',
-sph:'খেলা, সুবিধা বা পেজ খুঁজুন|Search sports, facilities or pages|ابحث عن رياضة أو خدمة أو صفحة|खेल, सुविधा या पेज खोजें|کھیل، سہولت یا صفحہ تلاش کریں',noRes:'কিছু পাওয়া যায়নি|Nothing found|لا نتائج|कुछ नहीं मिला|کچھ نہیں ملا',menu:'মেনু|Menu|القائمة|मेन्यू|مینو',page:'পেজ|Page|صفحة|पेज|صفحہ',setting:'সেটিং|Setting|إعداد|सेटिंग|سیٹنگ'};
+sph:'খেলা, সুবিধা বা পেজ খুঁজুন|Search sports, facilities or pages|ابحث عن رياضة أو خدمة أو صفحة|खेल, सुविधा या पेज खोजें|کھیل، سہولت یا صفحہ تلاش کریں',noRes:'কিছু পাওয়া যায়নি|Nothing found|لا نتائج|कुछ नहीं मिला|کچھ نہیں ملا',menu:'মেনু|Menu|القائمة|मेन्यू|مینو',page:'পেজ|Page|صفحة|पेज|صفحہ',setting:'সেটিং|Setting|إعداد|सेटिंग|سیٹنگ',
+payTitle:'পেমেন্ট করুন|Make payment|إتمام الدفع|भुगतान करें|ادائیگی کریں',
+paySelect:'পেমেন্ট মাধ্যম বেছে নিন|Choose a payment method|اختر طريقة الدفع|पेमेंट माध्यम चुनें|ادائیگی کا طریقہ چنیں',
+payStep1:'ধাপ ১: নিচের নম্বরে Send Money করুন|Step 1: Send money to the number below|الخطوة 1: أرسل المبلغ إلى الرقم أدناه|चरण 1: नीचे दिए नंबर पर Send Money करें|مرحلہ 1: نیچے دیے نمبر پر Send Money کریں',
+payStep2:'ধাপ ২: Transaction ID নিচে লিখুন|Step 2: Enter the Transaction ID below|الخطوة 2: أدخل رقم العملية أدناه|चरण 2: ट्रांजैक्शन आईडी नीचे लिखें|مرحلہ 2: ٹرانزیکشن آئی ڈی نیچے لکھیں',
+txid:'ট্রানজেকশন আইডি|Transaction ID|رقم العملية|ट्रांजैक्शन आईडी|ٹرانزیکشن آئی ڈی',submitPay:'সাবমিট করুন|Submit|إرسال|सबमिट करें|جمع کریں',
+pendingT:'পেমেন্ট পেন্ডিং|Payment pending|الدفع معلّق|पेमेंट पेंडिंग|ادائیگی زیرِ التوا',pendingD:'আপনার পেমেন্ট যাচাই করা হচ্ছে। প্রোফাইল থেকে স্টেটাস দেখুন।|Your payment is being verified. Check status in your profile.|يتم التحقق من دفعك. تحقق من الحالة في حسابك.|आपका पेमेंट जाँचा जा रहा है। प्रोफ़ाइल में स्टेटस देखें।|آپ کی ادائیگی کی جانچ ہو رہی ہے۔ پروفائل میں اسٹیٹس دیکھیں۔',
+stPending:'পেন্ডিং|Pending|معلّق|पेंडिंग|زیرِ التوا',stPaid:'পেইড|Paid|مدفوع|पेड|ادا شدہ',stRejected:'বাতিল|Rejected|مرفوض|अस्वीकृत|مسترد',stFree:'কনফার্মড|Confirmed|مؤكد|कन्फर्म्ड|کنفرم',
+copy:'কপি|Copy|نسخ|कॉपी|کاپی',numCopied:'নম্বর কপি হয়েছে|Number copied|تم نسخ الرقم|नंबर कॉपी हुआ|نمبر کاپی ہو گیا',txAsk:'ট্রানজেকশন আইডি দিন|Enter the transaction ID|أدخل رقم العملية|ट्रांजैक्शन आईडी दें|ٹرانزیکشن آئی ڈی دیں',
+accLabel:'অ্যাকাউন্ট নম্বর|Account number|رقم الحساب|अकाउंट नंबर|اکاؤنٹ نمبر'
+};
 const TC={};const t=k=>{const a=TC[k]||(TC[k]=(TR[k]||k).split('|'));return a[S.l]||a[1]||a[0]};
 const DS={l:0,th:'system',ac:'',fs:15,an:1,nt:1};
 const NT0=()=>[{k:'n1',r:0},{k:'n2',r:0},{k:'n3',r:0}];
 let S={...DS,...ld('gt_s2',{})},USERS={},B=[],U=null,NT=ld('gt_n2',null)||NT0(),RG=[];
-/* ===== Firebase state ===== */
-let FB=null,UID=null,SL=new Set(),authReady=false,AUTHING=false,PENDNAME='',LDWAIT=false,unsubB=null,unsubSL=null,cst=null,cbuf={};
+let FB=null,UID=null,SL=new Set(),PAYNUM={...DEFAULT_PAY},authReady=false,AUTHING=false,PENDNAME='',LDWAIT=false,unsubB=null,unsubSL=null,unsubCFG=null,cst=null,cbuf={};
 const clean=o=>JSON.parse(JSON.stringify(o));
 const cloudSet=o=>{if(!FB||!UID)return;FB.setDoc(FB.doc(FB.db,'users',UID),clean(o),{merge:true}).catch(e=>console.warn('cloud',e))};
 const flushCloud=()=>{clearTimeout(cst);if(Object.keys(cbuf).length){cloudSet(cbuf);cbuf={}}};
 const cloudLazy=o=>{Object.assign(cbuf,o);clearTimeout(cst);cst=setTimeout(flushCloud,700)};
 const slotId=(s,ds,h)=>s+'_'+String(ds).replace(/\s+/g,'-')+'_'+h;
-const sS=()=>{sv('gt_s2',S);if(UID)cloudLazy({settings:S})},sU=()=>{if(UID&&U&&USERS[U.email])cloudSet({plan:USERS[U.email].plan||''})},sB=()=>{},sN=()=>{if(UID)cloudSet({nt:NT});else sv('gt_n2',NT)},sRG=()=>cloudSet({rg:RG});
+const sS=()=>{sv('gt_s2',S);if(UID)cloudLazy({settings:S})},sU=()=>{if(UID&&U&&USERS[U.email])cloudSet({plan:USERS[U.email].plan||''})},sN=()=>{if(UID)cloudSet({nt:NT});else sv('gt_n2',NT)},sRG=()=>cloudSet({rg:RG});
 const fbErr=e=>{const c=(e&&e.code)||'';return({'auth/email-already-in-use':'eExist','auth/invalid-credential':'eBad','auth/wrong-password':'eBad','auth/user-not-found':'eBad','auth/invalid-email':'eMail','auth/weak-password':'eLen','auth/too-many-requests':'eMany','auth/network-request-failed':'eNet','auth/operation-not-allowed':'eOp','auth/unauthorized-domain':'eDom','permission-denied':'ePerm','unavailable':'eNet'})[c]||'eGen'};
 async function saveBooking(b){const w=FB.writeBatch(FB.db);
- b.hrs.forEach(h=>w.set(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h)),{uid:UID,sp:b.sp,ds:b.ds,h,ts:new Date(b.ds).getTime(),bid:b.id}));
+ b.hrs.forEach(h=>w.set(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h)),{uid:UID,sp:b.sp,ds:b.ds,h,ts:new Date(b.ds).getTime(),bid:b.id,status:b.status}));
  w.set(FB.doc(FB.db,'users',UID,'bookings',b.id),{...clean(b),c:Date.now()});
  await w.commit()}
 function startSlots(){if(unsubSL)unsubSL();const d=new Date();d.setHours(0,0,0,0);let last='';
  unsubSL=FB.onSnapshot(FB.query(FB.collection(FB.db,'slots'),FB.where('ts','>=',d.getTime())),sn=>{const ids=sn.docs.map(x=>x.id).sort();const k=ids.join('|');SL=new Set(ids);if(k!==last){const first=last==='';last=k;if(!first&&R==='book')draw()}},e=>console.warn('slots',e))}
 function startBookings(uid){if(unsubB)unsubB();
  unsubB=FB.onSnapshot(FB.collection(FB.db,'users',uid,'bookings'),sn=>{B=sn.docs.map(x=>x.data()).sort((a,b)=>(b.c||0)-(a.c||0));if(R==='profile'||R==='book')draw()},e=>console.warn('bookings',e))}
+function startPaymentCfg(){if(unsubCFG)unsubCFG();
+ unsubCFG=FB.onSnapshot(FB.doc(FB.db,'config','payment'),sn=>{if(sn.exists()){const d=sn.data();PAYNUM={...DEFAULT_PAY,...Object.fromEntries(Object.entries(d).filter(([k,v])=>typeof v==='string'&&v.trim()))}}} ,e=>{console.warn('cfg',e)})}
 function readyAuth(){authReady=true;if(LDWAIT)$('#ld').classList.add('h')}
 async function onUser(user){
  if(!user){if(unsubB){unsubB();unsubB=null}U=null;UID=null;B=[];RG=[];USERS={};NT=NT0();readyAuth();AUTHING=false;refresh();return}
@@ -350,10 +367,10 @@ async function onUser(user){
  RG=(data&&data.rg)||[];NT=(data&&data.nt)||NT0();
  if(data&&data.settings){S={...DS,...data.settings};sv('gt_s2',S)}
  startBookings(user.uid);readyAuth();
- if(AUTHING){AUTHING=false;const b=$('#ag');if(b){b.classList.remove('l');b.innerHTML=I('check')}
+ if(AUTHING){AUTHING=false;const b=$('#ag');if(b){b.classList.remove('l');b.innerHTML='<span>'+t('login')+'</span>'}
   setTimeout(()=>{closeA();refresh();toast(t('hi')+', '+U.name);if(PEND){const f=PEND;PEND=null;f()}},500)}
  else refresh()}
-window.gtFirebase=fb=>{FB=fb;FB.onAuthStateChanged(FB.auth,onUser);FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots()};
+window.gtFirebase=fb=>{FB=fb;startPaymentCfg();FB.onAuthStateChanged(FB.auth,onUser);FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots()};
 window.gtFirebaseFail=e=>{console.error('Firebase load failed',e);readyAuth();toast(t('eNet'))};
 const loc=()=>LG[S.l][2],bn=x=>Number(x).toLocaleString(loc()),tk=x=>'৳'+bn(x);
 const I=(n,c='')=>`<svg class="ic ${c}"><use href="#i-${n}"/></svg>`;
@@ -361,7 +378,7 @@ const logo=()=>`<a class="logo" href="#home" aria-label="Green Turf Sports Arena
 const SP={football:{i:'ball',p:2000,d:'d1'},cricket:{i:'bat',p:1800,d:'d2'},badminton:{i:'shut',p:600,d:'d3'}};
 const AD={jer:['shirt',300],glo:['shield',150],wat:['drop',40],park:['car',100]};
 const FAC=[['cal','f1'],['card','f2'],['moon','p2'],['car','p4'],['cup','p3'],['shirt','jer'],['shield','glo'],['drop','wat']];
-const PM=[['bKash','#e2136e','b'],['Nagad','#f6921e','N'],['Rocket','#8c3494','R'],['card','#334155','C'],['cash','#16a34a','৳']];
+const PAYM=[['bkash','#e2136e','b','bKash'],['nagad','#f6921e','N','Nagad'],['upay','#f7a600','U','Upay'],['rocket','#8c3494','R','Rocket'],['card','#334155','C','card'],['cash','#16a34a','৳','cash']];
 const PGS=[['home','home'],['book','cal'],['events','cup'],['plans','gift'],['help','chat'],['profile','user'],['settings','gear']];
 const EV=[{id:'e1',sp:'football',day:3,hr:19,fee:2000,spots:6},{id:'e2',sp:'cricket',day:5,hr:16,fee:1500,spots:4},{id:'e3',sp:'badminton',day:6,hr:18,fee:400,spots:9}];
 const PL=[{id:'s',n:'lvS',p:499,off:5,f:['pfWat']},{id:'g',n:'lvG',p:999,off:15,f:['pfPri','pfGuest'],hot:1},{id:'p',n:'plat',p:1799,off:25,f:['pfFix','pfJer']}];
@@ -377,13 +394,11 @@ const toast=m=>{const e=$('#ts');e.textContent=m;e.classList.add('on');clearTime
 const sub=()=>bk.sel.reduce((s,h)=>s+price(bk.sp,h),0)+bk.add.reduce((s,k)=>s+AD[k][1],0);
 const pct=()=>Math.min(40,(pl()?pl().off:0)+(bk.cp?10:0));
 const tot=()=>Math.round(sub()*(1-pct()/100));
-// settings
 function applyS(){const r=document.documentElement,sys=matchMedia('(prefers-color-scheme: dark)').matches,dark=S.th==='system'?sys:S.th==='dark';
 r.dataset.theme=dark?'dark':'light';r.lang=LG[S.l][0];r.dir=S.l===2||S.l===4?'rtl':'ltr';r.style.setProperty('--fs',S.fs);r.classList.toggle('noanim',!S.an);
 const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=dark?'#07110b':'#f2f7f2';
 if(S.ac){const c=parseInt(S.ac.slice(1),16),l=(((c>>16)&255)*299+((c>>8)&255)*587+(c&255)*114)/1000;r.style.setProperty('--g',S.ac);r.style.setProperty('--ink',l>150?'#06160a':'#fff')}else{r.style.removeProperty('--g');r.style.removeProperty('--ink')}}
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(S.th==='system')applyS()});
-// header
 function hdr(){
  const sp=Object.keys(SP).map(k=>`<a href="#book" data-act="sport" data-v="${k}">${I(SP[k].i)}<span><b>${t(k)}</b><small>${tk(SP[k].p)} ${t('perHr')}</small></span></a>`).join('');
  const un=NT.filter(x=>!x.r).length,th=S.th==='system'?'mon':S.th==='light'?'sun':'moon';
@@ -408,7 +423,6 @@ function ftr(){$('#ft').innerHTML=`<div class="wrap"><div class="fg"><div>${logo
 <div><h3>${t('s1')}</h3><ul>${Object.keys(SP).map(k=>`<li><a href="#book" data-act="sport" data-v="${k}">${t(k)}</a></li>`).join('')}</ul></div>
 <div><h3>${t('contact')}</h3><ul><li>${t('locTxt')}</li><li><a href="tel:${CFG.tel}">${CFG.telShow}</a></li><li>${t('hours')}</li></ul><h3 style="margin-top:14px">${t('news')}</h3><div class="nlf"><input class="inp" id="nm" placeholder="${t('email')}" style="margin:0"><button class="btn sm" data-act="sub">${t('subs')}</button></div></div></div>
 <div class="cp"><span>© 2026 Green Turf Sports Arena Noakhali · ${t('demoV')}</span><div class="chips" style="margin:0">${LG.map((l,i)=>`<button class="chip" style="padding:5px 12px;${S.l===i?'border-color:var(--g);color:var(--g)':''}" data-act="lang" data-v="${i}">${l[1]}</button>`).join('')}</div></div></div>`}
-// pages
 const free=k=>{let c=0;for(let h=6;h<23;h++)if(!taken(k,0,h))c++;return c};
 const VW={
 home(){const sp=Object.keys(SP).map(k=>`<div class="card sp rise" data-act="sport" data-v="${k}" tabindex="0" role="button"><div class="ph" style="background-image:url('${spi(k)}')"></div><div class="bi">${I(SP[k].i)}</div><h3>${t(k)}</h3><p style="color:var(--mu)">${t(SP[k].d)}</p><div class="pr">${tk(SP[k].p)} <small>${t('perHr')} · ${t('eve')}</small></div><span class="live">${bn(free(k))} ${t('freeT')}</span></div>`).join('');
@@ -441,9 +455,10 @@ help(){return `<div class="wrap pg"><h2>${t('help')}</h2><p class="sub">${t('hlp
 <div class="bk" style="margin-top:20px"><div><h3 style="margin-bottom:10px">${t('secFaq')}</h3>${[1,2,3].map(i=>`<details><summary>${t('q'+i)}</summary><p>${t('a'+i)}</p></details>`).join('')}</div><div class="card"><input class="inp" id="hn" placeholder="${t('yname')}"><input class="inp" id="he" placeholder="${t('email')}"><textarea class="inp" id="hm" rows="4" placeholder="${t('ymsg')}"></textarea><button class="btn f" style="margin-top:8px" data-act="send">${t('send')}</button></div></div></div>`},
 profile(){if(!U)return `<div class="wrap pg"><div class="card" style="text-align:center;padding:44px 20px;max-width:480px;margin:auto"><div class="av" style="margin:0 auto 14px">${I('user')}</div><h2>${t('signin')}</h2><p class="sub">${t('needLogin')}</p><button class="btn f" data-act="auth" data-v="in">${t('signin')}</button><button class="btn o f" style="margin-top:8px" data-act="auth" data-v="up">${t('createT')}</button></div></div>`;
 const mine=B.filter(b=>b.u===U.email),hrs=mine.reduce((s,b)=>s+b.hrs.length,0),lv=hrs>=10?'lvG':hrs>=4?'lvS':'lvN';
+const stBadge=b=>{const m={pending:['stPending','pending'],paid:['stPaid','paid'],rejected:['stRejected','rejected'],free:['stFree','free']};const x=m[b.status]||m.free;return `<span class="stbadge ${x[1]}">${t(x[0])}</span>`};
 return `<div class="wrap pg"><div class="card pf"><div class="av">${esc(U.name[0].toUpperCase())}</div><div style="flex:1;min-width:0"><h2 style="margin:0">${esc(U.name)}</h2><p style="color:var(--mu);overflow:hidden;text-overflow:ellipsis">${esc(U.email)}</p><span class="badge">${t(lv)} ${t('member')}</span> ${pl()?`<span class="badge">${t(pl().n)}</span>`:''}</div><a class="btn o" href="#settings">${I('gear')}${t('settings')}</a></div>
 <div class="g3" style="margin-top:14px">${[[mine.length,'st1'],[hrs,'st2'],0].map((x,i)=>`<div class="card"><b class="pr">${i<2?bn(x[0]):tk(mine.reduce((s,b)=>s+b.tot,0))}</b><br><span style="color:var(--mu)">${t(['st1','st2','st3'][i])}</span></div>`).join('')}</div>
-<h2 style="margin-top:30px">${t('myBk')}</h2>${mine.length?mine.map(b=>`<div class="card tk"><div class="bi">${I(SP[b.sp].i)}</div><div><b>${t(b.sp)}</b> · ${tk(b.tot)}<br><small style="color:var(--mu)">${new Date(b.ds).toLocaleDateString(loc(),{weekday:'short',day:'numeric',month:'short'})}, ${b.hrs.map(hh).join(', ')} · ${b.id}</small></div><button class="ib" data-act="share" data-v="${b.id}" aria-label="${t('share')}">${I('share')}</button><button class="btn o sm" data-act="cancel" data-v="${b.id}">${t('cancel')}</button></div>`).join(''):`<div class="card" style="text-align:center;padding:36px"><p class="sub">${t('none')}</p><a class="btn" href="#book">${t('firstBk')}</a></div>`}</div>`},
+<h2 style="margin-top:30px">${t('myBk')}</h2>${mine.length?mine.map(b=>`<div class="card tk"><div class="bi">${I(SP[b.sp].i)}</div><div><b>${t(b.sp)}</b> · ${tk(b.tot)} ${stBadge(b)}<br><small style="color:var(--mu)">${new Date(b.ds).toLocaleDateString(loc(),{weekday:'short',day:'numeric',month:'short'})}, ${b.hrs.map(hh).join(', ')} · ${b.id}${b.txid?' · TX: '+esc(b.txid):''}</small></div><button class="ib" data-act="share" data-v="${b.id}" aria-label="${t('share')}">${I('share')}</button><button class="btn o sm" data-act="cancel" data-v="${b.id}">${t('cancel')}</button></div>`).join(''):`<div class="card" style="text-align:center;padding:36px"><p class="sub">${t('none')}</p><a class="btn" href="#book">${t('firstBk')}</a></div>`}</div>`},
 settings(){const tg=(k,l)=>`<div class="tg"><span>${t(l)}</span><button class="swt ${S[k]?'on':''}" data-act="tgl" data-v="${k}" role="switch" aria-checked="${!!S[k]}" aria-label="${t(l)}"></button></div>`;
 return `<div class="wrap pg" style="max-width:760px"><h2>${t('settings')}</h2><p class="sub">${t('setS')}</p>
 <div class="card set"><h3>${I('globe')}${t('lang')}</h3><div class="lg">${LG.map((l,i)=>`<button class="chip ${S.l===i?'on':''}" data-act="lang" data-v="${i}"><span>${l[1]}</span>${S.l===i?I('check'):''}</button>`).join('')}</div></div>
@@ -453,21 +468,19 @@ return `<div class="wrap pg" style="max-width:760px"><h2>${t('settings')}</h2><p
 <div class="card set">${tg('an','anim')}${tg('nt','notif')}</div>
 <div class="card set"><h3>${I('user')}${t('accS')}</h3>${U?`<p style="margin-bottom:12px"><b>${esc(U.name)}</b><br><span style="color:var(--mu)">${esc(U.email)}</span></p><button class="btn o" data-act="signout">${I('out')}${t('signout')}</button>`:`<button class="btn" data-act="auth" data-v="in">${t('signin')}</button>`}</div>
 <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn o" data-act="reset">${t('reset')}</button><button class="btn o" data-act="clear" style="color:#ef4444">${t('clr')}</button></div></div>`}};
-// slideshow
 function slideTo(n){const els=$$('#ps .psl'),ds=$$('#ps .psd button');if(!els.length)return;SI=(n+els.length)%els.length;els.forEach((e,i)=>e.classList.toggle('on',i===SI));ds.forEach((e,i)=>e.classList.toggle('on',i===SI))}
 function slideAuto(){clearInterval(ST);if(R!=='home'||!$('#ps')||CFG.slides.length<2||matchMedia('(prefers-reduced-motion:reduce)').matches)return;ST=setInterval(()=>{if(!document.hidden)slideTo(SI+1)},4800)}
 function initSlides(){const ps=$('#ps');if(!ps)return;let x0=null;
 ps.addEventListener('pointerdown',e=>{x0=e.clientX});ps.addEventListener('pointercancel',()=>x0=null);
 ps.addEventListener('pointerup',e=>{if(x0===null)return;const dx=e.clientX-x0;x0=null;if(Math.abs(dx)>40){slideTo(SI+(dx<0?1:-1));slideAuto()}});
 ps.addEventListener('mouseenter',()=>clearInterval(ST));ps.addEventListener('mouseleave',slideAuto);slideAuto()}
-// auth popup
 let AM='in';
 function authCard(m){const up=m==='up',f=(id,ty,ph)=>`<div class="nf"><input id="${id}" type="${ty}" placeholder="${t(ph)}" autocomplete="${id==='aw'?'current-password':id==='ae'?'email':id==='an'?'name':'off'}">${ty==='password'?`<button data-act="eye" aria-label="show">${I('eye')}</button>`:''}</div>`;
 return `<button class="rb cx" data-act="closeA" aria-label="${t('menu')}">${I('x')}</button><div class="lk">${I(up?'user':'lock')}</div><h2>${t(up?'createT':'welcome')}</h2><p class="sub">${t(up?'createS':'inSub')}</p>
 ${up?f('an','text','fname'):''}${f('ae','email','email')}${f('aw','password','pass')}${up?f('ac','password','pass2'):''}
 ${up?'':`<div class="nr"><label><input type="checkbox" id="ar" checked style="accent-color:var(--g)">${t('rem')}</label><a data-act="forgot">${t('forgot')}</a></div>`}
 <button class="nbt" id="ag" data-act="submit" style="${up?'margin-top:18px':''}"><span>${t(up?'createT':'login')}</span></button>
-<div class="orl">${t('or')}</div><button class="gbt" data-act="google" type="button"><svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>${t('gLogin')}</span></button>
+<div class="orl">or</div><button class="gbt" data-act="google" type="button"><svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>Continue with Google</span></button>
 <div class="nsw"><span>${t(up?'haveAcc':'noAcc')}</span><button class="rb" data-act="authsw" aria-label="switch">${I(up?'back':'plus')}</button></div>`}
 function openAuth(m){AM=m||'in';const a=$('#am');a.innerHTML='<i class="bgc" style="width:260px;height:260px;left:-80px;top:8%"></i><i class="bgc" style="width:180px;height:180px;right:-50px;top:56%;animation-delay:-3s"></i><i class="bgc" style="width:120px;height:120px;left:20%;bottom:-40px;animation-delay:-6s"></i><div class="nc d0" id="nc">'+authCard(AM)+'</div>';a.classList.add('on')}
 async function submitAuth(){const nc=$('#nc'),up=AM==='up',v=id=>($('#'+id)||{value:''}).value.trim(),e=v('ae').toLowerCase(),w=($('#aw')||{}).value||'';
@@ -484,12 +497,8 @@ catch(err){AUTHING=false;PENDNAME='';b.classList.remove('l');bad(t(fbErr(err)))}
 const closeA=()=>$('#am').classList.remove('on');
 function swAuth(){const nc=$('#nc');nc.classList.remove('d0','shake');nc.classList.add('out');setTimeout(()=>{AM=AM==='in'?'up':'in';nc.innerHTML=authCard(AM);nc.classList.remove('out');nc.classList.add('in');setTimeout(()=>nc.classList.remove('in'),400)},280)}
 const need=(f,m)=>{if(U)return f();PEND=f;openAuth(m||'in')};
-// modal + pay
 const M=h=>{$('#mb').innerHTML=h;$('#md').classList.add('on')},xM=()=>$('#md').classList.remove('on');
-Object.assign(TR,{otpT:'ওটিপি যাচাই|Verify OTP',otpD:'আপনার নম্বরে ৬ সংখ্যার কোড গেছে (ডেমো: যেকোনো ৬ সংখ্যা)|A 6-digit code was sent (demo: any 6 digits)',pinT:'পিন দিন|Enter PIN',merch:'যাচাইকৃত মার্চেন্ট|Verified Merchant',sec:'সুরক্ষিত পেমেন্ট|Secure payment'});
-let PY={i:0,n:''};
 Object.assign(TR,{gLogin:'গুগল দিয়ে চালিয়ে যান|Continue with Google|المتابعة عبر Google|Google से जारी रखें|Google کے ساتھ جاری رکھیں',or:'অথবা|or|أو|या|یا',
-fSent:'পাসওয়ার্ড রিসেট লিংক ইমেইলে পাঠানো হয়েছে|Password reset link sent to your email|تم إرسال رابط إعادة التعيين إلى بريدك|रीसेट लिंक आपके ईमेल पर भेजा गया|ری سیٹ لنک آپ کی ای میل پر بھیج دیا گیا',
 fMail:'আগে ইমেইল ঘরে আপনার ইমেইল দিন|Enter your email first|أدخل بريدك أولاً|पहले अपना ईमेल दें|پہلے اپنی ای میل دیں',
 eMany:'অনেকবার চেষ্টা হয়েছে, একটু পরে আবার করুন|Too many attempts, try again later|محاولات كثيرة، حاول لاحقاً|बहुत कोशिशें हुईं, बाद में करें|بہت کوششیں ہو گئیں، بعد میں کریں',
 eNet:'নেটওয়ার্ক সমস্যা, ইন্টারনেট চেক করুন|Network problem, check your connection|مشكلة في الشبكة|नेटवर्क समस्या, इंटरनेट जाँचें|نیٹ ورک کا مسئلہ، انٹرنیٹ چیک کریں',
@@ -503,30 +512,34 @@ function pswap(h,first){const a=$('#am');
  if(first){a.innerHTML='<i class="bgc" style="width:260px;height:260px;left:-80px;top:8%"></i><i class="bgc" style="width:160px;height:160px;right:-40px;top:58%;animation-delay:-3s"></i><div class="nc d0" id="nc">'+h+'</div>';a.classList.add('on');return}
  const nc=$('#nc');nc.classList.remove('d0','shake');nc.classList.add('out');setTimeout(()=>{nc.innerHTML=h;nc.classList.remove('out');nc.classList.add('in');setTimeout(()=>nc.classList.remove('in'),400)},280)}
 const pHead=()=>`<button class="rb cx" data-act="closeA" aria-label="x">${I('x')}</button><img src="${CFG.logo}" alt=""><div class="mn">Green Turf Sports Arena</div><span class="vb">${I('shield')}${t('merch')}</span><div class="amt">${tk(tot())}</div><div class="rf">${t(bk.sp)} · ${bk.sel.map(hh).join(', ')}</div>`;
-function payUI(){xM();pswap(pHead()+PM.map((p,i)=>`<button class="pm" data-act="pm" data-v="${i}"><i style="background:${p[1]}">${p[2]}</i><b>${p[0]==='card'||p[0]==='cash'?t(p[0]):p[0]}</b></button>`).join('')+`<div class="demo">${I('lock')} ${t('sec')} · ${t('demoNote')}</div>`,!$('#am').classList.contains('on'))}
-function payNo(i){const p=PM[i],nm=p[0]==='card'||p[0]==='cash'?t(p[0]):p[0];PY={i,n:nm};if(p[0]==='cash')return fin(nm);
- pswap(pHead()+(i===3?`<div class="nf"><input id="p1" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456"></div><div style="display:flex;gap:10px"><div class="nf" style="flex:1"><input id="p2" maxlength="5" placeholder="MM/YY"></div><div class="nf" style="flex:1"><input id="p3" type="password" inputmode="numeric" maxlength="4" placeholder="CVC"></div></div>`:`<div class="nf"><input id="p1" inputmode="tel" maxlength="11" placeholder="01XXXXXXXXX"></div>`)+`<button class="nbt" data-act="pnext" data-v="ac">${t('conf')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`)}
+Object.assign(TR,{merch:'যাচাইকৃত মার্চেন্ট|Verified Merchant|تاجر موثّق|सत्यापित मर्चेंट|تصدیق شدہ مرچنٹ',sec:'সুরক্ষিত পেমেন্ট|Secure payment|دفع آمن|सुरक्षित पेमेंट|محفوظ ادائیگی'});
+function payUI(){xM();pswap(pHead()+`<h3>${t('paySelect')}</h3>`+PAYM.map((p,i)=>`<button class="pm" data-act="pm" data-v="${i}"><i style="background:${p[1]}">${p[2]}</i><b>${p[3]==='card'||p[3]==='cash'?t(p[3]):p[3]}</b></button>`).join('')+`<div class="demo">${I('lock')} ${t('sec')}</div>`,!$('#am').classList.contains('on'))}
+function payNo(i){const p=PAYM[i],nm=p[3]==='card'||p[3]==='cash'?t(p[3]):p[3];PY={i,n:nm,key:p[0]};
+ if(p[0]==='cash')return fin(nm,'free');
+ if(p[0]==='card')return pswap(pHead()+`<div class="nf"><input id="p1" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456"></div><div style="display:flex;gap:10px"><div class="nf" style="flex:1"><input id="p2" maxlength="5" placeholder="MM/YY"></div><div class="nf" style="flex:1"><input id="p3" type="password" inputmode="numeric" maxlength="4" placeholder="CVC"></div></div>`+`<button class="nbt" data-act="pnext" data-v="ac">${t('conf')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`);
+ const num=PAYNUM[p[0]]||DEFAULT_PAY[p[0]]||DEFAULT_PAY.bkash;
+ pswap(pHead()+`<div class="paybox"><div style="text-align:center"><span class="paytype"><b style="background:${p[1]}">${p[2]}</b> ${p[3]}</span></div><div class="paystep">${t('payStep1')}</div><div class="paynum">${esc(num)}</div><button class="gbt" data-act="copynum" data-v="${esc(num)}">${I('card')}${t('copy')}</button></div><div class="paystep">${t('payStep2')}</div><div class="nf"><input id="txid" placeholder="${t('txid')}" autocomplete="off"></div><button class="nbt" data-act="pnext" data-v="tx">${t('submitPay')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`)}
 const pOtp=()=>pswap(pHead()+`<h3>${t('otpT')}</h3><p class="sub">${t('otpD')}</p><div class="nf"><input id="p1" class="otp" inputmode="numeric" maxlength="6" placeholder="••••••"></div><button class="nbt" data-act="pnext" data-v="otp">${t('conf')}</button>`);
-const pPin=()=>pswap(pHead()+`<h3>${t('pinT')}</h3><div class="nf"><input id="p1" class="otp" type="password" inputmode="numeric" maxlength="5" placeholder="•••••"></div><button class="nbt" data-act="pnext" data-v="pin">${t('conf')} · ${tk(tot())}</button>`);
-function pnext(v){const x=id=>(($('#'+id)||{}).value||'').replace(/\s/g,''),card=PY.i===3,bad=m=>{toast(m);const nc=$('#nc');nc.classList.remove('shake');void nc.offsetWidth;nc.classList.add('shake')};
- if(v==='ac'){if(card?(x('p1').length<13||!/^\d\d\/\d\d$/.test(x('p2'))||x('p3').length<3):!/^01\d{9}$/.test(x('p1')))return bad(t('eFill'));pOtp()}
- else if(v==='otp'){if(x('p1').length<6)return bad(t('eFill'));card?fin(PY.n):pPin()}
- else{if(x('p1').length<4)return bad(t('eFill'));fin(PY.n)}}
-function fin(nm){pswap(`<div class="lk"><svg class="ic" style="animation:spin 1s linear infinite"><use href="#i-ball"/></svg></div><h3>${t('proc')}</h3><p class="sub">${t('sec')}</p>`,!$('#am').classList.contains('on'));
- const b={id:'GT'+(100000+Math.floor(Math.random()*899999)),u:U.email,sp:bk.sp,ds:dk(bk.day),hrs:[...bk.sel],tot:tot(),pm:nm},t0=Date.now();
+Object.assign(TR,{otpT:'ওটিপি যাচাই|Verify OTP|تحقق OTP|ओटीपी जाँचें|او ٹی پی کی تصدیق',otpD:'আপনার নম্বরে ৬ সংখ্যার কোড গেছে (ডেমো: যেকোনো ৬ সংখ্যা)|A 6-digit code was sent (demo: any 6 digits)|تم إرسال رمز مكون من 6 أرقام (تجريبي: أي 6 أرقام)|6 अंकों का कोड भेजा गया (डेमो: कोई भी 6 अंक)|6 ہندسوں کا کوڈ بھیجا گیا (ڈیمو: کوئی بھی 6 ہندسے)'});
+function pnext(v){const x=id=>(($('#'+id)||{}).value||'').replace(/\s/g,''),bad=m=>{toast(m);const nc=$('#nc');nc.classList.remove('shake');void nc.offsetWidth;nc.classList.add('shake')};
+ if(v==='ac'){const card=PY.key==='card';if(card?(x('p1').length<13||!/^\d\d\/\d\d$/.test(x('p2'))||x('p3').length<3):!/^01\d{9}$/.test(x('p1')))return bad(t('eFill'));pOtp()}
+ else if(v==='otp'){if(x('p1').length<6)return bad(t('eFill'));fin(PY.n,'paid')}
+ else if(v==='tx'){const tx=x('txid');if(tx.length<6)return toast(t('txAsk'));fin(PY.n,'pending',tx)}}
+function fin(nm,status,txid){pswap(`<div class="lk"><svg class="ic" style="animation:spin 1s linear infinite"><use href="#i-ball"/></svg></div><h3>${t('proc')}</h3><p class="sub">${t('sec')}</p>`,!$('#am').classList.contains('on'));
+ const b={id:'GT'+(100000+Math.floor(Math.random()*899999)),u:U.email,sp:bk.sp,ds:dk(bk.day),hrs:[...bk.sel],tot:tot(),pm:nm,status,txid:txid||''},t0=Date.now();
  saveBooking(b).then(()=>new Promise(r=>setTimeout(r,Math.max(0,1600-(Date.now()-t0))))).then(()=>{
  NT.unshift({k:'done',x:b.id,r:0});sN();bk.sel=[];bk.add=[];bk.cp=0;hdr();
- pswap(`<div class="ck"><svg class="ic" viewBox="0 0 24 24"><path class="ckd" d="M5 12l5 5 9-10"/></svg></div><h2>${t('done')}</h2><div style="text-align:start;margin:14px 0"><div class="row"><span>${t('bid')}</span><b>${b.id}</b></div><div class="row"><span>${t('sportL')}</span><b>${t(b.sp)}</b></div><div class="row"><span>${t('timeL')}</span><b>${b.hrs.map(hh).join(', ')}</b></div><div class="row"><span>${t('payM')}</span><b>${esc(nm)}</b></div><div class="row"><span>${t('total')}</span><b>${tk(b.tot)}</b></div></div><button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}).catch(err=>{
- console.warn(err);if(err&&err.code==='permission-denied'){bk.sel=[];closeA();draw();toast(t('slotGone'))}else{toast(t(fbErr(err)));payUI()}})}
+ const okBlock=`<div style="text-align:start;margin:14px 0"><div class="row"><span>${t('bid')}</span><b>${b.id}</b></div><div class="row"><span>${t('sportL')}</span><b>${t(b.sp)}</b></div><div class="row"><span>${t('timeL')}</span><b>${b.hrs.map(hh).join(', ')}</b></div><div class="row"><span>${t('payM')}</span><b>${esc(nm)}</b></div><div class="row"><span>${t('total')}</span><b>${tk(b.tot)}</b></div></div>`;
+ if(status==='pending'){pswap(`<div class="ck" style="background:#f59e0b"><svg class="ic" viewBox="0 0 24 24" style="stroke:#fff"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg></div><h2>${t('pendingT')}</h2><p class="sub">${t('pendingD')}</p>`+okBlock+`<button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}
+ else{pswap(`<div class="ck"><svg class="ic" viewBox="0 0 24 24"><path class="ckd" d="M5 12l5 5 9-10"/></svg></div><h2>${t('done')}</h2>`+okBlock+`<button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}
+ }).catch(err=>{console.warn(err);if(err&&err.code==='permission-denied'){bk.sel=[];closeA();draw();toast(t('slotGone'))}else{toast(t(fbErr(err)));payUI()}})}
 const SPI={football:'football,turf',cricket:'cricket,stadium',badminton:'badminton,court'};
 const spi=k=>`https://loremflickr.com/640/400/${SPI[k]}`;
-// search
 const IDX=()=>[...Object.keys(SP).map(k=>({t:t(k),s:tk(SP[k].p)+' '+t('perHr')+' · '+t(SP[k].d),i:SP[k].i,a:'sport:'+k})),...FAC.map(f=>({t:t(f[1]),s:t('page')+': '+t('home'),i:f[0],a:'go:home'})),...PGS.map(p=>({t:t(p[0]),s:t('page'),i:p[1],a:'go:'+p[0]})),...LG.map((l,i)=>({t:l[1],s:t('lang'),i:'globe',a:'lang:'+i})),...[['system','mon','sys'],['light','sun','light'],['dark','moon','dark']].map(x=>({t:t(x[2]),s:t('theme'),i:x[1],a:'theme:'+x[0]})),{t:t('secLoc'),s:t('addr'),i:'pin',a:'go:home'}];
 function srch(){const q=$('#si').value.trim().toLowerCase(),r=IDX().filter(x=>!q||(x.t+' '+x.s).toLowerCase().includes(q)).slice(0,8);$('#so').innerHTML=r.length?r.map(x=>`<div class="sr" data-act="sres" data-v="${x.a}">${I(x.i)}<div><b>${x.t}</b><small>${x.s}</small></div></div>`).join(''):`<p class="sub" style="padding:14px">${t('noRes')}</p>`}
 function drawer(){const acc=U?`<div class="card" style="display:flex;gap:12px;align-items:center;margin-bottom:10px;padding:14px"><div class="av" style="width:46px;height:46px;font-size:20px">${esc(U.name[0].toUpperCase())}</div><div style="min-width:0"><b>${esc(U.name)}</b><small style="display:block;color:var(--mu);overflow:hidden;text-overflow:ellipsis">${esc(U.email)}</small></div></div>`:`<div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn f sm" data-act="auth" data-v="in">${t('signin')}</button><button class="btn o f sm" data-act="auth" data-v="up">${t('createT')}</button></div>`;
 $('#dp').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">${logo()}<button class="ib" data-act="closeD" aria-label="x">${I('x')}</button></div>${acc}${PGS.map(p=>`<a href="#${p[0]}" data-p="${p[0]}" class="${R===p[0]?'on':''}">${I(p[1])}${t(p[0])}</a>`).join('')}${U?`<a data-act="signout" style="cursor:pointer">${I('out')}${t('signout')}</a>`:''}<h3 style="margin:18px 12px 8px">${t('lang')}</h3><div class="chips">${LG.map((l,i)=>`<button class="chip ${S.l===i?'on':''}" data-act="lang" data-v="${i}">${l[1]}</button>`).join('')}</div><h3 style="margin:8px 12px">${t('theme')}</h3><div class="chips">${[['system','mon'],['light','sun'],['dark','moon']].map(x=>`<button class="chip ${S.th===x[0]?'on':''}" data-act="theme" data-v="${x[0]}">${I(x[1])}</button>`).join('')}</div>`}
 const openD=()=>{drawer();$('#dr').classList.add('on')},closeD=()=>$('#dr').classList.remove('on');
-// actions
 const closeDD=()=>$$('.dm.on').forEach(m=>m.classList.remove('on'));
 const refresh=()=>{applyS();hdr();bot();ftr();draw();if($('#dr').classList.contains('on'))drawer()};
 const ACT={
@@ -534,7 +547,7 @@ go:v=>go(v),sport:v=>{bk.sp=v;bk.sel=[];go('book')},qgo:()=>{bk.sp=$('#qs').valu
 sp2:v=>{bk.sp=v;bk.sel=[];draw()},day:v=>{bk.day=+v;bk.sel=[];draw()},hr:v=>{const h=+v;bk.sel=bk.sel.includes(h)?bk.sel.filter(y=>y!==h):[...bk.sel,h].sort((a,b)=>a-b);draw()},
 addon:v=>{const i=bk.add.indexOf(v);i<0?bk.add.push(v):bk.add.splice(i,1);draw()},
 coupon:()=>{if($('#cpn').value.trim().toUpperCase()==='GREEN10'){bk.cp=1;toast(t('cOk'))}else{bk.cp=0;toast(t('cBad'))}draw()},
-pay:()=>need(payUI),pm:v=>payNo(+v),fin:(v)=>fin(v),pnext:v=>pnext(v),
+pay:()=>need(payUI),pm:v=>payNo(+v),pnext:v=>pnext(v),copynum:v=>{try{navigator.clipboard.writeText(v).then(()=>toast(t('numCopied')),()=>toast(v))}catch(e){toast(v)}},
 slide:v=>{slideTo(SI+ +v);slideAuto()},dot:v=>{slideTo(+v);slideAuto()},
 lang:v=>{S.l=+v;sS();refresh();toast(LG[S.l][1])},theme:v=>{S.th=v;sS();refresh();toast(t('saved'))},themecycle:()=>ACT.theme({system:'light',light:'dark',dark:'system'}[S.th]),
 accent:v=>{S.ac=v;sS();refresh()},tgl:v=>{S[v]=S[v]?0:1;sS();refresh();toast(t(v==='an'?'anim':'notif')+': '+t(S[v]?'on':'off'))},
@@ -561,6 +574,7 @@ call:()=>{location.href='tel:'+CFG.tel},
 wa:()=>{window.open('https://wa.me/'+CFG.wa,'_blank','noopener')},
 dir:()=>{window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(CFG.map),'_blank','noopener')},
 top:()=>scrollTo({top:0,behavior:'smooth'})};
+let PY={i:0,n:'',key:''};
 document.addEventListener('click',e=>{if(!e.target.closest('.dd'))closeDD();const el=e.target.closest('[data-act]');
 if(el){const a=el.dataset.act;if(el.tagName==='A')e.preventDefault();if(ACT[a]){ACT[a](el.dataset.v,el,e);return}}
 const a=e.target.closest('a[href^="#"]');if(a){e.preventDefault();closeD();go(a.getAttribute('href').slice(1))}
@@ -568,4 +582,78 @@ if(e.target.id==='md')xM()});
 document.addEventListener('input',e=>{if(e.target.dataset.inp==='fs'){S.fs=+e.target.value;sS();applyS();e.target.parentNode.querySelector('h3').lastChild.textContent=t('tsize')+': '+bn(S.fs)}});
 $('#si').addEventListener('input',srch);
 $('#sr').addEventListener('click',e=>{if(e.target.id==='sr')ACT.closeS()});$('#dr').addEventListener('click',e=>{if(e.target.id==='dr')closeD()});
-document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();ACT.search()}
+if(e.key==='Escape'){ACT.closeS();closeD();xM();closeA();closeDD()}if(e.key==='Enter'&&$('#am').classList.contains('on')&&e.target.tagName==='INPUT'&&e.target.type!=='checkbox')submitAuth();
+if((e.key==='Enter'||e.key===' ')&&e.target.matches('.sp[data-act]')){e.preventDefault();ACT.sport(e.target.dataset.v)}});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('v');e.target.querySelectorAll('[data-n]').forEach(c=>{const n=+c.dataset.n;let s=null;const f=ts=>{s=s||ts;const p=Math.min((ts-s)/1300,1);c.textContent=bn(Math.round(n*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)});io.unobserve(e.target)}),{threshold:.12});
+function draw(){const y=scrollY;clearInterval(ST);$('#v').innerHTML=VW[R]();$$('[data-p]').forEach(a=>a.classList.toggle('on',a.dataset.p===R));$$('.rise').forEach(e=>io.observe(e));ind();scrollTo({top:y,behavior:'instant'});if(R==='home')initSlides()}
+function go(r){R=VW[r]?r:'home';closeDD();xM();closeA();clearInterval(ST);try{history.replaceState(null,'','#'+R)}catch(e){}
+$$('[data-p]').forEach(a=>a.classList.toggle('on',a.dataset.p===R));ind();
+const v=$('#v');v.style.cssText='opacity:0;transform:translateY(14px);transition:.25s';
+scrollTo({top:0,behavior:'smooth'});
+setTimeout(()=>{v.innerHTML='<div class="wrap pg"><div class="sk"></div><div class="sk"></div><div class="sk" style="height:200px"></div></div>';v.style.cssText='opacity:1;transition:.25s';
+setTimeout(()=>{draw();v.style.cssText=''},320)},scrollY>40?400:180)}
+let ly=0;addEventListener('scroll',()=>{const y=scrollY,p=$('#prog'),h=document.documentElement.scrollHeight-innerHeight;if(p)p.style.width=(h>0?y/h*100:0)+'%';$('#tp').classList.toggle('on',y>600);if(innerWidth<=860){const hd=$('#hd');if(y>ly+8&&y>120)hd.classList.add('hide');else if(y<ly-8||y<60)hd.classList.remove('hide')}ly=y},{passive:true});
+addEventListener('resize',ind);
+applyS();R=VW[location.hash.slice(1)]?location.hash.slice(1):'home';hdr();bot();ftr();draw();
+setTimeout(()=>{if(authReady)$('#ld').classList.add('h');else LDWAIT=true},1500);setTimeout(()=>$('#ld').classList.add('h'),5000);
+</script>
+<script type="module">
+const V="10.12.2",G="https://www.gstatic.com/firebasejs/"+V+"/";
+const firebaseConfig={
+  apiKey:"AIzaSyCca1PWXnrW8XV_o69fyDdxelr1GM_yLi4",
+  authDomain:"green-turf-86d36.firebaseapp.com",
+  projectId:"green-turf-86d36",
+  storageBucket:"green-turf-86d36.firebasestorage.app",
+  messagingSenderId:"57008159263",
+  appId:"1:57008159263:web:1a770c8f5b1c14bd9f732a",
+  measurementId:"G-M4RHTXZREL"
+};
+(async()=>{try{
+  const [A,Au,Fs,An]=await Promise.all([import(G+"firebase-app.js"),import(G+"firebase-auth.js"),import(G+"firebase-firestore.js"),import(G+"firebase-analytics.js")]);
+  const app=A.initializeApp(firebaseConfig),auth=Au.getAuth(app),db=Fs.getFirestore(app);
+  An.isSupported().then(ok=>{if(ok)An.getAnalytics(app)}).catch(()=>{});
+  const wait=()=>window.gtFirebase?Promise.resolve():new Promise(r=>setTimeout(r,50)).then(wait);await wait();
+  window.gtFirebase({app,auth,db,
+    onAuthStateChanged:Au.onAuthStateChanged,createUserWithEmailAndPassword:Au.createUserWithEmailAndPassword,signInWithEmailAndPassword:Au.signInWithEmailAndPassword,
+    signOut:Au.signOut,updateProfile:Au.updateProfile,sendPasswordResetEmail:Au.sendPasswordResetEmail,GoogleAuthProvider:Au.GoogleAuthProvider,
+    signInWithPopup:Au.signInWithPopup,signInWithRedirect:Au.signInWithRedirect,getRedirectResult:Au.getRedirectResult,setPersistence:Au.setPersistence,
+    browserLocalPersistence:Au.browserLocalPersistence,browserSessionPersistence:Au.browserSessionPersistence,
+    doc:Fs.doc,getDoc:Fs.getDoc,setDoc:Fs.setDoc,collection:Fs.collection,query:Fs.query,where:Fs.where,onSnapshot:Fs.onSnapshot,writeBatch:Fs.writeBatch,serverTimestamp:Fs.serverTimestamp});
+}catch(e){window.gtFirebaseFail&&window.gtFirebaseFail(e)}})();
+</script>
+<script>
+(()=>{const bot=document.getElementById('nb');if(!bot)return;
+const H=64,TT=84,R=30,W0=23,F0=14,H_MAX=66,NS='http://www.w3.org/2000/svg';
+const g=document.createElement('div');g.id='nbg';
+g.innerHTML='<div class="gl"></div><svg><defs><mask id="nbm" maskUnits="userSpaceOnUse" x="-60" y="-60" width="2000" height="400"><rect x="-60" y="-60" width="2000" height="400" fill="#fff"/><path id="nbmp" fill="#000"/></mask><linearGradient id="nbg1" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".3" stop-color="#fff" stop-opacity=".18"/><stop offset=".7" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity=".85"/></linearGradient><clipPath id="nbcp"><path id="nbcpp"/></clipPath><filter id="nbgb" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="nbf" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="9"/></filter></defs><g mask="url(#nbm)"><path id="nbsp" fill="rgba(0,0,0,.22)" filter="url(#nbf)" transform="translate(0,8)"/></g><g clip-path="url(#nbcp)"><path id="nbig" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="10" filter="url(#nbgb)"/></g><path id="nbst" fill="none" stroke="url(#nbg1)" stroke-width="1.5"/></svg>';
+bot.parentNode.insertBefore(g,bot);
+const gl=g.querySelector('.gl'),mp=g.querySelector('#nbmp'),sp=g.querySelector('#nbsp'),st=g.querySelector('#nbst'),ig=g.querySelector('#nbig'),cp=g.querySelector('#nbcpp'),lg=g.querySelector('#nbg1');
+let W=0,cx=0,h=0;
+function path(){const y0=TT,w=W0,f=F0;let d=`M${R},${y0}`;
+ if(h>.5){const k=Math.min(1,h/(w+f)),ww=w*k,ff=f*k;d+=`H${cx-ww-ff}A${ff},${ff} 0 0 0 ${cx-ww},${y0-ff}V${y0-h+ww}A${ww},${ww} 0 0 1 ${cx+ww},${y0-h+ww}V${y0-ff}A${ff},${ff} 0 0 0 ${cx+ww+ff},${y0}`}
+ d+=`H${W-R}A${R},${R} 0 0 1 ${W},${y0+R}V${y0+H-R}A${R},${R} 0 0 1 ${W-R},${y0+H}H${R}A${R},${R} 0 0 1 0,${y0+H-R}V${y0+R}A${R},${R} 0 0 1 ${R},${y0}Z`;return d}
+function draw(){const d=path();gl.style.clipPath=`path('${d}')`;mp.setAttribute('d',d);sp.setAttribute('d',d);st.setAttribute('d',d);ig.setAttribute('d',d);cp.setAttribute('d',d);lg.setAttribute('x2',W);lg.setAttribute('y2',TT+H)}
+function size(){W=bot.clientWidth;g.querySelector('svg').setAttribute('width',W);g.querySelector('svg').setAttribute('height',TT+H);const a=bot.querySelector('a.on:not(.fab)');if(a&&!anim)cx=a.getBoundingClientRect().left-bot.getBoundingClientRect().left+a.offsetWidth/2;draw()}
+const grads=()=>{const l=document.documentElement.dataset.theme==='light';ig.setAttribute('stroke-opacity',l?'.7':'.34')};
+const TINT=['rgba(255,170,225,.1)','rgba(255,170,190,.1)','rgba(200,170,255,.1)','rgba(160,210,255,.1)','rgba(170,240,210,.1)'];
+let anim=0,lastOn=null;const ease=t=>1-Math.pow(1-t,3),eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function play(a,idx){const svg=a.querySelector('svg.ic');const br=bot.getBoundingClientRect(),ar=a.getBoundingClientRect();cx=ar.left-br.left+ar.width/2;
+ g.style.setProperty('--tint',TINT[idx%TINT.length]);
+ const rp=document.createElement('i');rp.className='rp';a.appendChild(rp);setTimeout(()=>rp.remove(),650);
+ const my=++anim,t0=performance.now(),T1=240,T2=340,T3=420;
+ const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ if(reduce){h=0;draw();anim=0;return}
+ (function fr(now){if(my!==anim)return;const t=now-t0;let iy=0,is=1;
+  if(t<T1){const u=ease(t/T1);h=H_MAX*u;iy=-h;is=1-.35*Math.sin(u*Math.PI/2)}
+  else if(t<T1+T2){const u=eio((t-T1)/T2);h=H_MAX*(1-u);iy=-h;is=.65+.35*u}
+  else if(t<T1+T2+T3){const u=(t-T1-T2)/T3;h=0;iy=-18*Math.sin(Math.PI*u)*(1-u)*1.6;is=1+.12*Math.sin(Math.PI*u)}
+  else{h=0;iy=0;is=1;anim=0;draw();if(svg){svg.style.removeProperty('--iy');svg.style.removeProperty('--is')}return}
+  if(svg){svg.style.setProperty('--iy',iy.toFixed(1)+'px');svg.style.setProperty('--is',is.toFixed(3))}
+  draw();requestAnimationFrame(fr)})(t0)}
+function sync(){const items=[...bot.querySelectorAll('a')];const a=bot.querySelector('a.on');const p=a?a.dataset.p:null;
+ if(p!==lastOn){const first=lastOn===null;lastOn=p;if(a&&!a.classList.contains('fab')&&!first){play(a,items.indexOf(a))}else{anim++;h=0;if(a&&!a.classList.contains('fab')){g.style.setProperty('--tint',TINT[items.indexOf(a)%TINT.length])}size()}}}
+new MutationObserver(()=>{requestAnimationFrame(()=>{size();sync()})}).observe(bot,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+addEventListener('resize',size);new MutationObserver(grads).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+grads();size();sync();setTimeout(()=>{size();grads()},700);setTimeout(size,2000)})();
+</script></body></html>
