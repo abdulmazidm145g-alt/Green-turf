@@ -159,7 +159,7 @@ input[type=range]{accent-color:var(--g);width:100%}
 .rb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--g);background:var(--nb);box-shadow:5px 5px 10px var(--nd),-5px -5px 10px var(--nl);transition:.2s}.rb:active{box-shadow:inset 4px 4px 8px var(--nd),inset -4px -4px 8px var(--nl)}
 .nsw{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:18px;color:var(--mu);font-size:.85em}
 .cx{position:absolute;top:14px;inset-inline-end:14px;width:36px;height:36px}.cx .ic{width:18px;height:18px}
-.dm2{display:block;margin:10px auto 0;color:var(--mu);font-size:.85em;text-decoration:underline;cursor:pointer}
+.orl{display:flex;align-items:center;gap:10px;color:var(--mu);font-size:.85em;margin:16px 0 0}.orl:before,.orl:after{content:"";flex:1;height:1px;background:var(--ln)}.gbt{width:100%;margin-top:12px;padding:13px;border-radius:14px;font-weight:600;color:inherit;background:var(--nb);box-shadow:6px 6px 14px var(--nd),-4px -4px 10px var(--nl);display:flex;justify-content:center;align-items:center;gap:10px;transition:.2s}.gbt:active{box-shadow:inset 4px 4px 8px var(--nd),inset -4px -4px 8px var(--nl)}.gbt svg{width:20px;height:20px;flex:none}.dm2{display:block;margin:10px auto 0;color:var(--mu);font-size:.85em;text-decoration:underline;cursor:pointer}
 /* loader */
 #ld{position:fixed;inset:0;z-index:200;background:#04100a;display:grid;place-items:center;transition:opacity .5s,visibility .5s}#ld.h{opacity:0;visibility:hidden}
 .ls{text-align:center;color:#fff}.lr{width:104px;height:104px;margin:0 auto;position:relative;display:grid;place-items:center}.lr:before{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid #1f3526;border-top-color:#b6f23a;animation:spin 1.1s linear infinite}.lr img{width:68px;height:68px;object-fit:contain}
@@ -315,9 +315,46 @@ nT:'নোটিফিকেশন|Notifications|الإشعارات|नोटि
 sph:'খেলা, সুবিধা বা পেজ খুঁজুন|Search sports, facilities or pages|ابحث عن رياضة أو خدمة أو صفحة|खेल, सुविधा या पेज खोजें|کھیل، سہولت یا صفحہ تلاش کریں',noRes:'কিছু পাওয়া যায়নি|Nothing found|لا نتائج|कुछ नहीं मिला|کچھ نہیں ملا',menu:'মেনু|Menu|القائمة|मेन्यू|مینو',page:'পেজ|Page|صفحة|पेज|صفحہ',setting:'সেটিং|Setting|إعداد|सेटिंग|سیٹنگ'};
 const TC={};const t=k=>{const a=TC[k]||(TC[k]=(TR[k]||k).split('|'));return a[S.l]||a[1]||a[0]};
 const DS={l:0,th:'system',ac:'',fs:15,an:1,nt:1};
-let S={...DS,...ld('gt_s2',{})},USERS=ld('gt_u2',{}),B=ld('gt_b2',[]),U=ld('gt_ses',null),NT=ld('gt_n2',null)||[{k:'n1',r:0},{k:'n2',r:0},{k:'n3',r:0}],RG=ld('gt_rg',[]);
-USERS['demo@greenturf.bd']=USERS['demo@greenturf.bd']||{name:'Demo Player',email:'demo@greenturf.bd',w:hs('demo123'),plan:''};
-const sS=()=>sv('gt_s2',S),sU=()=>sv('gt_u2',USERS),sB=()=>sv('gt_b2',B),sN=()=>sv('gt_n2',NT);
+const NT0=()=>[{k:'n1',r:0},{k:'n2',r:0},{k:'n3',r:0}];
+let S={...DS,...ld('gt_s2',{})},USERS={},B=[],U=null,NT=ld('gt_n2',null)||NT0(),RG=[];
+/* ===== Firebase state ===== */
+let FB=null,UID=null,SL=new Set(),authReady=false,AUTHING=false,PENDNAME='',LDWAIT=false,unsubB=null,unsubSL=null,cst=null,cbuf={};
+const clean=o=>JSON.parse(JSON.stringify(o));
+const cloudSet=o=>{if(!FB||!UID)return;FB.setDoc(FB.doc(FB.db,'users',UID),clean(o),{merge:true}).catch(e=>console.warn('cloud',e))};
+const flushCloud=()=>{clearTimeout(cst);if(Object.keys(cbuf).length){cloudSet(cbuf);cbuf={}}};
+const cloudLazy=o=>{Object.assign(cbuf,o);clearTimeout(cst);cst=setTimeout(flushCloud,700)};
+const slotId=(s,ds,h)=>s+'_'+String(ds).replace(/\s+/g,'-')+'_'+h;
+const sS=()=>{sv('gt_s2',S);if(UID)cloudLazy({settings:S})},sU=()=>{if(UID&&U&&USERS[U.email])cloudSet({plan:USERS[U.email].plan||''})},sB=()=>{},sN=()=>{if(UID)cloudSet({nt:NT});else sv('gt_n2',NT)},sRG=()=>cloudSet({rg:RG});
+const fbErr=e=>{const c=(e&&e.code)||'';return({'auth/email-already-in-use':'eExist','auth/invalid-credential':'eBad','auth/wrong-password':'eBad','auth/user-not-found':'eBad','auth/invalid-email':'eMail','auth/weak-password':'eLen','auth/too-many-requests':'eMany','auth/network-request-failed':'eNet','auth/operation-not-allowed':'eOp','auth/unauthorized-domain':'eDom','permission-denied':'ePerm','unavailable':'eNet'})[c]||'eGen'};
+async function saveBooking(b){const w=FB.writeBatch(FB.db);
+ b.hrs.forEach(h=>w.set(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h)),{uid:UID,sp:b.sp,ds:b.ds,h,ts:new Date(b.ds).getTime(),bid:b.id}));
+ w.set(FB.doc(FB.db,'users',UID,'bookings',b.id),{...clean(b),c:Date.now()});
+ await w.commit()}
+function startSlots(){if(unsubSL)unsubSL();const d=new Date();d.setHours(0,0,0,0);let last='';
+ unsubSL=FB.onSnapshot(FB.query(FB.collection(FB.db,'slots'),FB.where('ts','>=',d.getTime())),sn=>{const ids=sn.docs.map(x=>x.id).sort();const k=ids.join('|');SL=new Set(ids);if(k!==last){const first=last==='';last=k;if(!first&&R==='book')draw()}},e=>console.warn('slots',e))}
+function startBookings(uid){if(unsubB)unsubB();
+ unsubB=FB.onSnapshot(FB.collection(FB.db,'users',uid,'bookings'),sn=>{B=sn.docs.map(x=>x.data()).sort((a,b)=>(b.c||0)-(a.c||0));if(R==='profile'||R==='book')draw()},e=>console.warn('bookings',e))}
+function readyAuth(){authReady=true;if(LDWAIT)$('#ld').classList.add('h')}
+async function onUser(user){
+ if(!user){if(unsubB){unsubB();unsubB=null}U=null;UID=null;B=[];RG=[];USERS={};NT=NT0();readyAuth();AUTHING=false;refresh();return}
+ const email=(user.email||'').toLowerCase(),name=PENDNAME||user.displayName||email.split('@')[0]||'Player';PENDNAME='';
+ const ref=FB.doc(FB.db,'users',user.uid);let data=null,ok=true;
+ try{const sn=await FB.getDoc(ref);data=sn.exists()?sn.data():null}catch(e){ok=false;console.warn(e);toast(t(fbErr(e)))}
+ if(ok){
+  if(!data){data={name,email,photo:user.photoURL||'',plan:'',settings:clean(S),nt:NT0(),rg:[]};
+   try{await FB.setDoc(ref,{...data,createdAt:FB.serverTimestamp(),lastLogin:FB.serverTimestamp()})}catch(e){console.warn(e);toast(t(fbErr(e)))}}
+  else{FB.setDoc(ref,{lastLogin:FB.serverTimestamp(),email,photo:user.photoURL||data.photo||''},{merge:true}).catch(()=>{})}
+ }
+ UID=user.uid;U={name:(data&&data.name)||name,email,uid:user.uid,photo:user.photoURL||''};
+ USERS={};USERS[email]={name:U.name,email,plan:(data&&data.plan)||''};
+ RG=(data&&data.rg)||[];NT=(data&&data.nt)||NT0();
+ if(data&&data.settings){S={...DS,...data.settings};sv('gt_s2',S)}
+ startBookings(user.uid);readyAuth();
+ if(AUTHING){AUTHING=false;const b=$('#ag');if(b){b.classList.remove('l');b.innerHTML=I('check')}
+  setTimeout(()=>{closeA();refresh();toast(t('hi')+', '+U.name);if(PEND){const f=PEND;PEND=null;f()}},500)}
+ else refresh()}
+window.gtFirebase=fb=>{FB=fb;FB.onAuthStateChanged(FB.auth,onUser);FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots()};
+window.gtFirebaseFail=e=>{console.error('Firebase load failed',e);readyAuth();toast(t('eNet'))};
 const loc=()=>LG[S.l][2],bn=x=>Number(x).toLocaleString(loc()),tk=x=>'৳'+bn(x);
 const I=(n,c='')=>`<svg class="ic ${c}"><use href="#i-${n}"/></svg>`;
 const logo=()=>`<a class="logo" href="#home" aria-label="Green Turf Sports Arena"><img src="${CFG.logo}" alt="" width="44" height="44"><span class="lt"><b><span class="gr">GREEN</span> <span class="wb">TURF</span></b><small>SPORTS ARENA</small></span></a>`;
@@ -334,7 +371,7 @@ const dl=d=>d===0?t('today'):dt(d).toLocaleDateString(loc(),{weekday:'short',day
 const hh=h=>new Date(2000,0,1,h).toLocaleTimeString(loc(),{hour:'numeric'});
 const pl=()=>PL.find(p=>p.id===(U&&USERS[U.email]&&USERS[U.email].plan));
 const price=(s,h)=>Math.round(SP[s].p*(h>=17?1.2:1));
-const taken=(s,d,h)=>hs(s+d+h)%100<30||(d===0&&h<=new Date().getHours())||B.some(b=>b.sp===s&&b.ds===dk(d)&&b.hrs.includes(h));
+const taken=(s,d,h)=>hs(s+d+h)%100<30||(d===0&&h<=new Date().getHours())||SL.has(slotId(s,dk(d),h))||B.some(b=>b.sp===s&&b.ds===dk(d)&&b.hrs.includes(h));
 let bk={sp:'football',day:0,sel:[],add:[],cp:0},R='home',PEND=null,SI=0,ST=null;
 const toast=m=>{const e=$('#ts');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2400)};
 const sub=()=>bk.sel.reduce((s,h)=>s+price(bk.sp,h),0)+bk.add.reduce((s,k)=>s+AD[k][1],0);
@@ -430,20 +467,20 @@ return `<button class="rb cx" data-act="closeA" aria-label="${t('menu')}">${I('x
 ${up?f('an','text','fname'):''}${f('ae','email','email')}${f('aw','password','pass')}${up?f('ac','password','pass2'):''}
 ${up?'':`<div class="nr"><label><input type="checkbox" id="ar" checked style="accent-color:var(--g)">${t('rem')}</label><a data-act="forgot">${t('forgot')}</a></div>`}
 <button class="nbt" id="ag" data-act="submit" style="${up?'margin-top:18px':''}"><span>${t(up?'createT':'login')}</span></button>
-${up?'':`<a class="dm2" data-act="demo">${t('demoAcc')}</a>`}
+<div class="orl">${t('or')}</div><button class="gbt" data-act="google" type="button"><svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>${t('gLogin')}</span></button>
 <div class="nsw"><span>${t(up?'haveAcc':'noAcc')}</span><button class="rb" data-act="authsw" aria-label="switch">${I(up?'back':'plus')}</button></div>`}
 function openAuth(m){AM=m||'in';const a=$('#am');a.innerHTML='<i class="bgc" style="width:260px;height:260px;left:-80px;top:8%"></i><i class="bgc" style="width:180px;height:180px;right:-50px;top:56%;animation-delay:-3s"></i><i class="bgc" style="width:120px;height:120px;left:20%;bottom:-40px;animation-delay:-6s"></i><div class="nc d0" id="nc">'+authCard(AM)+'</div>';a.classList.add('on')}
-function submitAuth(){const nc=$('#nc'),up=AM==='up',v=id=>($('#'+id)||{value:''}).value.trim(),e=v('ae').toLowerCase(),w=($('#aw')||{}).value||'';
+async function submitAuth(){const nc=$('#nc'),up=AM==='up',v=id=>($('#'+id)||{value:''}).value.trim(),e=v('ae').toLowerCase(),w=($('#aw')||{}).value||'';
 const bad=m=>{toast(m);nc.classList.remove('shake');void nc.offsetWidth;nc.classList.add('shake')};
 if(!e||!w||(up&&(!v('an')||!($('#ac')||{}).value)))return bad(t('eFill'));
 if(!/^\S+@\S+\.\S+$/.test(e))return bad(t('eMail'));
-if(up){if(w.length<6)return bad(t('eLen'));if(w!==$('#ac').value)return bad(t('eMatch'));if(USERS[e])return bad(t('eExist'))}
-else if(!USERS[e]||USERS[e].w!==hs(w))return bad(t('eBad'));
-const b=$('#ag');b.classList.add('l');
-setTimeout(()=>{b.classList.remove('l');b.innerHTML=I('check');
-if(up){USERS[e]={name:v('an'),email:e,w:hs(w),plan:''};sU()}
-U={name:USERS[e].name,email:e};if(up||($('#ar')||{}).checked)sv('gt_ses',U);else sv('gt_ses',null);
-setTimeout(()=>{closeA();hdr();bot();draw();toast(t('hi')+', '+U.name);if(PEND){const f=PEND;PEND=null;f()}},500)},800)}
+if(up){if(w.length<6)return bad(t('eLen'));if(w!==$('#ac').value)return bad(t('eMatch'))}
+if(!FB)return bad(t('eNet'));
+const b=$('#ag');if(b.classList.contains('l'))return;b.classList.add('l');AUTHING=true;
+try{await FB.setPersistence(FB.auth,(up||($('#ar')||{}).checked)?FB.browserLocalPersistence:FB.browserSessionPersistence);
+ if(up){PENDNAME=v('an');const cr=await FB.createUserWithEmailAndPassword(FB.auth,e,w);try{await FB.updateProfile(cr.user,{displayName:PENDNAME||v('an')})}catch(x){}}
+ else await FB.signInWithEmailAndPassword(FB.auth,e,w)}
+catch(err){AUTHING=false;PENDNAME='';b.classList.remove('l');bad(t(fbErr(err)))}}
 const closeA=()=>$('#am').classList.remove('on');
 function swAuth(){const nc=$('#nc');nc.classList.remove('d0','shake');nc.classList.add('out');setTimeout(()=>{AM=AM==='in'?'up':'in';nc.innerHTML=authCard(AM);nc.classList.remove('out');nc.classList.add('in');setTimeout(()=>nc.classList.remove('in'),400)},280)}
 const need=(f,m)=>{if(U)return f();PEND=f;openAuth(m||'in')};
@@ -451,6 +488,17 @@ const need=(f,m)=>{if(U)return f();PEND=f;openAuth(m||'in')};
 const M=h=>{$('#mb').innerHTML=h;$('#md').classList.add('on')},xM=()=>$('#md').classList.remove('on');
 Object.assign(TR,{otpT:'ওটিপি যাচাই|Verify OTP',otpD:'আপনার নম্বরে ৬ সংখ্যার কোড গেছে (ডেমো: যেকোনো ৬ সংখ্যা)|A 6-digit code was sent (demo: any 6 digits)',pinT:'পিন দিন|Enter PIN',merch:'যাচাইকৃত মার্চেন্ট|Verified Merchant',sec:'সুরক্ষিত পেমেন্ট|Secure payment'});
 let PY={i:0,n:''};
+Object.assign(TR,{gLogin:'গুগল দিয়ে চালিয়ে যান|Continue with Google|المتابعة عبر Google|Google से जारी रखें|Google کے ساتھ جاری رکھیں',or:'অথবা|or|أو|या|یا',
+fSent:'পাসওয়ার্ড রিসেট লিংক ইমেইলে পাঠানো হয়েছে|Password reset link sent to your email|تم إرسال رابط إعادة التعيين إلى بريدك|रीसेट लिंक आपके ईमेल पर भेजा गया|ری سیٹ لنک آپ کی ای میل پر بھیج دیا گیا',
+fMail:'আগে ইমেইল ঘরে আপনার ইমেইল দিন|Enter your email first|أدخل بريدك أولاً|पहले अपना ईमेल दें|پہلے اپنی ای میل دیں',
+eMany:'অনেকবার চেষ্টা হয়েছে, একটু পরে আবার করুন|Too many attempts, try again later|محاولات كثيرة، حاول لاحقاً|बहुत कोशिशें हुईं, बाद में करें|بہت کوششیں ہو گئیں، بعد میں کریں',
+eNet:'নেটওয়ার্ক সমস্যা, ইন্টারনেট চেক করুন|Network problem, check your connection|مشكلة في الشبكة|नेटवर्क समस्या, इंटरनेट जाँचें|نیٹ ورک کا مسئلہ، انٹرنیٹ چیک کریں',
+eOp:'এই লগইন পদ্ধতি Firebase এ চালু নেই|This sign-in method is not enabled|طريقة الدخول غير مفعلة|यह लॉगिन तरीका चालू नहीं है|یہ لاگ اِن طریقہ فعال نہیں',
+eDom:'এই ডোমেইন Firebase এ অনুমোদিত নয়|This domain is not authorised in Firebase|النطاق غير مصرح به|यह डोमेन अनुमत नहीं है|یہ ڈومین مجاز نہیں',
+ePerm:'অনুমতি নেই, আবার লগইন করুন|Permission denied, please sign in again|لا يوجد إذن|अनुमति नहीं, फिर लॉगिन करें|اجازت نہیں، دوبارہ لاگ اِن کریں',
+eGen:'কিছু একটা ভুল হয়েছে, আবার চেষ্টা করুন|Something went wrong, try again|حدث خطأ، حاول مرة أخرى|कुछ गड़बड़ हुई, फिर कोशिश करें|کچھ غلط ہو گیا، دوبارہ کوشش کریں',
+slotGone:'এই স্লট এইমাত্র বুক হয়ে গেছে, অন্য সময় বেছে নিন|That slot was just booked, pick another|تم حجز هذا الموعد للتو|यह स्लॉट अभी बुक हो गया, दूसरा चुनें|یہ سلاٹ ابھی بک ہو گیا، دوسرا چنیں',
+cAsk:'আপনার সব বুকিং ও সেটিংস মুছে যাবে। নিশ্চিত?|All your bookings and settings will be deleted. Sure?|سيتم حذف كل حجوزاتك وإعداداتك. متأكد؟|आपकी सभी बुकिंग और सेटिंग्स मिट जाएँगी। पक्का?|آپ کی تمام بکنگز اور سیٹنگز مٹ جائیں گی۔ یقین؟'});
 function pswap(h,first){const a=$('#am');
  if(first){a.innerHTML='<i class="bgc" style="width:260px;height:260px;left:-80px;top:8%"></i><i class="bgc" style="width:160px;height:160px;right:-40px;top:58%;animation-delay:-3s"></i><div class="nc d0" id="nc">'+h+'</div>';a.classList.add('on');return}
  const nc=$('#nc');nc.classList.remove('d0','shake');nc.classList.add('out');setTimeout(()=>{nc.innerHTML=h;nc.classList.remove('out');nc.classList.add('in');setTimeout(()=>nc.classList.remove('in'),400)},280)}
@@ -465,8 +513,11 @@ function pnext(v){const x=id=>(($('#'+id)||{}).value||'').replace(/\s/g,''),card
  else if(v==='otp'){if(x('p1').length<6)return bad(t('eFill'));card?fin(PY.n):pPin()}
  else{if(x('p1').length<4)return bad(t('eFill'));fin(PY.n)}}
 function fin(nm){pswap(`<div class="lk"><svg class="ic" style="animation:spin 1s linear infinite"><use href="#i-ball"/></svg></div><h3>${t('proc')}</h3><p class="sub">${t('sec')}</p>`,!$('#am').classList.contains('on'));
- setTimeout(()=>{const b={id:'GT'+(100000+Math.floor(Math.random()*899999)),u:U.email,sp:bk.sp,ds:dk(bk.day),hrs:[...bk.sel],tot:tot(),pm:nm};B.unshift(b);sB();NT.unshift({k:'done',x:b.id,r:0});sN();bk.sel=[];bk.add=[];bk.cp=0;hdr();
- pswap(`<div class="ck"><svg class="ic" viewBox="0 0 24 24"><path class="ckd" d="M5 12l5 5 9-10"/></svg></div><h2>${t('done')}</h2><div style="text-align:start;margin:14px 0"><div class="row"><span>${t('bid')}</span><b>${b.id}</b></div><div class="row"><span>${t('sportL')}</span><b>${t(b.sp)}</b></div><div class="row"><span>${t('timeL')}</span><b>${b.hrs.map(hh).join(', ')}</b></div><div class="row"><span>${t('payM')}</span><b>${esc(nm)}</b></div><div class="row"><span>${t('total')}</span><b>${tk(b.tot)}</b></div></div><button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)},1600)}
+ const b={id:'GT'+(100000+Math.floor(Math.random()*899999)),u:U.email,sp:bk.sp,ds:dk(bk.day),hrs:[...bk.sel],tot:tot(),pm:nm},t0=Date.now();
+ saveBooking(b).then(()=>new Promise(r=>setTimeout(r,Math.max(0,1600-(Date.now()-t0))))).then(()=>{
+ NT.unshift({k:'done',x:b.id,r:0});sN();bk.sel=[];bk.add=[];bk.cp=0;hdr();
+ pswap(`<div class="ck"><svg class="ic" viewBox="0 0 24 24"><path class="ckd" d="M5 12l5 5 9-10"/></svg></div><h2>${t('done')}</h2><div style="text-align:start;margin:14px 0"><div class="row"><span>${t('bid')}</span><b>${b.id}</b></div><div class="row"><span>${t('sportL')}</span><b>${t(b.sp)}</b></div><div class="row"><span>${t('timeL')}</span><b>${b.hrs.map(hh).join(', ')}</b></div><div class="row"><span>${t('payM')}</span><b>${esc(nm)}</b></div><div class="row"><span>${t('total')}</span><b>${tk(b.tot)}</b></div></div><button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}).catch(err=>{
+ console.warn(err);if(err&&err.code==='permission-denied'){bk.sel=[];closeA();draw();toast(t('slotGone'))}else{toast(t(fbErr(err)));payUI()}})}
 const SPI={football:'football,turf',cricket:'cricket,stadium',badminton:'badminton,court'};
 const spi=k=>`https://loremflickr.com/640/400/${SPI[k]}`;
 // search
@@ -487,18 +538,22 @@ pay:()=>need(payUI),pm:v=>payNo(+v),fin:(v)=>fin(v),pnext:v=>pnext(v),
 slide:v=>{slideTo(SI+ +v);slideAuto()},dot:v=>{slideTo(+v);slideAuto()},
 lang:v=>{S.l=+v;sS();refresh();toast(LG[S.l][1])},theme:v=>{S.th=v;sS();refresh();toast(t('saved'))},themecycle:()=>ACT.theme({system:'light',light:'dark',dark:'system'}[S.th]),
 accent:v=>{S.ac=v;sS();refresh()},tgl:v=>{S[v]=S[v]?0:1;sS();refresh();toast(t(v==='an'?'anim':'notif')+': '+t(S[v]?'on':'off'))},
-reset:()=>{S={...DS};sS();refresh();toast(t('rDone'))},clear:()=>{try{localStorage.clear()}catch(e){}B=[];RG=[];U=null;NT=[{k:'n1',r:0},{k:'n2',r:0},{k:'n3',r:0}];S={...DS};USERS={'demo@greenturf.bd':USERS['demo@greenturf.bd']};refresh();toast(t('cDone'))},
+reset:()=>{S={...DS};sS();refresh();toast(t('rDone'))},clear:async()=>{if(UID){if(!confirm(t('cAsk')))return;flushCloud();try{const w=FB.writeBatch(FB.db);B.forEach(b=>{b.hrs.forEach(h=>w.delete(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h))));w.delete(FB.doc(FB.db,'users',UID,'bookings',b.id))});w.set(FB.doc(FB.db,'users',UID),{plan:'',rg:[],nt:NT0(),settings:clean(DS)},{merge:true});await w.commit();await FB.signOut(FB.auth)}catch(e){console.warn(e);return toast(t(fbErr(e)))}}try{localStorage.removeItem('gt_s2');localStorage.removeItem('gt_n2')}catch(e){}S={...DS};NT=NT0();refresh();toast(t('cDone'))},
 dd:(v,el,e)=>{const m=$('#'+v),was=m.classList.contains('on');closeDD();if(!was)m.classList.add('on')},
 search:()=>{$('#sr').classList.add('on');$('#si').placeholder=t('sph');$('#si').value='';srch();setTimeout(()=>$('#si').focus(),50)},closeS:()=>$('#sr').classList.remove('on'),
 sres:v=>{const[a,b]=v.split(':');ACT.closeS();(a==='go'?go:ACT[a])(b)},
 drawer:openD,closeD,auth:v=>{closeD();openAuth(v)},authsw:swAuth,closeA,submit:submitAuth,
 eye:(v,el)=>{const i=el.parentNode.querySelector('input');i.type=i.type==='password'?'text':'password'},
-forgot:()=>toast(t('fSent')),demo:()=>{$('#ae').value='demo@greenturf.bd';$('#aw').value='demo123';submitAuth()},
-signout:()=>{U=null;sv('gt_ses',null);closeDD();closeD();refresh();toast(t('outDone'))},
+forgot:async()=>{const e=(($('#ae')||{}).value||'').trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(e))return toast(t('fMail'));if(!FB)return toast(t('eNet'));try{await FB.sendPasswordResetEmail(FB.auth,e);toast(t('fSent'))}catch(err){if(err&&err.code==='auth/user-not-found')toast(t('fSent'));else toast(t(fbErr(err)))}},
+google:async()=>{if(!FB)return toast(t('eNet'));const p=new FB.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});AUTHING=true;
+ try{await FB.signInWithPopup(FB.auth,p)}catch(err){const c=(err&&err.code)||'';
+  if(c==='auth/popup-blocked'||c==='auth/operation-not-supported-in-this-environment'){try{await FB.signInWithRedirect(FB.auth,p);return}catch(x){err=x}}
+  AUTHING=false;if(c==='auth/popup-closed-by-user'||c==='auth/cancelled-popup-request')return;toast(t(fbErr(err)))}},
+signout:async()=>{closeDD();closeD();flushCloud();try{await FB.signOut(FB.auth)}catch(e){}toast(t('outDone'))},
 notif:v=>{NT[+v].r=1;sN();hdr();$('#m-nt').classList.add('on')},notifall:()=>{NT.forEach(n=>n.r=1);sN();hdr();$('#m-nt').classList.add('on')},
-reg:v=>need(()=>{const k=U.email+v,i=RG.indexOf(k);if(i<0){RG.push(k);toast(t('regOk'))}else RG.splice(i,1);sv('gt_rg',RG);draw()}),
+reg:v=>need(()=>{const k=U.email+v,i=RG.indexOf(k);if(i<0){RG.push(k);toast(t('regOk'))}else RG.splice(i,1);sRG();draw()}),
 join:v=>need(()=>{USERS[U.email].plan=USERS[U.email].plan===v?'':v;sU();toast(t('joined'));draw()}),
-cancel:v=>{B=B.filter(b=>b.id!==v);sB();toast(t('canceled'));draw()},
+cancel:v=>{const b=B.find(x=>x.id===v);if(!b||!UID)return;const w=FB.writeBatch(FB.db);b.hrs.forEach(h=>w.delete(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h))));w.delete(FB.doc(FB.db,'users',UID,'bookings',v));w.commit().then(()=>toast(t('canceled'))).catch(e=>{console.warn(e);toast(t(fbErr(e)))})},
 share:v=>{const b=B.find(x=>x.id===v),m=`Green Turf · ${t(b.sp)} · ${b.ds} · ${b.hrs.map(hh).join(', ')} · ${b.id}`;try{navigator.clipboard.writeText(m).then(()=>toast(t('copied')),()=>toast(m))}catch(e){toast(m)}},
 send:()=>{if(!$('#hn').value.trim()||!$('#hm').value.trim())return toast(t('eFill'));toast(t('sent'));$('#hn').value=$('#he').value=$('#hm').value=''},
 sub:()=>{const e=$('#nm').value.trim();if(!/^\S+@\S+\.\S+$/.test(e))return toast(t('eMail'));toast(t('subOk'));$('#nm').value=''},
@@ -513,55 +568,4 @@ if(e.target.id==='md')xM()});
 document.addEventListener('input',e=>{if(e.target.dataset.inp==='fs'){S.fs=+e.target.value;sS();applyS();e.target.parentNode.querySelector('h3').lastChild.textContent=t('tsize')+': '+bn(S.fs)}});
 $('#si').addEventListener('input',srch);
 $('#sr').addEventListener('click',e=>{if(e.target.id==='sr')ACT.closeS()});$('#dr').addEventListener('click',e=>{if(e.target.id==='dr')closeD()});
-document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();ACT.search()}
-if(e.key==='Escape'){ACT.closeS();closeD();xM();closeA();closeDD()}if(e.key==='Enter'&&$('#am').classList.contains('on')&&e.target.tagName==='INPUT'&&e.target.type!=='checkbox')submitAuth();
-if((e.key==='Enter'||e.key===' ')&&e.target.matches('.sp[data-act]')){e.preventDefault();ACT.sport(e.target.dataset.v)}});
-// router
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('v');e.target.querySelectorAll('[data-n]').forEach(c=>{const n=+c.dataset.n;let s=null;const f=ts=>{s=s||ts;const p=Math.min((ts-s)/1300,1);c.textContent=bn(Math.round(n*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)});io.unobserve(e.target)}),{threshold:.12});
-function draw(){const y=scrollY;clearInterval(ST);$('#v').innerHTML=VW[R]();$$('[data-p]').forEach(a=>a.classList.toggle('on',a.dataset.p===R));$$('.rise').forEach(e=>io.observe(e));ind();scrollTo({top:y,behavior:'instant'});if(R==='home')initSlides()}
-function go(r){R=VW[r]?r:'home';closeDD();xM();closeA();clearInterval(ST);try{history.replaceState(null,'','#'+R)}catch(e){}
-$$('[data-p]').forEach(a=>a.classList.toggle('on',a.dataset.p===R));ind();
-const v=$('#v');v.style.cssText='opacity:0;transform:translateY(14px);transition:.25s';
-scrollTo({top:0,behavior:'smooth'});
-setTimeout(()=>{v.innerHTML='<div class="wrap pg"><div class="sk"></div><div class="sk"></div><div class="sk" style="height:200px"></div></div>';v.style.cssText='opacity:1;transition:.25s';
-setTimeout(()=>{draw();v.style.cssText=''},320)},scrollY>40?400:180)}
-let ly=0;addEventListener('scroll',()=>{const y=scrollY,p=$('#prog'),h=document.documentElement.scrollHeight-innerHeight;if(p)p.style.width=(h>0?y/h*100:0)+'%';$('#tp').classList.toggle('on',y>600);if(innerWidth<=860){const hd=$('#hd');if(y>ly+8&&y>120)hd.classList.add('hide');else if(y<ly-8||y<60)hd.classList.remove('hide')}ly=y},{passive:true});
-addEventListener('resize',ind);
-applyS();R=VW[location.hash.slice(1)]?location.hash.slice(1):'home';hdr();bot();ftr();draw();
-setTimeout(()=>$('#ld').classList.add('h'),1500);
-</script>
-<script>
-(()=>{const bot=document.getElementById('nb');if(!bot)return;
-const H=64,TT=84,R=30,W0=23,F0=14,H_MAX=66,NS='http://www.w3.org/2000/svg';
-const g=document.createElement('div');g.id='nbg';
-g.innerHTML='<div class="gl"></div><svg><defs><mask id="nbm" maskUnits="userSpaceOnUse" x="-60" y="-60" width="2000" height="400"><rect x="-60" y="-60" width="2000" height="400" fill="#fff"/><path id="nbmp" fill="#000"/></mask><linearGradient id="nbg1" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".3" stop-color="#fff" stop-opacity=".18"/><stop offset=".7" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity=".85"/></linearGradient><clipPath id="nbcp"><path id="nbcpp"/></clipPath><filter id="nbgb" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="nbf" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="9"/></filter></defs><g mask="url(#nbm)"><path id="nbsp" fill="rgba(0,0,0,.22)" filter="url(#nbf)" transform="translate(0,8)"/></g><g clip-path="url(#nbcp)"><path id="nbig" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="10" filter="url(#nbgb)"/></g><path id="nbst" fill="none" stroke="url(#nbg1)" stroke-width="1.5"/></svg>';
-bot.parentNode.insertBefore(g,bot);
-const gl=g.querySelector('.gl'),mp=g.querySelector('#nbmp'),sp=g.querySelector('#nbsp'),st=g.querySelector('#nbst'),ig=g.querySelector('#nbig'),cp=g.querySelector('#nbcpp'),lg=g.querySelector('#nbg1');
-let W=0,cx=0,h=0;
-function path(){const y0=TT,w=W0,f=F0;let d=`M${R},${y0}`;
- if(h>.5){const k=Math.min(1,h/(w+f)),ww=w*k,ff=f*k;d+=`H${cx-ww-ff}A${ff},${ff} 0 0 0 ${cx-ww},${y0-ff}V${y0-h+ww}A${ww},${ww} 0 0 1 ${cx+ww},${y0-h+ww}V${y0-ff}A${ff},${ff} 0 0 0 ${cx+ww+ff},${y0}`}
- d+=`H${W-R}A${R},${R} 0 0 1 ${W},${y0+R}V${y0+H-R}A${R},${R} 0 0 1 ${W-R},${y0+H}H${R}A${R},${R} 0 0 1 0,${y0+H-R}V${y0+R}A${R},${R} 0 0 1 ${R},${y0}Z`;return d}
-function draw(){const d=path();gl.style.clipPath=`path('${d}')`;mp.setAttribute('d',d);sp.setAttribute('d',d);st.setAttribute('d',d);ig.setAttribute('d',d);cp.setAttribute('d',d);lg.setAttribute('x2',W);lg.setAttribute('y2',TT+H)}
-function size(){W=bot.clientWidth;g.querySelector('svg').setAttribute('width',W);g.querySelector('svg').setAttribute('height',TT+H);const a=bot.querySelector('a.on:not(.fab)');if(a&&!anim)cx=a.getBoundingClientRect().left-bot.getBoundingClientRect().left+a.offsetWidth/2;draw()}
-const grads=()=>{const l=document.documentElement.dataset.theme==='light';ig.setAttribute('stroke-opacity',l?'.7':'.34')};
-const TINT=['rgba(255,170,225,.1)','rgba(255,170,190,.1)','rgba(200,170,255,.1)','rgba(160,210,255,.1)','rgba(170,240,210,.1)'];
-let anim=0,lastOn=null;const ease=t=>1-Math.pow(1-t,3),eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-function play(a,idx){const svg=a.querySelector('svg.ic');const br=bot.getBoundingClientRect(),ar=a.getBoundingClientRect();cx=ar.left-br.left+ar.width/2;
- g.style.setProperty('--tint',TINT[idx%TINT.length]);
- const rp=document.createElement('i');rp.className='rp';a.appendChild(rp);setTimeout(()=>rp.remove(),650);
- const my=++anim,t0=performance.now(),T1=240,T2=340,T3=420;
- const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
- if(reduce){h=0;draw();anim=0;return}
- (function fr(now){if(my!==anim)return;const t=now-t0;let iy=0,is=1;
-  if(t<T1){const u=ease(t/T1);h=H_MAX*u;iy=-h;is=1-.35*Math.sin(u*Math.PI/2)}
-  else if(t<T1+T2){const u=eio((t-T1)/T2);h=H_MAX*(1-u);iy=-h;is=.65+.35*u}
-  else if(t<T1+T2+T3){const u=(t-T1-T2)/T3;h=0;iy=-18*Math.sin(Math.PI*u)*(1-u)*1.6;is=1+.12*Math.sin(Math.PI*u)}
-  else{h=0;iy=0;is=1;anim=0;draw();if(svg){svg.style.removeProperty('--iy');svg.style.removeProperty('--is')}return}
-  if(svg){svg.style.setProperty('--iy',iy.toFixed(1)+'px');svg.style.setProperty('--is',is.toFixed(3))}
-  draw();requestAnimationFrame(fr)})(t0)}
-function sync(){const items=[...bot.querySelectorAll('a')];const a=bot.querySelector('a.on');const p=a?a.dataset.p:null;
- if(p!==lastOn){const first=lastOn===null;lastOn=p;if(a&&!a.classList.contains('fab')&&!first){play(a,items.indexOf(a))}else{anim++;h=0;if(a&&!a.classList.contains('fab')){g.style.setProperty('--tint',TINT[items.indexOf(a)%TINT.length])}size()}}}
-new MutationObserver(()=>{requestAnimationFrame(()=>{size();sync()})}).observe(bot,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
-addEventListener('resize',size);new MutationObserver(grads).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
-grads();size();sync();setTimeout(()=>{size();grads()},700);setTimeout(size,2000)})();
-</script></body></html>
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.
