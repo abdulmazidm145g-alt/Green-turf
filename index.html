@@ -114,13 +114,18 @@ footer{margin-top:60px;background:var(--sf);border-top:1px solid var(--ln);paddi
 .bk{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;align-items:start}
 .sl{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
 .sb{padding:10px 6px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);text-align:center;line-height:1.3;transition:.15s}.sb small{display:block;color:var(--mu)}.sb:hover{border-color:var(--g)}.sb:active{transform:scale(.96)}.sb.on{background:var(--g);color:var(--ink);border-color:var(--g)}.sb.on small{color:var(--ink)}.sb.x{opacity:.35;pointer-events:none;text-decoration:line-through}
+.sb.pn{border-color:#f59e0b;background:#f59e0b1a;color:#f59e0b;pointer-events:none}.sb.pn small{color:#f59e0b}
 .sum{position:sticky;top:90px}.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--ln);color:var(--mu)}.row b{color:var(--tx);text-align:end}
 .tot{font:700 34px Oswald;color:var(--g);margin:10px 0}
 .cb{display:none}
 .inp{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--sf2);margin:5px 0}.inp:focus{outline:none;border-color:var(--g)}
 .pf{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.av{width:72px;height:72px;border-radius:50%;background:var(--g);color:var(--ink);display:grid;place-items:center;font:700 28px Oswald;flex:none}
 .badge{display:inline-block;padding:2px 12px;border-radius:99px;background:var(--sf2);color:var(--g);font-size:.85em;font-weight:600}
-.tk{display:flex;gap:14px;align-items:center;margin-bottom:10px}.tk>div:nth-child(2){flex:1;min-width:0}
+.stbadge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78em;font-weight:700}
+.stbadge.pending{background:#f59e0b26;color:#f59e0b}
+.stbadge.confirmed,.stbadge.paid{background:#2f9e4f30;color:var(--g)}
+.stbadge.rejected{background:#ef444426;color:#ef4444}
+.tk{display:flex;gap:14px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.tk>div:nth-child(2){flex:1;min-width:0}
 .ev{display:flex;gap:14px;align-items:center}.ev>div:nth-child(2){flex:1}
 .pl.hot{border-color:var(--g);background:linear-gradient(180deg,color-mix(in srgb,var(--g) 12%,transparent),var(--sf))}.pl ul{list-style:none;padding:0;margin:12px 0 18px;color:var(--mu)}.pl li{padding:4px 0;display:flex;gap:8px}.pl li .ic{width:18px;height:18px;color:var(--g)}
 .set{margin-bottom:14px}.set h3{margin-bottom:12px;display:flex;gap:10px;align-items:center}.set h3 .ic{color:var(--g)}
@@ -139,6 +144,7 @@ input[type=range]{accent-color:var(--g);width:100%}
 .pm{display:flex;gap:12px;align-items:center;width:100%;padding:12px;border:1px solid var(--ln);border-radius:14px;margin-bottom:8px;text-align:start}.pm i{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#fff;font-style:normal;font-weight:700}
 .demo{background:rgba(245,158,11,.15);color:#d99a1c;border-radius:10px;padding:8px 12px;font-size:.85em;margin-top:10px}
 .ok{text-align:center;padding:10px}.ck{width:72px;height:72px;margin:0 auto 12px;border-radius:50%;background:var(--g);color:var(--ink);display:grid;place-items:center;animation:pop .5s}.ck .ic{width:38px;height:38px;stroke-width:2.5}
+.ck.pend{background:#f59e0b}
 .toast{position:fixed;left:50%;bottom:30px;z-index:120;transform:translate(-50%,30px);background:var(--g);color:var(--ink);font-weight:700;padding:11px 20px;border-radius:99px;opacity:0;transition:.35s;pointer-events:none;max-width:90vw;text-align:center}.toast.on{opacity:1;transform:translate(-50%,0)}
 .up{position:fixed;bottom:92px;inset-inline-end:20px;z-index:35;opacity:0;visibility:hidden;transition:.3s}.up.on{opacity:1;visibility:visible}
 .wab{position:fixed;bottom:24px;inset-inline-end:20px;z-index:35;width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 10px 28px rgba(0,0,0,.4);transition:transform .2s}.wab:hover{transform:scale(1.08)}.wab .ic{width:26px;height:26px}
@@ -175,17 +181,10 @@ input[type=range]{accent-color:var(--g);width:100%}
 @keyframes flt{50%{transform:translateY(-24px) scale(1.04)}}
 .rise{opacity:0;transform:translateY(16px);transition:.6s}.rise.v{opacity:1;transform:none}
 .noanim *,.noanim *:before,.noanim *:after{animation:none!important;transition:none!important}.noanim .rise{opacity:1;transform:none}
-/* payment helpers */
 .paybox{background:var(--nb);border-radius:14px;padding:14px;margin:12px 0;box-shadow:inset 4px 4px 8px var(--nd),inset -4px -4px 8px var(--nl)}
 .paynum{font:700 24px Oswald;letter-spacing:.06em;color:var(--g);text-align:center;margin:6px 0}
 .paystep{font-size:.85em;color:var(--mu);margin:8px 0}
-.paytype{display:inline-flex;align-items:center;gap:8px;font-weight:700}
-.paytype b{border-radius:6px;padding:3px 8px;color:#fff;font-size:.8em}
-.stbadge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78em;font-weight:700}
-.stbadge.pending{background:rgba(245,158,11,.18);color:#d99a1c}
-.stbadge.paid{background:rgba(34,197,94,.18);color:#22c55e}
-.stbadge.free{background:var(--sf2);color:var(--mu)}
-.stbadge.rejected{background:rgba(239,68,68,.18);color:#ef4444}
+.paytype{display:inline-flex;align-items:center;gap:8px;font-weight:700}.paytype b{border-radius:6px;padding:3px 8px;color:#fff;font-size:.8em}
 @media(min-width:861px){
  .ov.b{align-items:center;padding:14px}.ov.b .box{border-radius:20px}.ov.b .box:before{display:none}
  .toast{bottom:30px}
@@ -270,15 +269,26 @@ input[type=range]{accent-color:var(--g);width:100%}
 <div class="am" id="am"></div>
 <div class="toast" id="ts"></div>
 <script>
-/* ====== CONFIG ====== */
+/* ====== CONFIG defaults ====== */
 const CFG={
  logo:'https://i.postimg.cc/wvPVf1NX/24986-removebg-preview-(1).png',
  slides:['https://i.postimg.cc/zBMyT816/FB-IMG-1793015031191.jpg','https://i.postimg.cc/rsrKJ3Vz/Screenshot-20261026-174402-Facebook.jpg'],
  tel:'01700000000',telShow:'01700-000000',
  wa:'8801700000000',
- map:'Miar Pole, Sonaimuri, Noakhali, Bangladesh'
+ map:'Miar Pole, Sonaimuri, Noakhali, Bangladesh',
+ hours:'প্রতিদিন সকাল ৬টা – রাত ১১টা', email:'greenturf@example.com', address:'মিয়ার পোল সংলগ্ন, সোনাইমুড়ী, নোয়াখালী'
 };
-const DEFAULT_PAY={bkash:'01892002275',nagad:'01892002275',upay:'01892002275',rocket:'01892002275'};
+const DEF_PAY={bkash:'01892002275',nagad:'01892002275',upay:'01892002275',rocket:'01892002275'};
+const DEF_PRICE={football:2000,cricket:1800,badminton:600,peakFrom:17,peakX:1.2};
+const DEF_ADD=[{id:'jer',name:'জার্সি',price:300,icon:'shirt'},{id:'glo',name:'হ্যান্ড গ্লাভস',price:150,icon:'shield'},{id:'wat',name:'মিনারেল ওয়াটার',price:40,icon:'drop'},{id:'park',name:'পার্কিং',price:100,icon:'car'}];
+const DEF_EV=[{id:'e1',title:'ফ্রাইডে নাইট ৫v৫ কাপ',sport:'football',fee:2000,spots:6,desc:'দল নিয়ে অংশ নিন'},{id:'e2',title:'বক্স ক্রিকেট লিগ',sport:'cricket',fee:1500,spots:4,desc:''},{id:'e3',title:'ব্যাডমিন্টন ডাবলস',sport:'badminton',fee:400,spots:9,desc:''}];
+const DEF_PLAN=[{id:'s',name:'সিলভার',price:499,discount:5,features:['ফ্রি মিনারেল ওয়াটার']},{id:'g',name:'গোল্ড',price:999,discount:15,features:['সন্ধ্যার অগ্রাধিকার','২টি গেস্ট পাস'],hot:1},{id:'p',name:'প্লাটিনাম',price:1799,discount:25,features:['নির্দিষ্ট সাপ্তাহিক স্লট','জার্সি প্রিন্ট']}];
+const DEF_HELP=[{id:'h1',q:'বুকিং কীভাবে বাতিল করব?',a:'প্রোফাইল পেজে বুকিংয়ের পাশে বাতিল বাটন আছে।'},{id:'h2',q:'রাতে কি খেলা যায়?',a:'হ্যাঁ, ফ্লাডলাইটে রাত ১১টা পর্যন্ত।'},{id:'h3',q:'টুর্নামেন্ট করতে চাইলে?',a:'ফোনে যোগাযোগ করুন বা ট্যুরnamenट পেজ দেখুন।'}];
+const DEF_FOOT={phone:'01700000000',whatsapp:'8801700000000',email:'greenturf@example.com',address:'সোনাইমুড়ী, নোয়াখালী',hours:'সকাল ৬ – রাত ১১'};
+
+/* live config store */
+const CFP={pricing:{...DEF_PRICE},payment:{...DEF_PAY},addons:{list:[...DEF_ADD]},events:{list:[...DEF_EV]},plans:{list:[...DEF_PLAN]},help:{list:[...DEF_HELP]},footer:{...DEF_FOOT},site:{...CFG}};
+
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
@@ -307,7 +317,7 @@ secFaq:'সাধারণ প্রশ্ন|FAQ|الأسئلة الشائعة|
 ctaT:'আপনার দল প্রস্তুত?|Is your squad ready?|هل فريقك جاهز؟|क्या आपकी टीम तैयार है?|کیا آپ کی ٹیم تیار ہے؟',ctaP:'আজ রাতের স্লট দ্রুত ফুরিয়ে যায়।|Tonight’s slots go fast.|مواعيد الليلة تنفد بسرعة.|आज रात के स्लॉट जल्दी भर जाते हैं।|آج رات کے سلاٹ جلد بھر جاتے ہیں۔',
 ftD:'ফুটবল, ক্রিকেট আর ব্যাডমিন্টন, দিন-রাত।|Football, cricket and badminton, day and night.|كرة قدم وكريكيت وريشة، نهاراً وليلاً.|फुटबॉल, क्रिकेट और बैडमिंटन, दिन-रात।|فٹبال، کرکٹ اور بیڈمنٹن، دن رات۔',quick:'দ্রুত লিংক|Quick links|روابط سريعة|त्वरित लिंक|فوری روابط',contact:'যোগাযোগ|Contact|اتصل|संपर्क|رابطہ',hours:'প্রতিদিন সকাল ৬টা থেকে রাত ১১টা|Daily 6 AM to 11 PM|يومياً 6 ص - 11 م|रोज़ सुबह 6 से रात 11|روزانہ صبح 6 سے رات 11',addr:'সোনাইমুড়ী, নোয়াখালী|Sonaimuri, Noakhali|سونايموري، نواخالي|सोनाइमुड़ी, नोआखाली|سونائی موڑی، نواکھالی',
 news:'নিউজলেটার|Newsletter|النشرة|न्यूज़लेटर|نیوز لیٹر',subs:'সাবস্ক্রাইব|Subscribe|اشترك|सब्सक्राइब|سبسکرائب',subOk:'সাবস্ক্রাইব হয়েছে (ডেমো)|Subscribed (demo)|تم الاشتراك (تجريبي)|सब्सक्राइब हो गया (डेमो)|سبسکرائب ہو گیا (ڈیمو)',demoV:'ডেমো সংস্করণ|Demo version|نسخة تجريبية|डेमो संस्करण|ڈیمو ورژن',soc:'সোশ্যাল লিংক (ডেমো)|Social link (demo)|رابط اجتماعي (تجريبي)|सोशल लिंक (डेमो)|سوشل لنک (ڈیمو)',
-bkT:'স্লট বুকিং|Slot booking|حجز موعد|स्लॉट बुकिंग|سلاٹ بکنگ',bkS:'খেলা, দিন আর এক বা একাধিক ঘণ্টা বেছে নিন।|Choose a sport, a day and one or more hours.|اختر الرياضة واليوم وساعة أو أكثر.|खेल, दिन और एक या अधिक घंटे चुनें।|کھیل، دن اور ایک یا زیادہ گھنٹے چنیں۔',addons:'অতিরিক্ত সুবিধা|Add-ons|إضافات|अतिरिक्त सुविधाएँ|اضافی سہولیات',yourBk:'আপনার বুকিং|Your booking|حجزك|आपकी बुकिंग|آپ کی بکنگ',sportL:'খেলা|Sport|الرياضة|खेल|کھیل',dateL:'দিন|Day|اليوم|दिन|دن',timeL:'সময়|Time|الوقت|समय|وقت',pickSlot:'স্লট বেছে নিন|Pick a slot|اختر موعداً|स्लॉट चुनें|سلاٹ چنیں',total:'মোট|Total|الإجمالي|कुल|کل',toPay:'পেমেন্টে যান|Continue to payment|المتابعة للدفع|पेमेंट पर जाएँ|ادائیگی پر جائیں',booked:'বুকড|Booked|محجوز|बुक्ड|بُک',
+bkT:'স্লট বুকিং|Slot booking|حجز موعد|स्लॉट बुकिंग|سلاٹ بکنگ',bkS:'খেলা, দিন আর এক বা একাধিক ঘণ্টা বেছে নিন।|Choose a sport, a day and one or more hours.|اختر الرياضة واليوم وساعة أو أكثر.|खेल, दिन और एक या अधिक घंटे चुनें।|کھیل، دن اور ایک یا زیادہ گھنٹے چنیں۔',addons:'অতিরিক্ত সুবিধা|Add-ons|إضافات|अतिरिक्त सुविधाएँ|اضافی سہولیات',yourBk:'আপনার বুকিং|Your booking|حجزك|आपकी बुकिंग|آپ کی بکنگ',sportL:'খেলা|Sport|الرياضة|खेल|کھیل',dateL:'দিন|Day|اليوم|दिन|دن',timeL:'সময়|Time|الوقت|समय|وقت',pickSlot:'স্লট বেছে নিন|Pick a slot|اختر موعداً|स्लॉट चुनें|سلاٹ چنیں',total:'মোট|Total|الإجمالي|कुल|کل',toPay:'পেমেন্টে যান|Continue to payment|المتابعة للدفع|पेमेंट पर जाएँ|ادائیگی پر جائیں',booked:'বুকড|Booked|محجوز|बुक्ड|بُک',pending:'পেন্ডিং|Pending|معلّق|पेंडिंग|زیرِ التوا',
 coupon:'কুপন কোড (GREEN10)|Coupon code (GREEN10)|رمز القسيمة (GREEN10)|कूपन कोड (GREEN10)|کوپن کوڈ (GREEN10)',apply:'প্রয়োগ|Apply|تطبيق|लागू करें|لاگو کریں',cOk:'কুপন প্রয়োগ হয়েছে: ১০% ছাড়|Coupon applied: 10% off|تم تطبيق القسيمة: خصم 10%|कूपन लागू: 10% छूट|کوپن لگ گیا: 10% رعایت',cBad:'কুপন কোড সঠিক নয়|Invalid coupon code|رمز غير صحيح|कूपन कोड सही नहीं|کوپن کوڈ درست نہیں',disc:'ছাড়|Discount|الخصم|छूट|رعایت',
 payM:'পেমেন্ট মাধ্যম|Payment method|طريقة الدفع|पेमेंट माध्यम|ادائیگی کا طریقہ',demoNote:'ডেমো মোড: আসল টাকা কাটা হবে না।|Demo mode: no real money is charged.|وضع تجريبي: لن يتم خصم أي مبلغ.|डेमो मोड: असली पैसे नहीं कटेंगे।|ڈیمو موڈ: اصل رقم نہیں کٹے گی۔',proc:'প্রসেস হচ্ছে…|Processing…|جارٍ المعالجة…|प्रोसेस हो रहा है…|پروسیس ہو رہا ہے…',done:'বুকিং কনফার্ম হয়েছে|Booking confirmed|تم تأكيد الحجز|बुकिंग कन्फर्म हुई|بکنگ کنفرم ہو گئی',bid:'বুকিং আইডি|Booking ID|رقم الحجز|बुकिंग आईडी|بکنگ آئی ڈی',viewBk:'আমার বুকিং দেখুন|View my bookings|عرض حجوزاتي|मेरी बुकिंग देखें|میری بکنگز دیکھیں',cash:'টার্ফে নগদ|Cash at turf|نقداً في الملعب|टर्फ पर नकद|ٹرف پر نقد',card:'কার্ড|Card|بطاقة|कार्ड|کارڈ',accNo:'অ্যাকাউন্ট নম্বর|Account number|رقم الحساب|अकाउंट नंबर|اکاؤنٹ نمبر',pin:'পিন / ওটিপি|PIN / OTP|الرمز / OTP|पिन / ओटीपी|پن / او ٹی پی',conf:'নিশ্চিত করুন|Confirm|تأكيد|कन्फर्म करें|تصدیق کریں',
 welcome:'স্বাগতম|Welcome|مرحباً|स्वागत है|خوش آمدید',inSub:'চালিয়ে যেতে সাইন ইন করুন|Sign in to continue your journey|سجّل الدخول للمتابعة|जारी रखने के लिए साइन इन करें|جاری رکھنے کے لیے سائن ان کریں',email:'ইমেইল|Email address|البريد الإلكتروني|ईमेल|ای میل',pass:'পাসওয়ার্ড|Password|كلمة المرور|पासवर्ड|پاس ورڈ',pass2:'পাসওয়ার্ড নিশ্চিত করুন|Confirm password|تأكيد كلمة المرور|पासवर्ड कन्फर्म करें|پاس ورڈ کی تصدیق',fname:'পুরো নাম|Full name|الاسم الكامل|पूरा नाम|پورا نام',rem:'মনে রাখুন|Remember me|تذكرني|मुझे याद रखें|مجھے یاد رکھیں',forgot:'পাসওয়ার্ড ভুলে গেছেন?|Forgot password?|نسيت كلمة المرور؟|पासवर्ड भूल गए?|پاس ورڈ بھول گئے؟',login:'লগইন|Login|دخول|लॉगिन|لاگ اِن',noAcc:'অ্যাকাউন্ট নেই?|Don’t have an account?|ليس لديك حساب؟|अकाउंट नहीं है?|اکاؤنٹ نہیں ہے؟',haveAcc:'আগে থেকেই অ্যাকাউন্ট আছে?|Already have an account?|لديك حساب؟|पहले से अकाउंट है?|پہلے سے اکاؤنٹ ہے؟',createT:'অ্যাকাউন্ট খুলুন|Create account|إنشاء حساب|अकाउंट बनाएँ|اکاؤنٹ بنائیں',createS:'আপনার যাত্রা শুরু করুন|Start your journey with us|ابدأ رحلتك معنا|हमारे साथ शुरुआत करें|ہمارے ساتھ آغاز کریں',demoAcc:'ডেমো অ্যাকাউন্ট ব্যবহার করুন|Use demo account|استخدم حساباً تجريبياً|डेमो अकाउंट इस्तेमाल करें|ڈیمو اکاؤنٹ استعمال کریں',
@@ -319,21 +329,20 @@ plS:'বেশি খেললে বেশি ছাড়।|Play more, pay le
 hlpS:'আমরা সাহায্যে প্রস্তুত।|We’re here to help.|نحن هنا للمساعدة.|हम मदद के लिए तैयार हैं।|ہم مدد کے لیے حاضر ہیں۔',yname:'আপনার নাম|Your name|اسمك|आपका नाम|آپ کا نام',ymsg:'আপনার বার্তা|Your message|رسالتك|आपका संदेश|آپ کا پیغام',send:'পাঠান|Send message|إرسال|भेजें|بھیجیں',sent:'বার্তা পাঠানো হয়েছে (ডেমো)|Message sent (demo)|تم إرسال الرسالة (تجريبي)|संदेश भेजा गया (डेमो)|پیغام بھیج دیا (ڈیمو)',wa:'হোয়াটসঅ্যাপ|WhatsApp|واتساب|व्हाट्सऐप|واٹس ایپ',calling:'কল শুরু হচ্ছে (ডেমো)|Starting call (demo)|بدء الاتصال (تجريبي)|कॉल शुरू (डेमो)|کال شروع (ڈیمو)',
 nT:'নোটিফিকেশন|Notifications|الإشعارات|नोटिफिकेशन|نوٹیفکیشن',n1:'আজ রাতের স্লট ফুরিয়ে আসছে|Tonight’s slots are filling up|مواعيد الليلة تقترب من النفاد|आज रात के स्लॉट भर रहे हैं|آج رات کے سلاٹ بھر رہے ہیں',n2:'কুপন GREEN10 দিয়ে ১০% ছাড়|Use GREEN10 for 10% off|استخدم GREEN10 لخصم 10%|GREEN10 से 10% छूट पाएँ|GREEN10 سے 10% رعایت',n3:'নতুন টুর্নামেন্ট নিবন্ধন চলছে|New tournament registrations are open|التسجيل في بطولة جديدة مفتوح|नए टूर्नामेंट का रजिस्ट्रेशन खुला|نئے ٹورنامنٹ کی رجسٹریشن کھلی',markAll:'সব পড়া হয়েছে|Mark all read|تعيين الكل كمقروء|सब पढ़ा हुआ|سب پڑھا ہوا',noN:'কোনো নোটিফিকেশন নেই|No notifications|لا إشعارات|कोई नोटिफिकेशन नहीं|کوئی نوٹیفکیشن نہیں',
 sph:'খেলা, সুবিধা বা পেজ খুঁজুন|Search sports, facilities or pages|ابحث عن رياضة أو خدمة أو صفحة|खेल, सुविधा या पेज खोजें|کھیل، سہولت یا صفحہ تلاش کریں',noRes:'কিছু পাওয়া যায়নি|Nothing found|لا نتائج|कुछ नहीं मिला|کچھ نہیں ملا',menu:'মেনু|Menu|القائمة|मेन्यू|مینو',page:'পেজ|Page|صفحة|पेज|صفحہ',setting:'সেটিং|Setting|إعداد|सेटिंग|سیٹنگ',
-payTitle:'পেমেন্ট করুন|Make payment|إتمام الدفع|भुगतान करें|ادائیگی کریں',
-paySelect:'পেমেন্ট মাধ্যম বেছে নিন|Choose a payment method|اختر طريقة الدفع|पेमेंट माध्यम चुनें|ادائیگی کا طریقہ چنیں',
+payTitle:'পেমেন্ট করুন|Make payment|إتمام الدفع|भुगतान करें|ادائیگی کریں',paySelect:'পেমেন্ট মাধ্যম বেছে নিন|Choose a payment method|اختر طريقة الدفع|पेमेंट माध्यम चुनें|ادائیگی کا طریقہ چنیں',
 payStep1:'ধাপ ১: নিচের নম্বরে Send Money করুন|Step 1: Send money to the number below|الخطوة 1: أرسل المبلغ إلى الرقم أدناه|चरण 1: नीचे दिए नंबर पर Send Money करें|مرحلہ 1: نیچے دیے نمبر پر Send Money کریں',
 payStep2:'ধাপ ২: Transaction ID নিচে লিখুন|Step 2: Enter the Transaction ID below|الخطوة 2: أدخل رقم العملية أدناه|चरण 2: ट्रांजैक्शन आईडी नीचे लिखें|مرحلہ 2: ٹرانزیکشن آئی ڈی نیچے لکھیں',
 txid:'ট্রানজেকশন আইডি|Transaction ID|رقم العملية|ट्रांजैक्शन आईडी|ٹرانزیکشن آئی ڈی',submitPay:'সাবমিট করুন|Submit|إرسال|सबमिट करें|جمع کریں',
 pendingT:'পেমেন্ট পেন্ডিং|Payment pending|الدفع معلّق|पेमेंट पेंडिंग|ادائیگی زیرِ التوا',pendingD:'আপনার পেমেন্ট যাচাই করা হচ্ছে। প্রোফাইল থেকে স্টেটাস দেখুন।|Your payment is being verified. Check status in your profile.|يتم التحقق من دفعك. تحقق من الحالة في حسابك.|आपका पेमेंट जाँचा जा रहा है। प्रोफ़ाइल में स्टेटस देखें।|آپ کی ادائیگی کی جانچ ہو رہی ہے۔ پروفائل میں اسٹیٹس دیکھیں۔',
-stPending:'পেন্ডিং|Pending|معلّق|पेंडिंग|زیرِ التوا',stPaid:'পেইড|Paid|مدفوع|पेड|ادا شدہ',stRejected:'বাতিল|Rejected|مرفوض|अस्वीकृत|مسترد',stFree:'কনফার্মড|Confirmed|مؤكد|कन्फर्म्ड|کنفرم',
-copy:'কপি|Copy|نسخ|कॉपी|کاپی',numCopied:'নম্বর কপি হয়েছে|Number copied|تم نسخ الرقم|नंबर कॉपी हुआ|نمبر کاپی ہو گیا',txAsk:'ট্রানজেকশন আইডি দিন|Enter the transaction ID|أدخل رقم العملية|ट्रांजैक्शन आईडी दें|ٹرانزیکشن آئی ڈی دیں',
-accLabel:'অ্যাকাউন্ট নম্বর|Account number|رقم الحساب|अकाउंट नंबर|اکاؤنٹ نمبر'
+stPending:'পেন্ডিং|Pending|معلّق|पेंडिंग|زیرِ التوا',stConfirmed:'কনফার্মড|Confirmed|مؤكد|कन्फर्म्ड|کنفرم',stRejected:'বাতিল|Rejected|مرفوض|अस्वीकृत|مسترد',
+copy:'কপি|Copy|نسخ|कॉपी|کاپی',numCopied:'নম্বর কপি হয়েছে|Number copied|تم نسخ الرقم|नंबर कॉपी हुआ|نمبر کاپی ہو گیا',txAsk:'ট্রানজেকশন আইডি দিন|Enter the transaction ID|أدخل رقم العملية|ट्रांजैक्शन आईडी दें|ٹرانزیکشن آئی ڈی دیں'
 };
 const TC={};const t=k=>{const a=TC[k]||(TC[k]=(TR[k]||k).split('|'));return a[S.l]||a[1]||a[0]};
 const DS={l:0,th:'system',ac:'',fs:15,an:1,nt:1};
 const NT0=()=>[{k:'n1',r:0},{k:'n2',r:0},{k:'n3',r:0}];
 let S={...DS,...ld('gt_s2',{})},USERS={},B=[],U=null,NT=ld('gt_n2',null)||NT0(),RG=[];
-let FB=null,UID=null,SL=new Set(),PAYNUM={...DEFAULT_PAY},authReady=false,AUTHING=false,PENDNAME='',LDWAIT=false,unsubB=null,unsubSL=null,unsubCFG=null,cst=null,cbuf={};
+/* ===== Firebase state ===== */
+let FB=null,UID=null,SL=new Set(),SLM={},authReady=false,AUTHING=false,PENDNAME='',LDWAIT=false,unsubB=null,unsubSL=null,cst=null,cbuf={};
 const clean=o=>JSON.parse(JSON.stringify(o));
 const cloudSet=o=>{if(!FB||!UID)return;FB.setDoc(FB.doc(FB.db,'users',UID),clean(o),{merge:true}).catch(e=>console.warn('cloud',e))};
 const flushCloud=()=>{clearTimeout(cst);if(Object.keys(cbuf).length){cloudSet(cbuf);cbuf={}}};
@@ -342,15 +351,27 @@ const slotId=(s,ds,h)=>s+'_'+String(ds).replace(/\s+/g,'-')+'_'+h;
 const sS=()=>{sv('gt_s2',S);if(UID)cloudLazy({settings:S})},sU=()=>{if(UID&&U&&USERS[U.email])cloudSet({plan:USERS[U.email].plan||''})},sN=()=>{if(UID)cloudSet({nt:NT});else sv('gt_n2',NT)},sRG=()=>cloudSet({rg:RG});
 const fbErr=e=>{const c=(e&&e.code)||'';return({'auth/email-already-in-use':'eExist','auth/invalid-credential':'eBad','auth/wrong-password':'eBad','auth/user-not-found':'eBad','auth/invalid-email':'eMail','auth/weak-password':'eLen','auth/too-many-requests':'eMany','auth/network-request-failed':'eNet','auth/operation-not-allowed':'eOp','auth/unauthorized-domain':'eDom','permission-denied':'ePerm','unavailable':'eNet'})[c]||'eGen'};
 async function saveBooking(b){const w=FB.writeBatch(FB.db);
- b.hrs.forEach(h=>w.set(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h)),{uid:UID,sp:b.sp,ds:b.ds,h,ts:new Date(b.ds).getTime(),bid:b.id,status:b.status}));
+ b.hrs.forEach(h=>w.set(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h)),{uid:UID,sp:b.sp,ds:b.ds,h,ts:new Date(b.ds).getTime(),bid:b.id,status:b.status,name:b.name||'',phone:b.phone||''}));
  w.set(FB.doc(FB.db,'users',UID,'bookings',b.id),{...clean(b),c:Date.now()});
  await w.commit()}
 function startSlots(){if(unsubSL)unsubSL();const d=new Date();d.setHours(0,0,0,0);let last='';
- unsubSL=FB.onSnapshot(FB.query(FB.collection(FB.db,'slots'),FB.where('ts','>=',d.getTime())),sn=>{const ids=sn.docs.map(x=>x.id).sort();const k=ids.join('|');SL=new Set(ids);if(k!==last){const first=last==='';last=k;if(!first&&R==='book')draw()}},e=>console.warn('slots',e))}
+ unsubSL=FB.onSnapshot(FB.query(FB.collection(FB.db,'slots'),FB.where('ts','>=',d.getTime())),sn=>{const arr=sn.docs.map(x=>({id:x.id,...x.data()}));SLM={};arr.forEach(x=>SLM[x.id]=x);SL=new Set(arr.map(x=>x.id));const k=arr.map(x=>x.id).sort().join('|');if(k!==last){const first=last==='';last=k;if(!first&&(R==='book'||R==='home'))draw()}},e=>console.warn('slots',e))}
 function startBookings(uid){if(unsubB)unsubB();
  unsubB=FB.onSnapshot(FB.collection(FB.db,'users',uid,'bookings'),sn=>{B=sn.docs.map(x=>x.data()).sort((a,b)=>(b.c||0)-(a.c||0));if(R==='profile'||R==='book')draw()},e=>console.warn('bookings',e))}
-function startPaymentCfg(){if(unsubCFG)unsubCFG();
- unsubCFG=FB.onSnapshot(FB.doc(FB.db,'config','payment'),sn=>{if(sn.exists()){const d=sn.data();PAYNUM={...DEFAULT_PAY,...Object.fromEntries(Object.entries(d).filter(([k,v])=>typeof v==='string'&&v.trim()))}}} ,e=>{console.warn('cfg',e)})}
+function startConfigs(){
+ ['pricing','payment','site','addons','events','plans','help','footer'].forEach(id=>{
+  if(FB.unsubC&&FB.unsubC[id])FB.unsubC[id]();
+  if(!FB.unsubC)FB.unsubC={};
+  FB.unsubC[id]=FB.onSnapshot(FB.doc(FB.db,'config',id),sn=>{
+   if(sn.exists()){const d=sn.data();
+    if(id==='addons'||id==='events'||id==='plans'||id==='help')CFP[id]={list:d.list||[]};
+    else CFP[id]={...CFP[id],...d};
+    if(id==='site'){Object.assign(CFG,{logo:d.logo||CFG.logo,tel:d.tel||CFG.tel,telShow:d.telShow||CFG.telShow,wa:d.wa||CFG.wa,map:d.map||CFG.map,slides:(d.slides&&d.slides.length)?d.slides:CFG.slides,email:d.email||CFG.email,address:d.address||CFG.address,hours:d.hours||CFG.hours})}
+    if(['home','book','events','plans','help','profile'].includes(R))refresh();else hdr()
+   }
+  },e=>console.warn(id,e))
+ })
+}
 function readyAuth(){authReady=true;if(LDWAIT)$('#ld').classList.add('h')}
 async function onUser(user){
  if(!user){if(unsubB){unsubB();unsubB=null}U=null;UID=null;B=[];RG=[];USERS={};NT=NT0();readyAuth();AUTHING=false;refresh();return}
@@ -370,28 +391,34 @@ async function onUser(user){
  if(AUTHING){AUTHING=false;const b=$('#ag');if(b){b.classList.remove('l');b.innerHTML='<span>'+t('login')+'</span>'}
   setTimeout(()=>{closeA();refresh();toast(t('hi')+', '+U.name);if(PEND){const f=PEND;PEND=null;f()}},500)}
  else refresh()}
-window.gtFirebase=fb=>{FB=fb;startPaymentCfg();FB.onAuthStateChanged(FB.auth,onUser);FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots()};
+window.gtFirebase=fb=>{FB=fb;startConfigs();FB.onAuthStateChanged(FB.auth,onUser);FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots()};
 window.gtFirebaseFail=e=>{console.error('Firebase load failed',e);readyAuth();toast(t('eNet'))};
 const loc=()=>LG[S.l][2],bn=x=>Number(x).toLocaleString(loc()),tk=x=>'৳'+bn(x);
 const I=(n,c='')=>`<svg class="ic ${c}"><use href="#i-${n}"/></svg>`;
 const logo=()=>`<a class="logo" href="#home" aria-label="Green Turf Sports Arena"><img src="${CFG.logo}" alt="" width="44" height="44"><span class="lt"><b><span class="gr">GREEN</span> <span class="wb">TURF</span></b><small>SPORTS ARENA</small></span></a>`;
-const SP={football:{i:'ball',p:2000,d:'d1'},cricket:{i:'bat',p:1800,d:'d2'},badminton:{i:'shut',p:600,d:'d3'}};
-const AD={jer:['shirt',300],glo:['shield',150],wat:['drop',40],park:['car',100]};
-const FAC=[['cal','f1'],['card','f2'],['moon','p2'],['car','p4'],['cup','p3'],['shirt','jer'],['shield','glo'],['drop','wat']];
-const PAYM=[['bkash','#e2136e','b','bKash'],['nagad','#f6921e','N','Nagad'],['upay','#f7a600','U','Upay'],['rocket','#8c3494','R','Rocket'],['card','#334155','C','card'],['cash','#16a34a','৳','cash']];
+const SP={football:{i:'ball',d:'d1'},cricket:{i:'bat',d:'d2'},badminton:{i:'shut',d:'d3'}};
+const addonList=()=>CFP.addons?.list||[];
+const addonById=k=>addonList().find(a=>a.id===k);
+const eventList=()=>CFP.events?.list||[];
+const planList=()=>CFP.plans?.list||[];
+const helpList=()=>CFP.help?.list||[];
+const price=(s,h)=>{const P=CFP.pricing||DEF_PRICE;const base=+(P[s]||DEF_PRICE[s]||2000);const peakFrom=+(P.peakFrom||17),peakX=+(P.peakX||1.2);return Math.round(base*(h>=peakFrom?peakX:1))};
+const isBooked=(s,ds,h)=>{const m=SLM[slotId(s,ds,h)];return m&&(m.status==='confirmed'||m.status==='paid'||m.status==='free')};
+const isPending=(s,ds,h)=>{const m=SLM[slotId(s,ds,h)];return m&&m.status==='pending'};
+const isBlocked=(s,ds,h)=>{const m=SLM[slotId(s,ds,h)];return m&&m.status==='blocked'};
+const taken=(s,d,h)=>isBooked(s,dk(d),h)||isPending(s,dk(d),h)||isBlocked(s,dk(d),h)||(d===0&&h<=new Date().getHours());
 const PGS=[['home','home'],['book','cal'],['events','cup'],['plans','gift'],['help','chat'],['profile','user'],['settings','gear']];
-const EV=[{id:'e1',sp:'football',day:3,hr:19,fee:2000,spots:6},{id:'e2',sp:'cricket',day:5,hr:16,fee:1500,spots:4},{id:'e3',sp:'badminton',day:6,hr:18,fee:400,spots:9}];
-const PL=[{id:'s',n:'lvS',p:499,off:5,f:['pfWat']},{id:'g',n:'lvG',p:999,off:15,f:['pfPri','pfGuest'],hot:1},{id:'p',n:'plat',p:1799,off:25,f:['pfFix','pfJer']}];
+const FAC=[['cal','f1'],['card','f2'],['moon','p2'],['car','p4'],['cup','p3'],['shirt','jer'],['shield','glo'],['drop','wat']];
+const PM=[['bkash','#e2136e','b','bKash'],['nagad','#f6921e','N','Nagad'],['upay','#f7a600','U','Upay'],['rocket','#8c3494','R','Rocket'],['card','#334155','C','card'],['cash','#16a34a','৳','cash']];
 const AC=['#2f9e4f','#b6f23a','#22c55e','#38bdf8','#f59e0b','#e879f9'];
 const dt=d=>{const x=new Date();x.setDate(x.getDate()+d);return x},dk=d=>dt(d).toDateString();
 const dl=d=>d===0?t('today'):dt(d).toLocaleDateString(loc(),{weekday:'short',day:'numeric'});
 const hh=h=>new Date(2000,0,1,h).toLocaleTimeString(loc(),{hour:'numeric'});
-const pl=()=>PL.find(p=>p.id===(U&&USERS[U.email]&&USERS[U.email].plan));
-const price=(s,h)=>Math.round(SP[s].p*(h>=17?1.2:1));
-const taken=(s,d,h)=>hs(s+d+h)%100<30||(d===0&&h<=new Date().getHours())||SL.has(slotId(s,dk(d),h))||B.some(b=>b.sp===s&&b.ds===dk(d)&&b.hrs.includes(h));
+const planObj=()=>{const pid=(U&&USERS[U.email]&&USERS[U.email].plan)||'';return planList().find(p=>p.id===pid)};
+const pl=()=>{const p=planObj();return p?{id:p.id,off:p.discount||0}:null};
 let bk={sp:'football',day:0,sel:[],add:[],cp:0},R='home',PEND=null,SI=0,ST=null;
 const toast=m=>{const e=$('#ts');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2400)};
-const sub=()=>bk.sel.reduce((s,h)=>s+price(bk.sp,h),0)+bk.add.reduce((s,k)=>s+AD[k][1],0);
+const sub=()=>bk.sel.reduce((s,h)=>s+price(bk.sp,h),0)+bk.add.reduce((s,k)=>s+(addonById(k)?.price||0),0);
 const pct=()=>Math.min(40,(pl()?pl().off:0)+(bk.cp?10:0));
 const tot=()=>Math.round(sub()*(1-pct()/100));
 function applyS(){const r=document.documentElement,sys=matchMedia('(prefers-color-scheme: dark)').matches,dark=S.th==='system'?sys:S.th==='dark';
@@ -400,7 +427,7 @@ const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=dark?
 if(S.ac){const c=parseInt(S.ac.slice(1),16),l=(((c>>16)&255)*299+((c>>8)&255)*587+(c&255)*114)/1000;r.style.setProperty('--g',S.ac);r.style.setProperty('--ink',l>150?'#06160a':'#fff')}else{r.style.removeProperty('--g');r.style.removeProperty('--ink')}}
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(S.th==='system')applyS()});
 function hdr(){
- const sp=Object.keys(SP).map(k=>`<a href="#book" data-act="sport" data-v="${k}">${I(SP[k].i)}<span><b>${t(k)}</b><small>${tk(SP[k].p)} ${t('perHr')}</small></span></a>`).join('');
+ const sp=Object.keys(SP).map(k=>`<a href="#book" data-act="sport" data-v="${k}">${I(SP[k].i)}<span><b>${t(k)}</b><small>${tk((CFP.pricing||{})[k]||DEF_PRICE[k])} ${t('perHr')}</small></span></a>`).join('');
  const un=NT.filter(x=>!x.r).length,th=S.th==='system'?'mon':S.th==='light'?'sun':'moon';
  const nl=['home','book','events','plans','help'].map(k=>k==='book'?`<div class="dd"><a class="nl" href="#book" data-p="book">${t('book')}${I('chev','cv')}</a><div class="dm mega">${sp}</div></div>`:`<a class="nl" href="#${k}" data-p="${k}">${t(k)}</a>`).join('');
  const nts=NT.length?NT.map((n,i)=>`<div class="nt ${n.r?'r':''}" data-act="notif" data-v="${i}"><i></i><span>${n.k==='done'?t('done')+' '+esc(n.x):t(n.k)}</span></div>`).join(''):`<p class="sub" style="padding:12px">${t('noN')}</p>`;
@@ -421,11 +448,11 @@ function bot(){const it=[['home','home'],['events','cup'],['book','ball2'],['pla
 function ftr(){$('#ft').innerHTML=`<div class="wrap"><div class="fg"><div>${logo()}<p style="color:var(--mu);margin-top:12px;max-width:300px">${t('ftD')}</p><div style="display:flex;gap:8px;margin-top:14px">${[['chat','wa'],['phone','call'],['pin','dir']].map(x=>`<button class="ib" data-act="${x[1]}" aria-label="${x[1]}">${I(x[0])}</button>`).join('')}</div></div>
 <div><h3>${t('quick')}</h3><ul>${PGS.map(p=>`<li><a href="#${p[0]}">${t(p[0])}</a></li>`).join('')}</ul></div>
 <div><h3>${t('s1')}</h3><ul>${Object.keys(SP).map(k=>`<li><a href="#book" data-act="sport" data-v="${k}">${t(k)}</a></li>`).join('')}</ul></div>
-<div><h3>${t('contact')}</h3><ul><li>${t('locTxt')}</li><li><a href="tel:${CFG.tel}">${CFG.telShow}</a></li><li>${t('hours')}</li></ul><h3 style="margin-top:14px">${t('news')}</h3><div class="nlf"><input class="inp" id="nm" placeholder="${t('email')}" style="margin:0"><button class="btn sm" data-act="sub">${t('subs')}</button></div></div></div>
+<div><h3>${t('contact')}</h3><ul><li>${esc((CFP.footer||{}).address||CFG.address)}</li><li><a href="tel:${esc((CFP.footer||{}).phone||CFG.tel)}">${esc((CFP.footer||{}).phone||CFG.telShow)}</a></li><li>${esc((CFP.footer||{}).hours||CFG.hours)}</li></ul><h3 style="margin-top:14px">${t('news')}</h3><div class="nlf"><input class="inp" id="nm" placeholder="${t('email')}" style="margin:0"><button class="btn sm" data-act="sub">${t('subs')}</button></div></div></div>
 <div class="cp"><span>© 2026 Green Turf Sports Arena Noakhali · ${t('demoV')}</span><div class="chips" style="margin:0">${LG.map((l,i)=>`<button class="chip" style="padding:5px 12px;${S.l===i?'border-color:var(--g);color:var(--g)':''}" data-act="lang" data-v="${i}">${l[1]}</button>`).join('')}</div></div></div>`}
 const free=k=>{let c=0;for(let h=6;h<23;h++)if(!taken(k,0,h))c++;return c};
 const VW={
-home(){const sp=Object.keys(SP).map(k=>`<div class="card sp rise" data-act="sport" data-v="${k}" tabindex="0" role="button"><div class="ph" style="background-image:url('${spi(k)}')"></div><div class="bi">${I(SP[k].i)}</div><h3>${t(k)}</h3><p style="color:var(--mu)">${t(SP[k].d)}</p><div class="pr">${tk(SP[k].p)} <small>${t('perHr')} · ${t('eve')}</small></div><span class="live">${bn(free(k))} ${t('freeT')}</span></div>`).join('');
+home(){const sp=Object.keys(SP).map(k=>`<div class="card sp rise" data-act="sport" data-v="${k}" tabindex="0" role="button"><div class="ph" style="background-image:url('${spi(k)}')"></div><div class="bi">${I(SP[k].i)}</div><h3>${t(k)}</h3><p style="color:var(--mu)">${t(SP[k].d)}</p><div class="pr">${tk((CFP.pricing||{})[k]||DEF_PRICE[k])} <small>${t('perHr')} · ${t('eve')}</small></div><span class="live">${bn(free(k))} ${t('freeT')}</span></div>`).join('');
 const sl=CFG.slides.map((s,i)=>`<div class="psl ${i===SI?'on':''}"><i style="background-image:url('${s}')"></i><img src="${s}" alt="Green Turf Sports Arena Noakhali ${i+1}" decoding="async" ${i?'loading="lazy"':'fetchpriority="high"'} onerror="this.parentNode.style.display='none'"></div>`).join('');
 const dots=CFG.slides.map((s,i)=>`<button class="${i===SI?'on':''}" data-act="dot" data-v="${i}" aria-label="${i+1}"></button>`).join('');
 return `<div class="hero"><div class="wrap hg"><div class="hx"><span class="pill">${I('ball')}Green Turf Sports Arena Noakhali</span><h1>${t('h1')}</h1><p>${t('hp')}</p><div class="qb"><select id="qs" aria-label="${t('sportL')}">${Object.keys(SP).map(k=>`<option value="${k}">${t(k)}</option>`).join('')}</select><select id="qd" aria-label="${t('dateL')}">${[0,1,2,3,4,5,6].map(d=>`<option value="${d}">${dl(d)}</option>`).join('')}</select><button class="btn" data-act="qgo">${t('viewSlots')}</button></div></div>
@@ -435,30 +462,31 @@ return `<div class="hero"><div class="wrap hg"><div class="hx"><span class="pill
 <section><h2>${t('secSp')}</h2><p class="sub">${t('secSpS')}</p><div class="g3 hs">${sp}</div></section>
 <section><h2>${t('secFac')}</h2><p class="sub">${t('secFacS')}</p><div class="g4">${FAC.map(f=>`<div class="card fc rise">${I(f[0])}<b>${t(f[1])}</b></div>`).join('')}</div></section>
 <section><h2>${t('secHow')}</h2><p class="sub">&nbsp;</p><div class="g3 steps">${[['h1t','h1d'],['signin','h2d'],['h3t','h3d']].map(x=>`<div class="card rise"><h3>${t(x[0])}</h3><p style="color:var(--mu)">${t(x[1])}</p></div>`).join('')}</div></section>
-<section><h2>${t('secLoc')}</h2><p class="sub">${t('addr')}</p><div class="loc"><div class="card"><div style="display:flex;gap:10px;color:var(--g);font-weight:700;margin-bottom:6px">${I('pin')}Green Turf Sports Arena</div><p style="color:var(--mu)">${t('locTxt')}</p><ul class="lmk">${['lm1','lm2','lm3'].map(k=>`<li>${I('pin')}<span>${t(k)}</span></li>`).join('')}</ul><div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"><button class="btn" data-act="call">${I('phone')}${t('call')}</button><button class="btn o" data-act="dir">${I('pin')}${t('dir')}</button></div></div><div class="map"><iframe title="Green Turf Sports Arena map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(CFG.map)}&output=embed"></iframe></div></div></section>
+<section><h2>${t('secLoc')}</h2><p class="sub">${esc(CFG.address)}</p><div class="loc"><div class="card"><div style="display:flex;gap:10px;color:var(--g);font-weight:700;margin-bottom:6px">${I('pin')}Green Turf Sports Arena</div><p style="color:var(--mu)">${t('locTxt')}</p><ul class="lmk">${['lm1','lm2','lm3'].map(k=>`<li>${I('pin')}<span>${t(k)}</span></li>`).join('')}</ul><div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"><button class="btn" data-act="call">${I('phone')}${t('call')}</button><button class="btn o" data-act="dir">${I('pin')}${t('dir')}</button></div></div><div class="map"><iframe title="Green Turf Sports Arena map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(CFG.map)}&output=embed"></iframe></div></div></section>
 <section><h2>${t('secRev')}</h2><p class="sub">&nbsp;</p><div class="g3 hs">${[['r1','Sakib','football'],['r2','Tamim','cricket'],['r3','Nafisa','badminton']].map(r=>`<div class="card rv rise"><span style="color:var(--g);display:flex">${I('star')}${I('star')}${I('star')}${I('star')}${I('star')}</span><p>${t(r[0])}</p><small>${r[1]} · ${t(r[2])}</small></div>`).join('')}</div></section>
-<section><h2>${t('secFaq')}</h2><p class="sub">&nbsp;</p>${[1,2,3].map(i=>`<details><summary>${t('q'+i)}</summary><p>${t('a'+i)}</p></details>`).join('')}</section>
+<section><h2>${t('secFaq')}</h2><p class="sub">&nbsp;</p>${(helpList().length?helpList():[1,2,3].map(i=>({q:t('q'+i),a:t('a'+i)}))).map(h=>`<details><summary>${esc(h.q)}</summary><p>${esc(h.a)}</p></details>`).join('')}</section>
 <div class="cta rise"><h2>${t('ctaT')}</h2><p>${t('ctaP')}</p><a class="btn" style="background:#fff;color:#06160a" href="#book">${t('bookSlot')}</a></div></div>`},
-book(){const s=bk.sp;let sl='';for(let h=6;h<23;h++){const x=taken(s,bk.day,h);sl+=`<button class="sb ${x?'x':''} ${bk.sel.includes(h)?'on':''}" data-act="hr" data-v="${h}"><b>${hh(h)}</b><small>${x?t('booked'):tk(price(s,h))}</small></button>`}
+book(){const s=bk.sp;let sl='';for(let h=6;h<23;h++){const b=isBooked(s,bk.day,h),p=isPending(s,bk.day,h),bl=isBlocked(s,bk.day,h),past=(bk.day===0&&h<=new Date().getHours());const x=b||p||bl||past;sl+=`<button class="sb ${b||bl?'x':''} ${p?'pn':''} ${bk.sel.includes(h)?'on':''}" data-act="hr" data-v="${h}"><b>${hh(h)}</b><small>${b||bl?t('booked'):p?t('pending'):tk(price(s,h))}</small></button>`}
 const ds=pct();
+const addonHtml=addonList().length?`<h3 style="margin:24px 0 10px">${t('addons')}</h3><div class="chips">${addonList().map(a=>`<button class="chip ${bk.add.includes(a.id)?'on':''}" data-act="addon" data-v="${a.id}">${I(a.icon||'plus')}${esc(a.name)} ${tk(a.price)}</button>`).join('')}</div>`:'';
 return `<div class="wrap pg" ${bk.sel.length?'style="padding-bottom:90px"':''}><h2>${t('bkT')}</h2><p class="sub">${t('bkS')}</p>
 <div class="chips">${Object.keys(SP).map(k=>`<button class="chip ${s===k?'on':''}" data-act="sp2" data-v="${k}">${I(SP[k].i)}${t(k)}</button>`).join('')}</div>
 <div class="chips">${[0,1,2,3,4,5,6].map(d=>`<button class="chip ${bk.day===d?'on':''}" data-act="day" data-v="${d}">${dl(d)}</button>`).join('')}</div>
-<div class="bk"><div><div class="sl">${sl}</div><h3 style="margin:24px 0 10px">${t('addons')}</h3><div class="chips">${Object.keys(AD).map(k=>`<button class="chip ${bk.add.includes(k)?'on':''}" data-act="addon" data-v="${k}">${I(AD[k][0])}${t(k)} ${tk(AD[k][1])}</button>`).join('')}</div></div>
+<div class="bk"><div><div class="sl">${sl}</div>${addonHtml}</div>
 <div class="card sum"><h3>${t('yourBk')}</h3><div class="row"><span>${t('sportL')}</span><b>${t(s)}</b></div><div class="row"><span>${t('dateL')}</span><b>${dl(bk.day)}</b></div><div class="row"><span>${t('timeL')}</span><b>${bk.sel.length?bk.sel.map(hh).join(', '):t('pickSlot')}</b></div>
 <div style="display:flex;gap:8px;margin-top:12px"><input class="inp" id="cpn" style="margin:0" placeholder="${t('coupon')}" value="${bk.cp?'GREEN10':''}"><button class="btn o sm" data-act="coupon">${t('apply')}</button></div>
 ${ds?`<div class="row"><span>${t('disc')}</span><b>-${bn(ds)}%</b></div>`:''}<div class="tot">${tk(tot())}</div><button class="btn f" data-act="pay" ${bk.sel.length?'':'disabled'}>${t('toPay')}</button></div></div></div>
 ${bk.sel.length?`<div class="cb"><div><small>${t(s)} · ${bn(bk.sel.length)} ${t('perHr').replace('/','').trim()}</small><b>${tk(tot())}</b></div><button class="btn" data-act="pay">${t('toPay')}</button></div>`:''}`},
-events(){return `<div class="wrap pg"><h2>${t('events')}</h2><p class="sub">${t('evS')}</p><div class="g3">${EV.map(e=>{const r=U&&RG.includes(U.email+e.id);return `<div class="card rise"><div class="ev"><div class="bi">${I(SP[e.sp].i)}</div><div><h3>${t(e.id)}</h3><small style="color:var(--mu)">${dt(e.day).toLocaleDateString(loc(),{weekday:'long',day:'numeric',month:'short'})}, ${hh(e.hr)}</small></div></div><div class="row" style="margin-top:12px"><span>${t('fee')}</span><b>${tk(e.fee)}</b></div><div class="row"><span>${t('spots')}</span><b>${bn(e.spots-(r?1:0))}</b></div><button class="btn f ${r?'o':''}" style="margin-top:14px" data-act="reg" data-v="${e.id}">${r?I('check')+t('regd'):t('reg')}</button></div>`}).join('')}</div></div>`},
-plans(){const cur=pl();return `<div class="wrap pg"><h2>${t('plans')}</h2><p class="sub">${t('plS')}</p><div class="g3">${PL.map(p=>`<div class="card pl rise ${p.hot?'hot':''}"><h3>${t(p.n)}</h3><div class="pr">${tk(p.p)} <small>${t('mo')}</small></div><ul><li>${I('check')}${bn(p.off)}${t('offT')}</li>${p.f.map(f=>`<li>${I('check')}${t(f)}</li>`).join('')}</ul><button class="btn f ${cur&&cur.id===p.id?'o':p.hot?'':'o'}" data-act="join" data-v="${p.id}">${cur&&cur.id===p.id?I('check')+t('curPlan'):t('join')}</button></div>`).join('')}</div></div>`},
-help(){return `<div class="wrap pg"><h2>${t('help')}</h2><p class="sub">${t('hlpS')}</p><div class="g3">${[['phone','call','call'],['chat','wa','wa'],['pin','dir','dir']].map(c=>`<button class="card fc sp" data-act="${c[2]}">${I(c[0])}<b>${t(c[1])}</b></button>`).join('')}</div>
-<div class="bk" style="margin-top:20px"><div><h3 style="margin-bottom:10px">${t('secFaq')}</h3>${[1,2,3].map(i=>`<details><summary>${t('q'+i)}</summary><p>${t('a'+i)}</p></details>`).join('')}</div><div class="card"><input class="inp" id="hn" placeholder="${t('yname')}"><input class="inp" id="he" placeholder="${t('email')}"><textarea class="inp" id="hm" rows="4" placeholder="${t('ymsg')}"></textarea><button class="btn f" style="margin-top:8px" data-act="send">${t('send')}</button></div></div></div>`},
+events(){const evs=eventList();return `<div class="wrap pg"><h2>${t('events')}</h2><p class="sub">${t('evS')}</p><div class="g3">${evs.length?evs.map(e=>{const r=U&&RG.includes(U.email+e.id);const sp=(e.sport||'football');return `<div class="card rise"><div class="ev"><div class="bi">${I(SP[sp]?SP[sp].i:'ball')}</div><div><h3>${esc(e.title)}</h3><small style="color:var(--mu)">${esc(e.desc||'')}</small></div></div><div class="row" style="margin-top:12px"><span>${t('fee')}</span><b>${tk(e.fee)}</b></div><div class="row"><span>${t('spots')}</span><b>${bn(e.spots-(r?1:0))}</b></div><button class="btn f ${r?'o':''}" style="margin-top:14px" data-act="reg" data-v="${esc(e.id)}">${r?I('check')+t('regd'):t('reg')}</button></div>`}).join(''):`<p class="sub">কোনো টুর্নামেন্ট নেই</p>`}</div></div>`},
+plans(){const cur=planObj();return `<div class="wrap pg"><h2>${t('plans')}</h2><p class="sub">${t('plS')}</p><div class="g3">${planList().length?planList().map(p=>`<div class="card pl rise ${p.hot?'hot':''}"><h3>${esc(p.name)}</h3><div class="pr">${tk(p.price)} <small>${t('mo')}</small></div><ul><li>${I('check')}${bn(p.discount||0)}${t('offT')}</li>${(p.features||[]).map(f=>`<li>${I('check')}${esc(f)}</li>`).join('')}</ul><button class="btn f ${cur&&cur.id===p.id?'o':'o'}" data-act="join" data-v="${esc(p.id)}">${cur&&cur.id===p.id?I('check')+t('curPlan'):t('join')}</button></div>`).join(''):`<p class="sub">কোনো প্ল্যান নেই</p>`}</div></div>`},
+help(){const ft=CFP.footer||{};return `<div class="wrap pg"><h2>${t('help')}</h2><p class="sub">${t('hlpS')}</p><div class="g3">${[['phone','call','call'],['chat','wa','wa'],['pin','dir','dir']].map(c=>`<button class="card fc sp" data-act="${c[2]}">${I(c[0])}<b>${t(c[1])}</b></button>`).join('')}</div>
+<div class="bk" style="margin-top:20px"><div><h3 style="margin-bottom:10px">${t('secFaq')}</h3>${(helpList().length?helpList():[1,2,3].map(i=>({q:t('q'+i),a:t('a'+i)}))).map(h=>`<details><summary>${esc(h.q)}</summary><p>${esc(h.a)}</p></details>`).join('')}</div><div class="card"><input class="inp" id="hn" placeholder="${t('yname')}"><input class="inp" id="he" placeholder="${t('email')}"><textarea class="inp" id="hm" rows="4" placeholder="${t('ymsg')}"></textarea><button class="btn f" style="margin-top:8px" data-act="send">${t('send')}</button></div></div></div>`},
 profile(){if(!U)return `<div class="wrap pg"><div class="card" style="text-align:center;padding:44px 20px;max-width:480px;margin:auto"><div class="av" style="margin:0 auto 14px">${I('user')}</div><h2>${t('signin')}</h2><p class="sub">${t('needLogin')}</p><button class="btn f" data-act="auth" data-v="in">${t('signin')}</button><button class="btn o f" style="margin-top:8px" data-act="auth" data-v="up">${t('createT')}</button></div></div>`;
 const mine=B.filter(b=>b.u===U.email),hrs=mine.reduce((s,b)=>s+b.hrs.length,0),lv=hrs>=10?'lvG':hrs>=4?'lvS':'lvN';
-const stBadge=b=>{const m={pending:['stPending','pending'],paid:['stPaid','paid'],rejected:['stRejected','rejected'],free:['stFree','free']};const x=m[b.status]||m.free;return `<span class="stbadge ${x[1]}">${t(x[0])}</span>`};
-return `<div class="wrap pg"><div class="card pf"><div class="av">${esc(U.name[0].toUpperCase())}</div><div style="flex:1;min-width:0"><h2 style="margin:0">${esc(U.name)}</h2><p style="color:var(--mu);overflow:hidden;text-overflow:ellipsis">${esc(U.email)}</p><span class="badge">${t(lv)} ${t('member')}</span> ${pl()?`<span class="badge">${t(pl().n)}</span>`:''}</div><a class="btn o" href="#settings">${I('gear')}${t('settings')}</a></div>
+const stBadge=b=>{const m={pending:['stPending','pending'],confirmed:['stConfirmed','confirmed'],paid:['stConfirmed','paid'],rejected:['stRejected','rejected']};const x=m[b.status]||m.pending;return `<span class="stbadge ${x[1]}">${t(x[0])}</span>`};
+return `<div class="wrap pg"><div class="card pf"><div class="av">${esc(U.name[0].toUpperCase())}</div><div style="flex:1;min-width:0"><h2 style="margin:0">${esc(U.name)}</h2><p style="color:var(--mu);overflow:hidden;text-overflow:ellipsis">${esc(U.email)}</p><span class="badge">${t(lv)} ${t('member')}</span> ${planObj()?`<span class="badge">${esc(planObj().name)}</span>`:''}</div><a class="btn o" href="#settings">${I('gear')}${t('settings')}</a></div>
 <div class="g3" style="margin-top:14px">${[[mine.length,'st1'],[hrs,'st2'],0].map((x,i)=>`<div class="card"><b class="pr">${i<2?bn(x[0]):tk(mine.reduce((s,b)=>s+b.tot,0))}</b><br><span style="color:var(--mu)">${t(['st1','st2','st3'][i])}</span></div>`).join('')}</div>
-<h2 style="margin-top:30px">${t('myBk')}</h2>${mine.length?mine.map(b=>`<div class="card tk"><div class="bi">${I(SP[b.sp].i)}</div><div><b>${t(b.sp)}</b> · ${tk(b.tot)} ${stBadge(b)}<br><small style="color:var(--mu)">${new Date(b.ds).toLocaleDateString(loc(),{weekday:'short',day:'numeric',month:'short'})}, ${b.hrs.map(hh).join(', ')} · ${b.id}${b.txid?' · TX: '+esc(b.txid):''}</small></div><button class="ib" data-act="share" data-v="${b.id}" aria-label="${t('share')}">${I('share')}</button><button class="btn o sm" data-act="cancel" data-v="${b.id}">${t('cancel')}</button></div>`).join(''):`<div class="card" style="text-align:center;padding:36px"><p class="sub">${t('none')}</p><a class="btn" href="#book">${t('firstBk')}</a></div>`}</div>`},
+<h2 style="margin-top:30px">${t('myBk')}</h2>${mine.length?mine.map(b=>`<div class="card tk"><div class="bi">${I(SP[b.sp]?SP[b.sp].i:'ball')}</div><div><b>${t(b.sp)}</b> · ${tk(b.tot)} ${stBadge(b)}<br><small style="color:var(--mu)">${new Date(b.ds).toLocaleDateString(loc(),{weekday:'short',day:'numeric',month:'short'})}, ${b.hrs.map(hh).join(', ')} · ${b.id}${b.txid?' · TX '+esc(b.txid):''}</small></div>${b.status==='pending'?`<button class="btn o sm" data-act="cancel" data-v="${b.id}">${t('cancel')}</button>`:''}</div>`).join(''):`<div class="card" style="text-align:center;padding:36px"><p class="sub">${t('none')}</p><a class="btn" href="#book">${t('firstBk')}</a></div>`}</div>`},
 settings(){const tg=(k,l)=>`<div class="tg"><span>${t(l)}</span><button class="swt ${S[k]?'on':''}" data-act="tgl" data-v="${k}" role="switch" aria-checked="${!!S[k]}" aria-label="${t(l)}"></button></div>`;
 return `<div class="wrap pg" style="max-width:760px"><h2>${t('settings')}</h2><p class="sub">${t('setS')}</p>
 <div class="card set"><h3>${I('globe')}${t('lang')}</h3><div class="lg">${LG.map((l,i)=>`<button class="chip ${S.l===i?'on':''}" data-act="lang" data-v="${i}"><span>${l[1]}</span>${S.l===i?I('check'):''}</button>`).join('')}</div></div>
@@ -498,44 +526,30 @@ const closeA=()=>$('#am').classList.remove('on');
 function swAuth(){const nc=$('#nc');nc.classList.remove('d0','shake');nc.classList.add('out');setTimeout(()=>{AM=AM==='in'?'up':'in';nc.innerHTML=authCard(AM);nc.classList.remove('out');nc.classList.add('in');setTimeout(()=>nc.classList.remove('in'),400)},280)}
 const need=(f,m)=>{if(U)return f();PEND=f;openAuth(m||'in')};
 const M=h=>{$('#mb').innerHTML=h;$('#md').classList.add('on')},xM=()=>$('#md').classList.remove('on');
-Object.assign(TR,{gLogin:'গুগল দিয়ে চালিয়ে যান|Continue with Google|المتابعة عبر Google|Google से जारी रखें|Google کے ساتھ جاری رکھیں',or:'অথবা|or|أو|या|یا',
-fMail:'আগে ইমেইল ঘরে আপনার ইমেইল দিন|Enter your email first|أدخل بريدك أولاً|पहले अपना ईमेल दें|پہلے اپنی ای میل دیں',
-eMany:'অনেকবার চেষ্টা হয়েছে, একটু পরে আবার করুন|Too many attempts, try again later|محاولات كثيرة، حاول لاحقاً|बहुत कोशिशें हुईं, बाद में करें|بہت کوششیں ہو گئیں، بعد میں کریں',
-eNet:'নেটওয়ার্ক সমস্যা, ইন্টারনেট চেক করুন|Network problem, check your connection|مشكلة في الشبكة|नेटवर्क समस्या, इंटरनेट जाँचें|نیٹ ورک کا مسئلہ، انٹرنیٹ چیک کریں',
-eOp:'এই লগইন পদ্ধতি Firebase এ চালু নেই|This sign-in method is not enabled|طريقة الدخول غير مفعلة|यह लॉगिन तरीका चालू नहीं है|یہ لاگ اِن طریقہ فعال نہیں',
-eDom:'এই ডোমেইন Firebase এ অনুমোদিত নয়|This domain is not authorised in Firebase|النطاق غير مصرح به|यह डोमेन अनुमत नहीं है|یہ ڈومین مجاز نہیں',
-ePerm:'অনুমতি নেই, আবার লগইন করুন|Permission denied, please sign in again|لا يوجد إذن|अनुमति नहीं, फिर लॉगिन करें|اجازت نہیں، دوبارہ لاگ اِن کریں',
-eGen:'কিছু একটা ভুল হয়েছে, আবার চেষ্টা করুন|Something went wrong, try again|حدث خطأ، حاول مرة أخرى|कुछ गड़बड़ हुई, फिर कोशिश करें|کچھ غلط ہو گیا، دوبارہ کوشش کریں',
-slotGone:'এই স্লট এইমাত্র বুক হয়ে গেছে, অন্য সময় বেছে নিন|That slot was just booked, pick another|تم حجز هذا الموعد للتو|यह स्लॉट अभी बुक हो गया, दूसरा चुनें|یہ سلاٹ ابھی بک ہو گیا، دوسرا چنیں',
-cAsk:'আপনার সব বুকিং ও সেটিংস মুছে যাবে। নিশ্চিত?|All your bookings and settings will be deleted. Sure?|سيتم حذف كل حجوزاتك وإعداداتك. متأكد؟|आपकी सभी बुकिंग और सेटिंग्स मिट जाएँगी। पक्का?|آپ کی تمام بکنگز اور سیٹنگز مٹ جائیں گی۔ یقین؟'});
+Object.assign(TR,{merch:'যাচাইকৃত মার্চেন্ট|Verified Merchant',sec:'সুরক্ষিত পেমেন্ট|Secure payment'});
+let PY={i:0,n:'',key:''};
 function pswap(h,first){const a=$('#am');
  if(first){a.innerHTML='<i class="bgc" style="width:260px;height:260px;left:-80px;top:8%"></i><i class="bgc" style="width:160px;height:160px;right:-40px;top:58%;animation-delay:-3s"></i><div class="nc d0" id="nc">'+h+'</div>';a.classList.add('on');return}
  const nc=$('#nc');nc.classList.remove('d0','shake');nc.classList.add('out');setTimeout(()=>{nc.innerHTML=h;nc.classList.remove('out');nc.classList.add('in');setTimeout(()=>nc.classList.remove('in'),400)},280)}
 const pHead=()=>`<button class="rb cx" data-act="closeA" aria-label="x">${I('x')}</button><img src="${CFG.logo}" alt=""><div class="mn">Green Turf Sports Arena</div><span class="vb">${I('shield')}${t('merch')}</span><div class="amt">${tk(tot())}</div><div class="rf">${t(bk.sp)} · ${bk.sel.map(hh).join(', ')}</div>`;
-Object.assign(TR,{merch:'যাচাইকৃত মার্চেন্ট|Verified Merchant|تاجر موثّق|सत्यापित मर्चेंट|تصدیق شدہ مرچنٹ',sec:'সুরক্ষিত পেমেন্ট|Secure payment|دفع آمن|सुरक्षित पेमेंट|محفوظ ادائیگی'});
-function payUI(){xM();pswap(pHead()+`<h3>${t('paySelect')}</h3>`+PAYM.map((p,i)=>`<button class="pm" data-act="pm" data-v="${i}"><i style="background:${p[1]}">${p[2]}</i><b>${p[3]==='card'||p[3]==='cash'?t(p[3]):p[3]}</b></button>`).join('')+`<div class="demo">${I('lock')} ${t('sec')}</div>`,!$('#am').classList.contains('on'))}
-function payNo(i){const p=PAYM[i],nm=p[3]==='card'||p[3]==='cash'?t(p[3]):p[3];PY={i,n:nm,key:p[0]};
- if(p[0]==='cash')return fin(nm,'free');
+function payUI(){xM();pswap(pHead()+`<h3>${t('paySelect')}</h3>`+PM.map((p,i)=>`<button class="pm" data-act="pm" data-v="${i}"><i style="background:${p[1]}">${p[2]}</i><b>${p[3]==='card'||p[3]==='cash'?t(p[3]):p[3]}</b></button>`).join('')+`<div class="demo">${I('lock')} ${t('sec')}</div>`,!$('#am').classList.contains('on'))}
+function payNo(i){const p=PM[i],nm=p[3]==='card'||p[3]==='cash'?t(p[3]):p[3];PY={i,n:nm,key:p[0]};
+ if(p[0]==='cash')return fin(nm,'pending','');
  if(p[0]==='card')return pswap(pHead()+`<div class="nf"><input id="p1" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456"></div><div style="display:flex;gap:10px"><div class="nf" style="flex:1"><input id="p2" maxlength="5" placeholder="MM/YY"></div><div class="nf" style="flex:1"><input id="p3" type="password" inputmode="numeric" maxlength="4" placeholder="CVC"></div></div>`+`<button class="nbt" data-act="pnext" data-v="ac">${t('conf')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`);
- const num=PAYNUM[p[0]]||DEFAULT_PAY[p[0]]||DEFAULT_PAY.bkash;
- pswap(pHead()+`<div class="paybox"><div style="text-align:center"><span class="paytype"><b style="background:${p[1]}">${p[2]}</b> ${p[3]}</span></div><div class="paystep">${t('payStep1')}</div><div class="paynum">${esc(num)}</div><button class="gbt" data-act="copynum" data-v="${esc(num)}">${I('card')}${t('copy')}</button></div><div class="paystep">${t('payStep2')}</div><div class="nf"><input id="txid" placeholder="${t('txid')}" autocomplete="off"></div><button class="nbt" data-act="pnext" data-v="tx">${t('submitPay')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`)}
-const pOtp=()=>pswap(pHead()+`<h3>${t('otpT')}</h3><p class="sub">${t('otpD')}</p><div class="nf"><input id="p1" class="otp" inputmode="numeric" maxlength="6" placeholder="••••••"></div><button class="nbt" data-act="pnext" data-v="otp">${t('conf')}</button>`);
-Object.assign(TR,{otpT:'ওটিপি যাচাই|Verify OTP|تحقق OTP|ओटीपी जाँचें|او ٹی پی کی تصدیق',otpD:'আপনার নম্বরে ৬ সংখ্যার কোড গেছে (ডেমো: যেকোনো ৬ সংখ্যা)|A 6-digit code was sent (demo: any 6 digits)|تم إرسال رمز مكون من 6 أرقام (تجريبي: أي 6 أرقام)|6 अंकों का कोड भेजा गया (डेमो: कोई भी 6 अंक)|6 ہندسوں کا کوڈ بھیجا گیا (ڈیمو: کوئی بھی 6 ہندسے)'});
+ const num=(CFP.payment&&CFP.payment[p[0]])||DEF_PAY[p[0]]||'01892002275';
+ pswap(pHead()+`<div class="paybox"><div style="text-align:center"><span class="paytype"><b style="background:${p[1]}">${p[2]}</b> ${p[3]}</span></div><div class="paystep">${t('payStep1')}</div><div class="paynum">${esc(num)}</div><button class="gbt" data-act="copynum" data-v="${esc(num)}">${I('card')} ${t('copy')}</button></div><div class="paystep">${t('payStep2')}</div><div class="nf"><input id="txid" placeholder="${t('txid')}" autocomplete="off"></div><div class="nf"><input id="pphone" inputmode="tel" maxlength="11" placeholder="${t('accNo')} (01XXXXXXXXX)"></div><button class="nbt" data-act="pnext" data-v="tx">${t('submitPay')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`)}
 function pnext(v){const x=id=>(($('#'+id)||{}).value||'').replace(/\s/g,''),bad=m=>{toast(m);const nc=$('#nc');nc.classList.remove('shake');void nc.offsetWidth;nc.classList.add('shake')};
- if(v==='ac'){const card=PY.key==='card';if(card?(x('p1').length<13||!/^\d\d\/\d\d$/.test(x('p2'))||x('p3').length<3):!/^01\d{9}$/.test(x('p1')))return bad(t('eFill'));pOtp()}
- else if(v==='otp'){if(x('p1').length<6)return bad(t('eFill'));fin(PY.n,'paid')}
- else if(v==='tx'){const tx=x('txid');if(tx.length<6)return toast(t('txAsk'));fin(PY.n,'pending',tx)}}
-function fin(nm,status,txid){pswap(`<div class="lk"><svg class="ic" style="animation:spin 1s linear infinite"><use href="#i-ball"/></svg></div><h3>${t('proc')}</h3><p class="sub">${t('sec')}</p>`,!$('#am').classList.contains('on'));
- const b={id:'GT'+(100000+Math.floor(Math.random()*899999)),u:U.email,sp:bk.sp,ds:dk(bk.day),hrs:[...bk.sel],tot:tot(),pm:nm,status,txid:txid||''},t0=Date.now();
+ if(v==='ac'){const card=PY.key==='card';if(card?(x('p1').length<13||!/^\d\d\/\d\d$/.test(x('p2'))||x('p3').length<3):!/^01\d{9}$/.test(x('p1')))return bad(t('eFill'));fin(PY.n,'pending','')}
+ else if(v==='tx'){const tx=x('txid'),ph=x('pphone');if(tx.length<4)return toast(t('txAsk'));if(!/^01\d{9}$/.test(ph))return bad(t('eFill'));fin(PY.n,'pending',tx,ph)}}
+function fin(nm,status,txid,phone){pswap(`<div class="lk"><svg class="ic" style="animation:spin 1s linear infinite"><use href="#i-ball"/></svg></div><h3>${t('proc')}</h3><p class="sub">${t('sec')}</p>`,!$('#am').classList.contains('on'));
+ const b={id:'GT'+(100000+Math.floor(Math.random()*899999)),u:U.email,name:U.name,phone:phone||'',sp:bk.sp,ds:dk(bk.day),hrs:[...bk.sel],tot:tot(),pm:nm,status,txid:txid||''},t0=Date.now();
  saveBooking(b).then(()=>new Promise(r=>setTimeout(r,Math.max(0,1600-(Date.now()-t0))))).then(()=>{
  NT.unshift({k:'done',x:b.id,r:0});sN();bk.sel=[];bk.add=[];bk.cp=0;hdr();
- const okBlock=`<div style="text-align:start;margin:14px 0"><div class="row"><span>${t('bid')}</span><b>${b.id}</b></div><div class="row"><span>${t('sportL')}</span><b>${t(b.sp)}</b></div><div class="row"><span>${t('timeL')}</span><b>${b.hrs.map(hh).join(', ')}</b></div><div class="row"><span>${t('payM')}</span><b>${esc(nm)}</b></div><div class="row"><span>${t('total')}</span><b>${tk(b.tot)}</b></div></div>`;
- if(status==='pending'){pswap(`<div class="ck" style="background:#f59e0b"><svg class="ic" viewBox="0 0 24 24" style="stroke:#fff"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg></div><h2>${t('pendingT')}</h2><p class="sub">${t('pendingD')}</p>`+okBlock+`<button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}
- else{pswap(`<div class="ck"><svg class="ic" viewBox="0 0 24 24"><path class="ckd" d="M5 12l5 5 9-10"/></svg></div><h2>${t('done')}</h2>`+okBlock+`<button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}
+ pswap(`<div class="ck pend"><svg class="ic" viewBox="0 0 24 24" style="stroke:#fff"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></div><h2>${t('pendingT')}</h2><p class="sub">${t('pendingD')}</p><div style="text-align:start;margin:14px 0"><div class="row"><span>${t('bid')}</span><b>${b.id}</b></div><div class="row"><span>${t('sportL')}</span><b>${t(b.sp)}</b></div><div class="row"><span>${t('timeL')}</span><b>${b.hrs.map(hh).join(', ')}</b></div><div class="row"><span>${t('payM')}</span><b>${esc(nm)}</b></div><div class="row"><span>${t('total')}</span><b>${tk(b.tot)}</b></div></div><button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)
  }).catch(err=>{console.warn(err);if(err&&err.code==='permission-denied'){bk.sel=[];closeA();draw();toast(t('slotGone'))}else{toast(t(fbErr(err)));payUI()}})}
 const SPI={football:'football,turf',cricket:'cricket,stadium',badminton:'badminton,court'};
 const spi=k=>`https://loremflickr.com/640/400/${SPI[k]}`;
-const IDX=()=>[...Object.keys(SP).map(k=>({t:t(k),s:tk(SP[k].p)+' '+t('perHr')+' · '+t(SP[k].d),i:SP[k].i,a:'sport:'+k})),...FAC.map(f=>({t:t(f[1]),s:t('page')+': '+t('home'),i:f[0],a:'go:home'})),...PGS.map(p=>({t:t(p[0]),s:t('page'),i:p[1],a:'go:'+p[0]})),...LG.map((l,i)=>({t:l[1],s:t('lang'),i:'globe',a:'lang:'+i})),...[['system','mon','sys'],['light','sun','light'],['dark','moon','dark']].map(x=>({t:t(x[2]),s:t('theme'),i:x[1],a:'theme:'+x[0]})),{t:t('secLoc'),s:t('addr'),i:'pin',a:'go:home'}];
+const IDX=()=>[...Object.keys(SP).map(k=>({t:t(k),s:tk((CFP.pricing||{})[k]||DEF_PRICE[k])+' '+t('perHr')+' · '+t(SP[k].d),i:SP[k].i,a:'sport:'+k})),...FAC.map(f=>({t:t(f[1]),s:t('page')+': '+t('home'),i:f[0],a:'go:home'})),...PGS.map(p=>({t:t(p[0]),s:t('page'),i:p[1],a:'go:'+p[0]})),...LG.map((l,i)=>({t:l[1],s:t('lang'),i:'globe',a:'lang:'+i})),...[['system','mon','sys'],['light','sun','light'],['dark','moon','dark']].map(x=>({t:t(x[2]),s:t('theme'),i:x[1],a:'theme:'+x[0]})),{t:t('secLoc'),s:esc(CFG.address),i:'pin',a:'go:home'}];
 function srch(){const q=$('#si').value.trim().toLowerCase(),r=IDX().filter(x=>!q||(x.t+' '+x.s).toLowerCase().includes(q)).slice(0,8);$('#so').innerHTML=r.length?r.map(x=>`<div class="sr" data-act="sres" data-v="${x.a}">${I(x.i)}<div><b>${x.t}</b><small>${x.s}</small></div></div>`).join(''):`<p class="sub" style="padding:14px">${t('noRes')}</p>`}
 function drawer(){const acc=U?`<div class="card" style="display:flex;gap:12px;align-items:center;margin-bottom:10px;padding:14px"><div class="av" style="width:46px;height:46px;font-size:20px">${esc(U.name[0].toUpperCase())}</div><div style="min-width:0"><b>${esc(U.name)}</b><small style="display:block;color:var(--mu);overflow:hidden;text-overflow:ellipsis">${esc(U.email)}</small></div></div>`:`<div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn f sm" data-act="auth" data-v="in">${t('signin')}</button><button class="btn o f sm" data-act="auth" data-v="up">${t('createT')}</button></div>`;
 $('#dp').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">${logo()}<button class="ib" data-act="closeD" aria-label="x">${I('x')}</button></div>${acc}${PGS.map(p=>`<a href="#${p[0]}" data-p="${p[0]}" class="${R===p[0]?'on':''}">${I(p[1])}${t(p[0])}</a>`).join('')}${U?`<a data-act="signout" style="cursor:pointer">${I('out')}${t('signout')}</a>`:''}<h3 style="margin:18px 12px 8px">${t('lang')}</h3><div class="chips">${LG.map((l,i)=>`<button class="chip ${S.l===i?'on':''}" data-act="lang" data-v="${i}">${l[1]}</button>`).join('')}</div><h3 style="margin:8px 12px">${t('theme')}</h3><div class="chips">${[['system','mon'],['light','sun'],['dark','moon']].map(x=>`<button class="chip ${S.th===x[0]?'on':''}" data-act="theme" data-v="${x[0]}">${I(x[1])}</button>`).join('')}</div>`}
@@ -544,7 +558,7 @@ const closeDD=()=>$$('.dm.on').forEach(m=>m.classList.remove('on'));
 const refresh=()=>{applyS();hdr();bot();ftr();draw();if($('#dr').classList.contains('on'))drawer()};
 const ACT={
 go:v=>go(v),sport:v=>{bk.sp=v;bk.sel=[];go('book')},qgo:()=>{bk.sp=$('#qs').value;bk.day=+$('#qd').value;bk.sel=[];go('book')},
-sp2:v=>{bk.sp=v;bk.sel=[];draw()},day:v=>{bk.day=+v;bk.sel=[];draw()},hr:v=>{const h=+v;bk.sel=bk.sel.includes(h)?bk.sel.filter(y=>y!==h):[...bk.sel,h].sort((a,b)=>a-b);draw()},
+sp2:v=>{bk.sp=v;bk.sel=[];draw()},day:v=>{bk.day=+v;bk.sel=[];draw()},hr:v=>{const h=+v;if(isBooked(bk.sp,bk.day,h)||isPending(bk.sp,bk.day,h)||isBlocked(bk.sp,bk.day,h)||(bk.day===0&&h<=new Date().getHours()))return;bk.sel=bk.sel.includes(h)?bk.sel.filter(y=>y!==h):[...bk.sel,h].sort((a,b)=>a-b);draw()},
 addon:v=>{const i=bk.add.indexOf(v);i<0?bk.add.push(v):bk.add.splice(i,1);draw()},
 coupon:()=>{if($('#cpn').value.trim().toUpperCase()==='GREEN10'){bk.cp=1;toast(t('cOk'))}else{bk.cp=0;toast(t('cBad'))}draw()},
 pay:()=>need(payUI),pm:v=>payNo(+v),pnext:v=>pnext(v),copynum:v=>{try{navigator.clipboard.writeText(v).then(()=>toast(t('numCopied')),()=>toast(v))}catch(e){toast(v)}},
@@ -570,11 +584,10 @@ cancel:v=>{const b=B.find(x=>x.id===v);if(!b||!UID)return;const w=FB.writeBatch(
 share:v=>{const b=B.find(x=>x.id===v),m=`Green Turf · ${t(b.sp)} · ${b.ds} · ${b.hrs.map(hh).join(', ')} · ${b.id}`;try{navigator.clipboard.writeText(m).then(()=>toast(t('copied')),()=>toast(m))}catch(e){toast(m)}},
 send:()=>{if(!$('#hn').value.trim()||!$('#hm').value.trim())return toast(t('eFill'));toast(t('sent'));$('#hn').value=$('#he').value=$('#hm').value=''},
 sub:()=>{const e=$('#nm').value.trim();if(!/^\S+@\S+\.\S+$/.test(e))return toast(t('eMail'));toast(t('subOk'));$('#nm').value=''},
-call:()=>{location.href='tel:'+CFG.tel},
-wa:()=>{window.open('https://wa.me/'+CFG.wa,'_blank','noopener')},
+call:()=>{location.href='tel:'+(CFP.footer?.phone||CFG.tel)},
+wa:()=>{window.open('https://wa.me/'+(CFP.footer?.whatsapp||CFG.wa),'_blank','noopener')},
 dir:()=>{window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(CFG.map),'_blank','noopener')},
 top:()=>scrollTo({top:0,behavior:'smooth'})};
-let PY={i:0,n:'',key:''};
 document.addEventListener('click',e=>{if(!e.target.closest('.dd'))closeDD();const el=e.target.closest('[data-act]');
 if(el){const a=el.dataset.act;if(el.tagName==='A')e.preventDefault();if(ACT[a]){ACT[a](el.dataset.v,el,e);return}}
 const a=e.target.closest('a[href^="#"]');if(a){e.preventDefault();closeD();go(a.getAttribute('href').slice(1))}
@@ -600,15 +613,7 @@ setTimeout(()=>{if(authReady)$('#ld').classList.add('h');else LDWAIT=true},1500)
 </script>
 <script type="module">
 const V="10.12.2",G="https://www.gstatic.com/firebasejs/"+V+"/";
-const firebaseConfig={
-  apiKey:"AIzaSyCca1PWXnrW8XV_o69fyDdxelr1GM_yLi4",
-  authDomain:"green-turf-86d36.firebaseapp.com",
-  projectId:"green-turf-86d36",
-  storageBucket:"green-turf-86d36.firebasestorage.app",
-  messagingSenderId:"57008159263",
-  appId:"1:57008159263:web:1a770c8f5b1c14bd9f732a",
-  measurementId:"G-M4RHTXZREL"
-};
+const firebaseConfig={apiKey:"AIzaSyCca1PWXnrW8XV_o69fyDdxelr1GM_yLi4",authDomain:"green-turf-86d36.firebaseapp.com",projectId:"green-turf-86d36",storageBucket:"green-turf-86d36.firebasestorage.app",messagingSenderId:"57008159263",appId:"1:57008159263:web:1a770c8f5b1c14bd9f732a",measurementId:"G-M4RHTXZREL"};
 (async()=>{try{
   const [A,Au,Fs,An]=await Promise.all([import(G+"firebase-app.js"),import(G+"firebase-auth.js"),import(G+"firebase-firestore.js"),import(G+"firebase-analytics.js")]);
   const app=A.initializeApp(firebaseConfig),auth=Au.getAuth(app),db=Fs.getFirestore(app);
