@@ -79,10 +79,10 @@ kbd{font:11px Oswald;border:1px solid var(--ln);border-radius:6px;padding:1px 6p
 .qb{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;background:var(--sf);border:1px solid var(--ln);padding:10px;border-radius:18px;max-width:560px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
 .qb select{background:var(--sf2);border:1px solid var(--ln);border-radius:12px;padding:12px;min-width:0}
 .ps{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:16/10;background:var(--sf2);border:1px solid var(--ln);touch-action:pan-y;box-shadow:0 28px 70px rgba(0,0,0,.35)}
-.ps:after{content:"";position:absolute;inset:auto 0 0 0;height:32%;background:linear-gradient(0deg,rgba(0,0,0,.5),transparent);pointer-events:none;z-index:2}
-.psl{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;overflow:hidden}.psl.on{opacity:1;z-index:1}
+
+.psl{position:absolute;inset:0;overflow:hidden;transform:translate3d(100%,0,0);will-change:transform;backface-visibility:hidden}.psl.on{transform:none}.ps{cursor:grab;user-select:none;-webkit-user-select:none}.ps:active{cursor:grabbing}
 .psl i{position:absolute;inset:-24px;background-size:cover;background-position:center;filter:blur(24px) brightness(.55)}
-.psl img{position:relative;width:100%;height:100%;object-fit:contain;transform:scale(1.06);transition:transform 6s linear}.psl.on img{transform:scale(1)}
+.psl img{position:relative;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .psb{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;display:grid;place-items:center;backdrop-filter:blur(6px);transition:.2s}.psb:hover{background:var(--g);color:var(--ink)}
 .psb.p{inset-inline-start:12px}.psb.n{inset-inline-end:12px}.psb .fl{transform:scaleX(-1)}[dir=rtl] .psb .ic{transform:scaleX(-1)}[dir=rtl] .psb .fl{transform:none}
 .psd{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:3}
@@ -430,7 +430,7 @@ return`<div class="lv" id="lv" data-s="${x.s}"><div class="lvx">${head}<div clas
 function lvTick(){const e=$('#lv');if(!e)return;const x=lvState();if(e.dataset.s!==x.s){e.outerHTML=liveHTML();return}if(x.r==null)return;const p=lvP(x.r);if(x.s==='live')p.h=String(Math.floor(x.r/36e5)).padStart(2,'0');e.querySelectorAll('[data-u]').forEach(n=>{const q=p[n.dataset.u];if(n.textContent!==q){n.textContent=q;n.classList.remove('tk');void n.offsetWidth;n.classList.add('tk')}})}
 setInterval(lvTick,1000);
 function applyAll(){try{const c=SITEC||{};
- if(c.logo)CFG.logo=c.logo;const sl=(c.slides||[]).filter(Boolean);if(sl.length)CFG.slides=sl;
+ if(c.logo)CFG.logo=c.logo;const sl=(c.slides||[]).filter(Boolean);if(sl.length){CFG.slides=sl;if(SI>=sl.length)SI=0}
  if(c.tel){CFG.tel=c.tel;CFG.telShow=c.tel}if(c.wa)CFG.wa=c.wa;if(c.map)CFG.map=c.map;
  const x=c.texts||{};['secSp','secSpS','ftD','locTxt','hours','contact','cpr'].forEach(k=>bi(k,x[k],x[k+'e']));bi('h1',x.h1,x.h1e);bi('hp',x.hp,x.hpe);
  [0,1,2,3].forEach(i=>bi('p'+(i+1),(x.feat||[])[i],(x.feate||[])[i]));
@@ -503,10 +503,10 @@ function ftr(){$('#ft').innerHTML=`<div class="wrap"><div class="fg"><div>${logo
 const free=k=>{let c=0;for(let h=6;h<23;h++)if(!taken(k,0,h))c++;return c};
 const VW={
 home(){const sp=Object.keys(SP).map(k=>`<div class="card sp rise" data-act="sport" data-v="${k}" tabindex="0" role="button"><div class="ph" style="background-image:url('${cu(spi(k))}')"></div><div class="bi">${I(SP[k].i)}</div><h3>${t(k)}</h3><p style="color:var(--mu)">${t(SP[k].d)}</p><div class="pr">${tk(SP[k].p)} <small>${SP[k].nt?esc(SP[k].nt[S.l===0?0:1]):t('perHr')+' · '+t('eve')}</small></div><span class="live">${bn(free(k))} ${t('freeT')}</span></div>`).join('');
-const sl=CFG.slides.map((s,i)=>`<div class="psl ${i===SI?'on':''}"><i style="background-image:url('${s}')"></i><img src="${s}" alt="Green Turf Sports Arena Noakhali ${i+1}" decoding="async" ${i?'loading="lazy"':'fetchpriority="high"'} onerror="this.parentNode.style.display='none'"></div>`).join('');
+const sl=CFG.slides.map((s,i)=>`<div class="psl ${i===SI?'on':''}"><i style="background-image:url('${s}')"></i><img src="${s}" alt="Green Turf Sports Arena Noakhali ${i+1}" decoding="async" ${i?'':'fetchpriority="high"'} onerror="this.parentNode.style.display='none'"></div>`).join('');
 const dots=CFG.slides.map((s,i)=>`<button class="${i===SI?'on':''}" data-act="dot" data-v="${i}" aria-label="${i+1}"></button>`).join('');
 return `<div class="hero"><div class="wrap hg"><div class="hx"><span class="pill">${I('ball')}Green Turf Sports Arena Noakhali</span><h1>${t('h1')}</h1><p>${t('hp')}</p>${liveHTML()}<div class="qb"><select id="qs" aria-label="${t('sportL')}">${Object.keys(SP).map(k=>`<option value="${k}">${t(k)}</option>`).join('')}</select><select id="qd" aria-label="${t('dateL')}">${[0,1,2,3,4,5,6].map(d=>`<option value="${d}">${dl(d)}</option>`).join('')}</select><button class="btn" data-act="qgo">${t('viewSlots')}</button></div></div>
-<div class="ps" id="ps" role="region" aria-roledescription="carousel" aria-label="Green Turf Sports Arena">${sl}<button class="psb p" data-act="slide" data-v="-1" aria-label="prev">${I('back')}</button><button class="psb n" data-act="slide" data-v="1" aria-label="next">${I('back','fl')}</button><div class="psd">${dots}</div></div></div></div>
+<div class="ps" id="ps" role="region" aria-roledescription="carousel" aria-label="Green Turf Sports Arena">${sl}<button class="psb p" data-act="slide" data-v="-1" aria-label="prev">${I('back')}</button><button class="psb n" data-act="slide" data-v="1" aria-label="next">${I('back','fl')}</button></div></div></div>
 <div class="wrap"><div class="pts">${[['ball','p1'],['moon','p2'],['cup','p3'],['car','p4']].map(x=>`<div class="pt">${I(x[0])}${t(x[1])}</div>`).join('')}</div>
 <div class="stats rise">${[[3,'s1'],[17,'s2'],[1240,'s3'],[380,'s4']].map(x=>`<div><b data-n="${x[0]}">0</b><span>${t(x[1])}</span></div>`).join('')}</div>
 <section><h2>${t('secSp')}</h2><p class="sub">${t('secSpS')}</p><div class="g3 hs">${sp}</div></section>
@@ -545,11 +545,18 @@ return `<div class="wrap pg" style="max-width:760px"><h2>${t('settings')}</h2><p
 <div class="card set">${tg('an','anim')}${tg('nt','notif')}</div>
 <div class="card set"><h3>${I('user')}${t('accS')}</h3>${U?`<p style="margin-bottom:12px"><b>${esc(U.name)}</b><br><span style="color:var(--mu)">${esc(U.email)}</span></p><button class="btn o" data-act="signout">${I('out')}${t('signout')}</button>`:`<button class="btn" data-act="auth" data-v="in">${t('signin')}</button>`}</div>
 <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn o" data-act="reset">${t('reset')}</button><button class="btn o" data-act="clear" style="color:#ef4444">${t('clr')}</button></div></div>`}};
-function slideTo(n){const els=$$('#ps .psl'),ds=$$('#ps .psd button');if(!els.length)return;SI=(n+els.length)%els.length;els.forEach((e,i)=>e.classList.toggle('on',i===SI));ds.forEach((e,i)=>e.classList.toggle('on',i===SI))}
-function slideAuto(){clearInterval(ST);if(R!=='home'||!$('#ps')||CFG.slides.length<2||matchMedia('(prefers-reduced-motion:reduce)').matches)return;ST=setInterval(()=>{if(!document.hidden)slideTo(SI+1)},4800)}
-function initSlides(){const ps=$('#ps');if(!ps)return;let x0=null;
-ps.addEventListener('pointerdown',e=>{x0=e.clientX});ps.addEventListener('pointercancel',()=>x0=null);
-ps.addEventListener('pointerup',e=>{if(x0===null)return;const dx=e.clientX-x0;x0=null;if(Math.abs(dx)>40){slideTo(SI+(dx<0?1:-1));slideAuto()}});
+let PSB=0;
+const psSet=(el,x,tr)=>{if(!el)return;el.style.transition=tr?'transform .65s cubic-bezier(.22,.61,.36,1)':'none';el.style.transform='translate3d('+x+'%,0,0)'};
+function slideTo(n){const els=$$('#ps .psl');if(els.length<2||Date.now()<PSB)return;const to=(n+els.length)%els.length;if(to===SI)return;PSB=Date.now()+600;const d=n>SI?1:-1,a=els[SI],b=els[to];psSet(b,d*100,0);void b.offsetWidth;psSet(a,-d*100,1);psSet(b,0,1);SI=to}
+function slideAuto(){clearInterval(ST);if(R!=='home'||!$('#ps')||CFG.slides.length<2)return;ST=setInterval(()=>{if(!document.hidden)slideTo(SI+1)},3000)}
+function initSlides(){const ps=$('#ps');if(!ps)return;let x0=null,y0=0,t0=0,dg=0,nb=null,nd=0,w=1;
+const els=()=>$$('#ps .psl');
+ps.addEventListener('pointerdown',e=>{if(e.target.closest('.psb')||els().length<2)return;x0=e.clientX;y0=e.clientY;t0=Date.now();dg=0;nb=null;w=ps.offsetWidth||1});
+ps.addEventListener('pointermove',e=>{if(x0===null)return;const dx=e.clientX-x0;if(!dg){if(Math.abs(dx)<8)return;if(Math.abs(e.clientY-y0)>Math.abs(dx)*1.4){x0=null;return}dg=1;clearInterval(ST);try{ps.setPointerCapture(e.pointerId)}catch(_){}}
+const E=els(),d=dx<0?1:-1,nx=E[(SI+d+E.length)%E.length];if(nb&&(nb!==nx||nd!==d))psSet(nb,nd*100,0);nb=nx;nd=d;psSet(E[SI],dx/w*100,0);psSet(nb,d*100+dx/w*100,0)});
+const end=e=>{if(x0===null)return;const dx=e.clientX-x0;x0=null;if(!dg){slideAuto();return}dg=0;const E=els(),cur=E[SI];
+if(nb&&(Math.abs(dx)>w*.18||(Date.now()-t0<280&&Math.abs(dx)>30))){PSB=Date.now()+600;psSet(cur,-nd*100,1);psSet(nb,0,1);SI=E.indexOf(nb)}else{psSet(cur,0,1);if(nb)psSet(nb,nd*100,1)}nb=null;slideAuto()};
+ps.addEventListener('pointerup',end);ps.addEventListener('pointercancel',end);
 ps.addEventListener('mouseenter',()=>clearInterval(ST));ps.addEventListener('mouseleave',slideAuto);slideAuto()}
 let AM='in';
 function authCard(m){const up=m==='up',f=(id,ty,ph)=>`<div class="nf"><input id="${id}" type="${ty}" placeholder="${t(ph)}" autocomplete="${id==='aw'?'current-password':id==='ae'?'email':id==='an'?'name':'off'}">${ty==='password'?`<button data-act="eye" aria-label="show">${I('eye')}</button>`:''}</div>`;
