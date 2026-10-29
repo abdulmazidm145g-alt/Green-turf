@@ -279,7 +279,7 @@ input[type=range]{accent-color:var(--g);width:100%}
 .cwh img{width:40px;height:40px;border-radius:50%;object-fit:contain;background:#fff;padding:3px;flex:none}.cwh div{flex:1;min-width:0}.cwh b{display:block;font-size:16px;line-height:1.2}.cwh small{display:block;font-size:12px;opacity:.85}
 .cwx{width:34px;height:34px;border-radius:50%;color:#fff;display:grid;place-items:center;font-size:17px;flex:none}.cwx:hover{background:#ffffff26}.cwx:not(.r){display:none}
 .cwb{flex:1;overflow-y:auto;padding:12px 12px 8px;display:flex;flex-direction:column;gap:5px;background:#efeae2 radial-gradient(#d9d2c3 1px,transparent 1.5px) 0 0/22px 22px;overscroll-behavior:contain}
-.cm{max-width:82%;padding:6px 9px 4px;border-radius:9px;font-size:14.5px;line-height:1.35;white-space:pre-wrap;word-break:break-word;box-shadow:0 1px 1px rgba(0,0,0,.13);animation:up .25s both;color:#111}
+.cm{max-width:82%;padding:6px 9px 4px;border-radius:9px;font-size:14.5px;line-height:1.35;white-space:pre-wrap;word-break:break-word;box-shadow:0 1px 1px rgba(0,0,0,.13);color:#111}.cm.nw{animation:up .25s both}
 .cm.u{align-self:flex-end;background:#d9fdd3;border-top-right-radius:2px}.cm.a{align-self:flex-start;background:#fff;border-top-left-radius:2px}
 .cm small{display:block;text-align:end;font-size:10.5px;color:#667781;margin-top:2px;white-space:nowrap}.cm small .sn{color:#53bdeb}
 .cwf{display:flex;align-items:flex-end;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:#f0f2f5}.cwf:empty{display:none}
@@ -426,7 +426,7 @@ function startPaymentCfg(){if(unsubCFG)unsubCFG();
  unsubCFG=FB.onSnapshot(FB.doc(FB.db,'config','payment'),sn=>{if(sn.exists()){const d=sn.data();PAYNUM={...DEFAULT_PAY,...Object.fromEntries(Object.entries(d).filter(([k,v])=>typeof v==='string'&&v.trim()))}}} ,e=>{console.warn('cfg',e)})}
 function readyAuth(){authReady=true;if(LDWAIT)$('#ld').classList.add('h')}
 async function onUser(user){
- if(!user){if(unsubB){unsubB();unsubB=null}U=null;UID=null;B=[];RG=[];USERS={};NT=NT0();readyAuth();AUTHING=false;refresh();return}
+ if(!user){if(unsubB){unsubB();unsubB=null}U=null;UID=null;B=[];RG=[];USERS={};NT=NT0();chReset();readyAuth();AUTHING=false;refresh();return}
  const email=(user.email||'').toLowerCase(),name=PENDNAME||user.displayName||email.split('@')[0]||'Player';PENDNAME='';
  const ref=FB.doc(FB.db,'users',user.uid);let data=null,ok=true;
  try{const sn=await FB.getDoc(ref);data=sn.exists()?sn.data():null}catch(e){ok=false;console.warn(e);toast(t(fbErr(e)))}
@@ -474,18 +474,24 @@ setInterval(lvTick,1000);
 
 /* ===== support chat (Firestore, realtime) ===== */
 Object.assign(TR,{chT:'গ্রিন টার্ফ সাপোর্ট|Green Turf Support',chOn:'অনলাইন · কিছুক্ষণের মধ্যে উত্তর পাবেন|Online · we reply shortly',chHi:'আসসালামু আলাইকুম! 👋 কীভাবে সাহায্য করতে পারি?|Hi! 👋 How can we help you today?',chPh:'মেসেজ লিখুন|Type a message',chNm:'আপনার নাম|Your name',chPn:'ফোন নম্বর (ঐচ্ছিক)|Phone number (optional)',chSt:'চ্যাট শুরু করুন|Start chat',chErr:'মেসেজ পাঠানো যায়নি, আবার চেষ্টা করুন|Message not sent, try again'});
-const CH={id:null,n:'',p:'',msgs:[],seen:0,sub:null,u1:null,u2:null,open:0,last:0};try{CH.last=+localStorage.getItem('gt_cs')||0}catch(e){}
+const CH={id:null,n:'',p:'',msgs:[],seen:0,useen:0,shown:null,sub:null,u1:null,u2:null,open:0,last:0};const lsg=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const chLS=()=>{try{return JSON.parse(localStorage.getItem('gt_chat')||'{}')}catch(e){return{}}};
-const chSave=()=>{try{localStorage.setItem('gt_chat',JSON.stringify({id:CH.id,n:CH.n,p:CH.p}))}catch(e){}};
-function chSub(){if(!FB||!CH.id||CH.sub===CH.id)return;CH.u1&&CH.u1();CH.u2&&CH.u2();CH.sub=CH.id;
-CH.u1=FB.onSnapshot(FB.collection(FB.db,'support',CH.id,'msgs'),sn=>{CH.msgs=sn.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.ts-b.ts);chDraw();chBadge()},e=>console.warn('chat',e));
-CH.u2=FB.onSnapshot(FB.doc(FB.db,'support',CH.id),sn=>{CH.seen=(sn.data()||{}).seen||0;chDraw()},()=>{})}
-function chInit(){if(!FB)return;const id=UID?'u_'+UID:(chLS().id||null);if(!id)return;if(CH.id!==id){CH.id=id;CH.msgs=[];CH.sub=null;const s=chLS();CH.n=UID?(U&&U.name)||'':s.n||'';CH.p=s.p||''}chSub()}
-function chBadge(){const n=CH.open?0:CH.msgs.filter(m=>m.f==='a'&&m.ts>CH.last).length,b=$('#wbd'),w=$('#wab');if(b){b.textContent=n>9?'9+':n;b.style.display=n?'grid':'none'}if(w)w.classList.toggle('nb',n>0)}
+const chSave=()=>{try{if(UID||!CH.id||!String(CH.id).startsWith('g_'))return;localStorage.setItem('gt_chat',JSON.stringify({id:CH.id,n:CH.n,p:CH.p}))}catch(e){}};
+function chUnsub(){CH.u1&&CH.u1();CH.u2&&CH.u2();CH.u1=CH.u2=null;CH.sub=null}
+function chSub(){if(!FB||!CH.id||CH.sub===CH.id)return;chUnsub();const id=CH.id;CH.sub=id;
+CH.u1=FB.onSnapshot(FB.collection(FB.db,'support',id,'msgs'),sn=>{if(CH.id!==id)return;CH.msgs=sn.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.ts-b.ts);chDraw();chBadge()},e=>console.warn('chat',e));
+CH.u2=FB.onSnapshot(FB.doc(FB.db,'support',id),sn=>{if(CH.id!==id)return;const d=sn.data()||{};CH.seen=d.seen||0;CH.useen=Math.max(CH.useen||0,d.useen||0);chDraw();chBadge()},()=>{})}
+function chSwitch(id,n,p){chUnsub();CH.id=id;CH.msgs=[];CH.seen=0;CH.useen=0;CH.shown=null;CH.last=id?(+lsg('gt_cs_'+id)||0):0;CH.n=n||'';CH.p=p||'';const f=$('#cwf');if(f)f.dataset.m='';if(CH.open)chRender();chBadge()}
+function chInit(){if(!FB)return;const s=chLS(),gid=s.id&&String(s.id).startsWith('g_')?s.id:null;
+ if(UID){const id='u_'+UID;if(CH.id!==id)chSwitch(id,(U&&U.name)||'','');else if(!CH.n&&U)CH.n=U.name||''}
+ else if(CH.id&&String(CH.id).startsWith('u_'))chSwitch(gid,gid?s.n:'',gid?s.p:'')
+ else if(!CH.id&&gid)chSwitch(gid,s.n,s.p);
+ chSub()}
+function chEnsure(){if(UID)return chInit();const s=chLS();let id=CH.id&&String(CH.id).startsWith('g_')?CH.id:(s.id&&String(s.id).startsWith('g_')?s.id:'');if(!id)id='g_'+Math.random().toString(36).slice(2,12)+Date.now().toString(36);if(CH.id!==id)chSwitch(id,s.id===id?s.n:'',s.id===id?s.p:'');chSub()}
+function chReset(){chUnsub();CH.id=null;CH.msgs=[];CH.seen=0;CH.useen=0;CH.shown=null;CH.last=0;CH.n='';CH.p='';if(CH.open)chClose();chBadge()}
+function chBadge(){const sk=Math.max(CH.last||0,CH.useen||0),n=CH.open?0:CH.msgs.filter(m=>m.f==='a'&&m.ts>sk).length,b=$('#wbd'),w=$('#wab');if(b){b.textContent=n>9?'9+':n;b.style.display=n?'grid':'none'}if(w)w.classList.toggle('nb',n>0)}
 function chBuild(){if($('#cw'))return;const d=document.createElement('div');d.id='cw';d.innerHTML=`<div class="cwh"><button class="cwx" data-act="chatx" aria-label="back">${I('back')}</button><img src="${esc(CFG.logo)}" alt="" onerror="this.style.display='none'"><div><b>${t('chT')}</b><small>${t('chOn')}</small></div><button class="cwx r" data-act="chatx" aria-label="close">✕</button></div><div class="cwb" id="cwb"></div><div class="cwf" id="cwf"></div>`;document.body.appendChild(d)}
-function chOpen(){if(!FB)return toast(t('chErr'));chBuild();const s=chLS();
-if(UID){CH.id='u_'+UID;if(!CH.n)CH.n=(U&&U.name)||''}else{if(!CH.id||CH.id.startsWith('u_'))CH.id=s.id||('g_'+Math.random().toString(36).slice(2,12)+Date.now().toString(36));if(!CH.n){CH.n=s.n||'';CH.p=s.p||''}}
-chSub();CH.open=1;$('#cw').classList.add('on');chFit();chRender();chBadge();setTimeout(()=>{const i=$('#cwi')||$('#cnm');if(i&&innerWidth>860)i.focus()},320)}
+function chOpen(){if(!FB)return toast(t('chErr'));chBuild();chEnsure();CH.shown=null;chSub();CH.open=1;$('#cw').classList.add('on');chFit();chRender();chBadge();setTimeout(()=>{const i=$('#cwi')||$('#cnm');if(i&&innerWidth>860)i.focus()},320)}
 function chFit(){const c=$('#cw');if(!c)return;if(innerWidth>860||!CH.open){c.style.bottom='';c.style.height='';return}const v=window.visualViewport,vh=v?v.height:innerHeight,kb=v?innerHeight-v.height-v.offsetTop:0;if(kb>120){c.style.bottom=(kb+8)+'px';c.style.height=Math.min(480,vh-16)+'px'}else if(innerHeight<520){c.style.bottom='8px';c.style.height=(innerHeight-16)+'px'}else{c.style.bottom='';c.style.height=''}}
 if(window.visualViewport){visualViewport.addEventListener('resize',chFit);visualViewport.addEventListener('scroll',chFit)}addEventListener('resize',chFit);
 function chClose(){CH.open=0;const c=$('#cw');if(c)c.classList.remove('on');document.body.style.overflow='';chFit()}
@@ -493,12 +499,12 @@ function chRender(){const b=$('#cwb'),f=$('#cwf');if(!b)return;
 if(!CH.n){f.dataset.m='';f.innerHTML='';b.innerHTML=`<div class="cwfm"><h4>${t('chHi')}</h4><input class="inp" id="cnm" placeholder="${t('chNm')}" maxlength="40"><input class="inp" id="cph" type="tel" placeholder="${t('chPn')}" maxlength="20"><button class="btn" data-act="chname">${t('chSt')}</button></div>`;return}
 if(f.dataset.m!=='c'){f.dataset.m='c';b.innerHTML='';f.innerHTML=`<textarea id="cwi" rows="1" maxlength="1000" placeholder="${t('chPh')}"></textarea><button class="cws" data-act="chats" aria-label="send"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>`;const i=$('#cwi');i.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();chSend()}});i.addEventListener('input',()=>{i.style.height='auto';i.style.height=Math.min(i.scrollHeight,100)+'px'})}
 chDraw(1)}
-function chDraw(force){const b=$('#cwb');if(!b||!CH.open||!CH.n)return;const near=force||b.scrollHeight-b.scrollTop-b.clientHeight<90,tm=x=>new Date(x).toLocaleTimeString(loc(),{hour:'numeric',minute:'2-digit'});
-b.innerHTML=`<div class="cm a">${esc(t('chHi'))}<small>${t('chT')}</small></div>`+CH.msgs.map(m=>`<div class="cm ${m.f==='u'?'u':'a'}">${esc(m.t)}<small>${tm(m.ts)}${m.f==='u'?`<span class="${m.ts<=CH.seen?'sn':''}"> ✓✓</span>`:''}</small></div>`).join('');
-if(near)b.scrollTop=b.scrollHeight;const mx=CH.msgs.reduce((a,m)=>Math.max(a,m.ts||0),0);if(mx>CH.last){CH.last=mx;try{localStorage.setItem('gt_cs',mx)}catch(e){}}chBadge()}
+function chDraw(force){const b=$('#cwb');if(!b||!CH.open||!CH.n)return;const first=!CH.shown;if(first)CH.shown=new Set();const nw=m=>(!first&&!CH.shown.has(m.id))?' nw':'';const near=force||b.scrollHeight-b.scrollTop-b.clientHeight<90,tm=x=>new Date(x).toLocaleTimeString(loc(),{hour:'numeric',minute:'2-digit'});
+b.innerHTML=`<div class="cm a">${esc(t('chHi'))}<small>${t('chT')}</small></div>`+CH.msgs.map(m=>`<div class="cm ${m.f==='u'?'u':'a'}${nw(m)}">${esc(m.t)}<small>${tm(m.ts)}${m.f==='u'?`<span class="${m.ts<=CH.seen?'sn':''}"> ✓✓</span>`:''}</small></div>`).join('');
+if(near)b.scrollTop=b.scrollHeight;const mx=CH.msgs.reduce((a,m)=>Math.max(a,m.ts||0),0);CH.msgs.forEach(m=>CH.shown.add(m.id));if(mx>CH.last){CH.last=mx;try{localStorage.setItem('gt_cs_'+CH.id,mx)}catch(e){}}if(mx>(CH.useen||0)&&CH.msgs.length&&CH.id&&FB){CH.useen=mx;FB.setDoc(FB.doc(FB.db,'support',CH.id),{useen:mx},{merge:true}).catch(()=>{})}chBadge()}
 function chStart(){const n=($('#cnm').value||'').trim();if(!n)return $('#cnm').focus();CH.n=n.slice(0,40);CH.p=($('#cph').value||'').trim();chSave();chRender();setTimeout(()=>{const i=$('#cwi');if(i&&innerWidth>860)i.focus()},50)}
-async function chSend(){const i=$('#cwi');if(!i||!FB||!CH.id)return;const tx=i.value.trim();if(!tx)return;i.value='';i.style.height='auto';const ts=Date.now();chSave();
-try{await FB.addDoc(FB.collection(FB.db,'support',CH.id,'msgs'),{f:'u',t:tx.slice(0,1000),ts});await FB.setDoc(FB.doc(FB.db,'support',CH.id),{n:CH.n,p:CH.p,e:(U&&U.email)||'',last:tx.slice(0,200),lf:'u',ts},{merge:true})}catch(e){console.warn(e);toast(t('chErr'));i.value=tx}}
+async function chSend(){const i=$('#cwi');if(!i||!FB||!CH.id)return;const tx=i.value.trim(),cid=CH.id;if(!tx)return;i.value='';i.style.height='auto';const ts=Math.max(Date.now(),CH.msgs.reduce((a,m)=>Math.max(a,m.ts||0),0)+1);chSave();
+try{await FB.addDoc(FB.collection(FB.db,'support',cid,'msgs'),{f:'u',t:tx.slice(0,1000),ts});await FB.setDoc(FB.doc(FB.db,'support',cid),{n:CH.n,p:CH.p,e:(U&&U.email)||'',last:tx.slice(0,200),lf:'u',ts,un:FB.increment(1)},{merge:true})}catch(e){console.warn(e);toast(t('chErr'));i.value=tx}}
 function applyAll(){try{const c=SITEC||{};
  if(c.logo)CFG.logo=c.logo;const sl=(c.slides||[]).filter(Boolean);if(sl.length){CFG.slides=sl;if(SI>=sl.length)SI=0}
  if(c.tel){CFG.tel=c.tel;CFG.telShow=c.tel}if(c.wa)CFG.wa=c.wa;if(c.map)CFG.map=c.map;
@@ -516,7 +522,7 @@ function startSite(){const w=(r,f)=>FB.onSnapshot(r,f,e=>console.warn('site',e))
  w(FB.doc(FB.db,'config','site'),sn=>{SITEC=sn.exists()?sn.data():{};applyAll()});
  w(FB.collection(FB.db,'plans'),sn=>{PLD=sn.docs.map(d=>({id:d.id,...d.data()}));applyAll()});
  w(FB.collection(FB.db,'events'),sn=>{EVD=sn.docs.map(d=>({id:d.id,...d.data()}));applyAll()})}
-window.gtFirebase=fb=>{FB=fb;startSite();startPaymentCfg();FB.onAuthStateChanged(FB.auth,(...a)=>{const r=onUser(...a);setTimeout(chInit,800);return r});FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots();chInit()};
+window.gtFirebase=fb=>{FB=fb;startSite();startPaymentCfg();FB.onAuthStateChanged(FB.auth,(...a)=>{const r=onUser(...a);Promise.resolve(r).then(chInit,chInit);setTimeout(chInit,800);return r});FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots();chInit()};
 window.gtFirebaseFail=e=>{console.error('Firebase load failed',e);readyAuth();toast(t('eNet'))};
 const loc=()=>LG[S.l][2],bn=x=>Number(x).toLocaleString(loc()),tk=x=>'৳'+bn(x);
 const I=(n,c='')=>`<svg class="ic ${c}"><use href="#i-${n}"/></svg>`;
@@ -779,7 +785,7 @@ const firebaseConfig={
     signOut:Au.signOut,updateProfile:Au.updateProfile,sendPasswordResetEmail:Au.sendPasswordResetEmail,GoogleAuthProvider:Au.GoogleAuthProvider,
     signInWithPopup:Au.signInWithPopup,signInWithRedirect:Au.signInWithRedirect,getRedirectResult:Au.getRedirectResult,setPersistence:Au.setPersistence,
     browserLocalPersistence:Au.browserLocalPersistence,browserSessionPersistence:Au.browserSessionPersistence,
-    doc:Fs.doc,getDoc:Fs.getDoc,setDoc:Fs.setDoc,collection:Fs.collection,query:Fs.query,where:Fs.where,onSnapshot:Fs.onSnapshot,writeBatch:Fs.writeBatch,serverTimestamp:Fs.serverTimestamp,addDoc:Fs.addDoc});
+    doc:Fs.doc,getDoc:Fs.getDoc,setDoc:Fs.setDoc,collection:Fs.collection,query:Fs.query,where:Fs.where,onSnapshot:Fs.onSnapshot,writeBatch:Fs.writeBatch,serverTimestamp:Fs.serverTimestamp,addDoc:Fs.addDoc,increment:Fs.increment});
 }catch(e){window.gtFirebaseFail&&window.gtFirebaseFail(e)}})();
 </script>
 <script>
