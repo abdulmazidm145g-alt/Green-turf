@@ -278,6 +278,7 @@ const CFG={
  wa:'8801700000000',
  map:'Miar Pole, Sonaimuri, Noakhali, Bangladesh'
 };
+let XF=[],PRX={},SITEC={},PLD=[],EVD=[];
 const DEFAULT_PAY={bkash:'01892002275',nagad:'01892002275',upay:'01892002275',rocket:'01892002275'};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
@@ -364,20 +365,42 @@ async function onUser(user){
  }
  UID=user.uid;U={name:(data&&data.name)||name,email,uid:user.uid,photo:user.photoURL||''};
  USERS={};USERS[email]={name:U.name,email,plan:(data&&data.plan)||''};
+ try{if(!sessionStorage.gt_lg){sessionStorage.gt_lg=1;FB.addDoc(FB.collection(FB.db,'logins'),{uid:user.uid,email,name:U.name,ts:Date.now()}).catch(()=>{})}}catch(e){}
  RG=(data&&data.rg)||[];NT=(data&&data.nt)||NT0();
  if(data&&data.settings){S={...DS,...data.settings};sv('gt_s2',S)}
  startBookings(user.uid);readyAuth();
  if(AUTHING){AUTHING=false;const b=$('#ag');if(b){b.classList.remove('l');b.innerHTML='<span>'+t('login')+'</span>'}
   setTimeout(()=>{closeA();refresh();toast(t('hi')+', '+U.name);if(PEND){const f=PEND;PEND=null;f()}},500)}
  else refresh()}
-window.gtFirebase=fb=>{FB=fb;startPaymentCfg();FB.onAuthStateChanged(FB.auth,onUser);FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots()};
+const bi=(k,a,b)=>{if(!a&&!b)return;const p=(TR[k]||k).split('|');if(a)p[0]=a;if(b)p[1]=b;TR[k]=p.join('|');delete TC[k]};
+const daysTo=d=>{if(!d)return 3;const a=new Date(d+'T00:00:00'),b=new Date();b.setHours(0,0,0,0);return Math.max(0,Math.round((a-b)/864e5))};
+TR.dX=' ';
+function applyAll(){try{const c=SITEC||{};
+ if(c.logo)CFG.logo=c.logo;const sl=(c.slides||[]).filter(Boolean);if(sl.length)CFG.slides=sl;
+ if(c.tel){CFG.tel=c.tel;CFG.telShow=c.tel}if(c.wa)CFG.wa=c.wa;if(c.map)CFG.map=c.map;
+ const x=c.texts||{};bi('h1',x.h1,x.h1e);bi('hp',x.hp,x.hpe);
+ [0,1,2,3].forEach(i=>bi('p'+(i+1),(x.feat||[])[i],(x.feate||[])[i]));
+ FAC.forEach((f,i)=>bi(f[1],(x.fac||[])[i],(x.face||[])[i]));
+ XF=c.fields||[];PRX=c.prices||{};
+ if(c.sports&&c.sports.length){const o={...SP};Object.keys(SP).forEach(k=>delete SP[k]);c.sports.forEach(z=>{SP[z.k]={i:(o[z.k]||{}).i||'ball',p:+z.p||0,d:(o[z.k]||{}).d||'dX'};bi(z.k,z.n,z.e)})}
+ if(c.addons){const o={...AD};Object.keys(AD).forEach(k=>delete AD[k]);c.addons.forEach(z=>{AD[z.k]=[(o[z.k]||[])[0]||'check',+z.p||0];bi(z.k,z.n,z.e)})}
+ if(PLD.length){PL.length=0;PLD.slice().sort((a,b)=>a.p-b.p).forEach(d=>PL.push({id:d.id,n:(d.n||'')+'|'+(d.ne||d.n||''),p:+d.p||0,off:+d.off||0,f:(d.f||[]).map((f,i)=>f+'|'+((d.fe||[])[i]||f)),hot:!!d.hot}))}
+ if(EVD.length){EV.length=0;const k0=Object.keys(SP)[0];EVD.forEach(d=>{bi(d.id,d.n,d.ne||d.n);EV.push({id:d.id,sp:SP[d.sp]?d.sp:k0,day:daysTo(d.date),hr:+d.hr||18,fee:+d.fee||0,spots:+d.spots||0})})}
+ if(!SP[bk.sp])bk.sp=Object.keys(SP)[0];bk.sel=bk.sel.filter(()=>true);bk.add=bk.add.filter(k=>AD[k]);
+ refresh()}catch(e){console.warn('site cfg',e)}}
+function startSite(){const w=(r,f)=>FB.onSnapshot(r,f,e=>console.warn('site',e));
+ w(FB.doc(FB.db,'config','site'),sn=>{SITEC=sn.exists()?sn.data():{};applyAll()});
+ w(FB.collection(FB.db,'plans'),sn=>{PLD=sn.docs.map(d=>({id:d.id,...d.data()}));applyAll()});
+ w(FB.collection(FB.db,'events'),sn=>{EVD=sn.docs.map(d=>({id:d.id,...d.data()}));applyAll()})}
+window.gtFirebase=fb=>{FB=fb;startSite();startPaymentCfg();FB.onAuthStateChanged(FB.auth,onUser);FB.getRedirectResult(FB.auth).catch(e=>{if(e&&e.code!=='auth/no-auth-event')toast(t(fbErr(e)))});startSlots()};
 window.gtFirebaseFail=e=>{console.error('Firebase load failed',e);readyAuth();toast(t('eNet'))};
 const loc=()=>LG[S.l][2],bn=x=>Number(x).toLocaleString(loc()),tk=x=>'৳'+bn(x);
 const I=(n,c='')=>`<svg class="ic ${c}"><use href="#i-${n}"/></svg>`;
 const logo=()=>`<a class="logo" href="#home" aria-label="Green Turf Sports Arena"><img src="${CFG.logo}" alt="" width="44" height="44"><span class="lt"><b><span class="gr">GREEN</span> <span class="wb">TURF</span></b><small>SPORTS ARENA</small></span></a>`;
 const SP={football:{i:'ball',p:2000,d:'d1'},cricket:{i:'bat',p:1800,d:'d2'},badminton:{i:'shut',p:600,d:'d3'}};
 const AD={jer:['shirt',300],glo:['shield',150],wat:['drop',40],park:['car',100]};
-const FAC=[['cal','f1'],['card','f2'],['moon','p2'],['car','p4'],['cup','p3'],['shirt','jer'],['shield','glo'],['drop','wat']];
+['f1','f2','p2','p4','p3','jer','glo','wat'].forEach((k,i)=>TR['fa'+i]=TR[k]);
+const FAC=[['cal','fa0'],['card','fa1'],['moon','fa2'],['car','fa3'],['cup','fa4'],['shirt','fa5'],['shield','fa6'],['drop','fa7']];
 const PAYM=[['bkash','#e2136e','b','bKash'],['nagad','#f6921e','N','Nagad'],['upay','#f7a600','U','Upay'],['rocket','#8c3494','R','Rocket'],['card','#334155','C','card'],['cash','#16a34a','৳','cash']];
 const PGS=[['home','home'],['book','cal'],['events','cup'],['plans','gift'],['help','chat'],['profile','user'],['settings','gear']];
 const EV=[{id:'e1',sp:'football',day:3,hr:19,fee:2000,spots:6},{id:'e2',sp:'cricket',day:5,hr:16,fee:1500,spots:4},{id:'e3',sp:'badminton',day:6,hr:18,fee:400,spots:9}];
@@ -387,8 +410,8 @@ const dt=d=>{const x=new Date();x.setDate(x.getDate()+d);return x},dk=d=>dt(d).t
 const dl=d=>d===0?t('today'):dt(d).toLocaleDateString(loc(),{weekday:'short',day:'numeric'});
 const hh=h=>new Date(2000,0,1,h).toLocaleTimeString(loc(),{hour:'numeric'});
 const pl=()=>PL.find(p=>p.id===(U&&USERS[U.email]&&USERS[U.email].plan));
-const price=(s,h)=>Math.round(SP[s].p*(h>=17?1.2:1));
-const taken=(s,d,h)=>hs(s+d+h)%100<30||(d===0&&h<=new Date().getHours())||SL.has(slotId(s,dk(d),h))||B.some(b=>b.sp===s&&b.ds===dk(d)&&b.hrs.includes(h));
+const price=(s,h)=>{const o=PRX[s]&&PRX[s][h];return o!=null&&o!==''?+o:Math.round(SP[s].p*(h>=17?1.2:1))};
+const taken=(s,d,h)=>(d===0&&h<=new Date().getHours())||SL.has(slotId(s,dk(d),h))||B.some(b=>b.sp===s&&b.ds===dk(d)&&b.hrs.includes(h));
 let bk={sp:'football',day:0,sel:[],add:[],cp:0},R='home',PEND=null,SI=0,ST=null;
 const toast=m=>{const e=$('#ts');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2400)};
 const sub=()=>bk.sel.reduce((s,h)=>s+price(bk.sp,h),0)+bk.add.reduce((s,k)=>s+AD[k][1],0);
@@ -421,7 +444,7 @@ function bot(){const it=[['home','home'],['events','cup'],['book','ball2'],['pla
 function ftr(){$('#ft').innerHTML=`<div class="wrap"><div class="fg"><div>${logo()}<p style="color:var(--mu);margin-top:12px;max-width:300px">${t('ftD')}</p><div style="display:flex;gap:8px;margin-top:14px">${[['chat','wa'],['phone','call'],['pin','dir']].map(x=>`<button class="ib" data-act="${x[1]}" aria-label="${x[1]}">${I(x[0])}</button>`).join('')}</div></div>
 <div><h3>${t('quick')}</h3><ul>${PGS.map(p=>`<li><a href="#${p[0]}">${t(p[0])}</a></li>`).join('')}</ul></div>
 <div><h3>${t('s1')}</h3><ul>${Object.keys(SP).map(k=>`<li><a href="#book" data-act="sport" data-v="${k}">${t(k)}</a></li>`).join('')}</ul></div>
-<div><h3>${t('contact')}</h3><ul><li>${t('locTxt')}</li><li><a href="tel:${CFG.tel}">${CFG.telShow}</a></li><li>${t('hours')}</li></ul><h3 style="margin-top:14px">${t('news')}</h3><div class="nlf"><input class="inp" id="nm" placeholder="${t('email')}" style="margin:0"><button class="btn sm" data-act="sub">${t('subs')}</button></div></div></div>
+<div><h3>${t('contact')}</h3><ul><li>${t('locTxt')}</li><li><a href="tel:${CFG.tel}">${CFG.telShow}</a></li><li>${t('hours')}</li>${XF.map(f=>`<li>${esc(f.k)}: ${esc(f.v)}</li>`).join('')}</ul><h3 style="margin-top:14px">${t('news')}</h3><div class="nlf"><input class="inp" id="nm" placeholder="${t('email')}" style="margin:0"><button class="btn sm" data-act="sub">${t('subs')}</button></div></div></div>
 <div class="cp"><span>© 2026 Green Turf Sports Arena Noakhali · ${t('demoV')}</span><div class="chips" style="margin:0">${LG.map((l,i)=>`<button class="chip" style="padding:5px 12px;${S.l===i?'border-color:var(--g);color:var(--g)':''}" data-act="lang" data-v="${i}">${l[1]}</button>`).join('')}</div></div></div>`}
 const free=k=>{let c=0;for(let h=6;h<23;h++)if(!taken(k,0,h))c++;return c};
 const VW={
@@ -534,7 +557,7 @@ function fin(nm,status,txid){pswap(`<div class="lk"><svg class="ic" style="anima
  else{pswap(`<div class="ck"><svg class="ic" viewBox="0 0 24 24"><path class="ckd" d="M5 12l5 5 9-10"/></svg></div><h2>${t('done')}</h2>`+okBlock+`<button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}
  }).catch(err=>{console.warn(err);if(err&&err.code==='permission-denied'){bk.sel=[];closeA();draw();toast(t('slotGone'))}else{toast(t(fbErr(err)));payUI()}})}
 const SPI={football:'football,turf',cricket:'cricket,stadium',badminton:'badminton,court'};
-const spi=k=>`https://loremflickr.com/640/400/${SPI[k]}`;
+const spi=k=>`https://loremflickr.com/640/400/${SPI[k]||'sports,turf'}`;
 const IDX=()=>[...Object.keys(SP).map(k=>({t:t(k),s:tk(SP[k].p)+' '+t('perHr')+' · '+t(SP[k].d),i:SP[k].i,a:'sport:'+k})),...FAC.map(f=>({t:t(f[1]),s:t('page')+': '+t('home'),i:f[0],a:'go:home'})),...PGS.map(p=>({t:t(p[0]),s:t('page'),i:p[1],a:'go:'+p[0]})),...LG.map((l,i)=>({t:l[1],s:t('lang'),i:'globe',a:'lang:'+i})),...[['system','mon','sys'],['light','sun','light'],['dark','moon','dark']].map(x=>({t:t(x[2]),s:t('theme'),i:x[1],a:'theme:'+x[0]})),{t:t('secLoc'),s:t('addr'),i:'pin',a:'go:home'}];
 function srch(){const q=$('#si').value.trim().toLowerCase(),r=IDX().filter(x=>!q||(x.t+' '+x.s).toLowerCase().includes(q)).slice(0,8);$('#so').innerHTML=r.length?r.map(x=>`<div class="sr" data-act="sres" data-v="${x.a}">${I(x.i)}<div><b>${x.t}</b><small>${x.s}</small></div></div>`).join(''):`<p class="sub" style="padding:14px">${t('noRes')}</p>`}
 function drawer(){const acc=U?`<div class="card" style="display:flex;gap:12px;align-items:center;margin-bottom:10px;padding:14px"><div class="av" style="width:46px;height:46px;font-size:20px">${esc(U.name[0].toUpperCase())}</div><div style="min-width:0"><b>${esc(U.name)}</b><small style="display:block;color:var(--mu);overflow:hidden;text-overflow:ellipsis">${esc(U.email)}</small></div></div>`:`<div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn f sm" data-act="auth" data-v="in">${t('signin')}</button><button class="btn o f sm" data-act="auth" data-v="up">${t('createT')}</button></div>`;
@@ -619,7 +642,7 @@ const firebaseConfig={
     signOut:Au.signOut,updateProfile:Au.updateProfile,sendPasswordResetEmail:Au.sendPasswordResetEmail,GoogleAuthProvider:Au.GoogleAuthProvider,
     signInWithPopup:Au.signInWithPopup,signInWithRedirect:Au.signInWithRedirect,getRedirectResult:Au.getRedirectResult,setPersistence:Au.setPersistence,
     browserLocalPersistence:Au.browserLocalPersistence,browserSessionPersistence:Au.browserSessionPersistence,
-    doc:Fs.doc,getDoc:Fs.getDoc,setDoc:Fs.setDoc,collection:Fs.collection,query:Fs.query,where:Fs.where,onSnapshot:Fs.onSnapshot,writeBatch:Fs.writeBatch,serverTimestamp:Fs.serverTimestamp});
+    doc:Fs.doc,getDoc:Fs.getDoc,setDoc:Fs.setDoc,collection:Fs.collection,query:Fs.query,where:Fs.where,onSnapshot:Fs.onSnapshot,writeBatch:Fs.writeBatch,serverTimestamp:Fs.serverTimestamp,addDoc:Fs.addDoc});
 }catch(e){window.gtFirebaseFail&&window.gtFirebaseFail(e)}})();
 </script>
 <script>
