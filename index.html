@@ -82,7 +82,7 @@ kbd{font:11px Oswald;border:1px solid var(--ln);border-radius:6px;padding:1px 6p
 
 .psl{position:absolute;inset:0;overflow:hidden;transform:translate3d(100%,0,0);will-change:transform;backface-visibility:hidden}.psl.on{transform:none}.ps{cursor:grab;user-select:none;-webkit-user-select:none}.ps:active{cursor:grabbing}
 .psl i{position:absolute;inset:-24px;background-size:cover;background-position:center;filter:blur(24px) brightness(.55)}
-.psl img{position:relative;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.psl img{position:relative;width:100%;height:100%;object-fit:cover;object-position:center;display:block;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .psb{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;display:grid;place-items:center;backdrop-filter:blur(6px);transition:.2s}.psb:hover{background:var(--g);color:var(--ink)}
 .psb.p{inset-inline-start:12px}.psb.n{inset-inline-end:12px}.psb .fl{transform:scaleX(-1)}[dir=rtl] .psb .ic{transform:scaleX(-1)}[dir=rtl] .psb .fl{transform:none}
 .psd{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:3}
@@ -503,7 +503,7 @@ function ftr(){$('#ft').innerHTML=`<div class="wrap"><div class="fg"><div>${logo
 const free=k=>{let c=0;for(let h=6;h<23;h++)if(!taken(k,0,h))c++;return c};
 const VW={
 home(){const sp=Object.keys(SP).map(k=>`<div class="card sp rise" data-act="sport" data-v="${k}" tabindex="0" role="button"><div class="ph" style="background-image:url('${cu(spi(k))}')"></div><div class="bi">${I(SP[k].i)}</div><h3>${t(k)}</h3><p style="color:var(--mu)">${t(SP[k].d)}</p><div class="pr">${tk(SP[k].p)} <small>${SP[k].nt?esc(SP[k].nt[S.l===0?0:1]):t('perHr')+' · '+t('eve')}</small></div><span class="live">${bn(free(k))} ${t('freeT')}</span></div>`).join('');
-const sl=CFG.slides.map((s,i)=>`<div class="psl ${i===SI?'on':''}"><i style="background-image:url('${s}')"></i><img src="${s}" alt="Green Turf Sports Arena Noakhali ${i+1}" decoding="async" ${i?'':'fetchpriority="high"'} onerror="this.parentNode.style.display='none'"></div>`).join('');
+const sl=CFG.slides.map((s,i)=>`<div class="psl ${i===SI?'on':''}"><img src="${s}" alt="Green Turf Sports Arena Noakhali ${i+1}" decoding="async" ${i?'':'fetchpriority="high"'} onerror="this.parentNode.style.display='none'"></div>`).join('');
 const dots=CFG.slides.map((s,i)=>`<button class="${i===SI?'on':''}" data-act="dot" data-v="${i}" aria-label="${i+1}"></button>`).join('');
 return `<div class="hero"><div class="wrap hg"><div class="hx"><span class="pill">${I('ball')}Green Turf Sports Arena Noakhali</span><h1>${t('h1')}</h1><p>${t('hp')}</p>${liveHTML()}<div class="qb"><select id="qs" aria-label="${t('sportL')}">${Object.keys(SP).map(k=>`<option value="${k}">${t(k)}</option>`).join('')}</select><select id="qd" aria-label="${t('dateL')}">${[0,1,2,3,4,5,6].map(d=>`<option value="${d}">${dl(d)}</option>`).join('')}</select><button class="btn" data-act="qgo">${t('viewSlots')}</button></div></div>
 <div class="ps" id="ps" role="region" aria-roledescription="carousel" aria-label="Green Turf Sports Arena">${sl}<button class="psb p" data-act="slide" data-v="-1" aria-label="prev">${I('back')}</button><button class="psb n" data-act="slide" data-v="1" aria-label="next">${I('back','fl')}</button></div></div></div>
