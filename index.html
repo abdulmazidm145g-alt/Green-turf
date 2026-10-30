@@ -192,6 +192,10 @@ input[type=range]{accent-color:var(--g);width:100%}
 .rise{opacity:0;transform:translateY(16px);transition:.6s}.rise.v{opacity:1;transform:none}
 .noanim *,.noanim *:before,.noanim *:after{animation:none!important;transition:none!important}.noanim .rise{opacity:1;transform:none}
 /* payment helpers */
+.pmx{align-items:center}.pmx b{display:block;text-align:start}.pmx small{display:block;font-weight:500;font-size:.82em;color:var(--mu);margin-top:2px}
+.advln{display:flex;justify-content:space-between;gap:10px;background:var(--nb);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:.9em;color:var(--mu);box-shadow:inset 3px 3px 6px var(--nd),inset -3px -3px 6px var(--nl)}.advln b{color:var(--g);display:block;font:700 1.15em Oswald}
+.payamt{text-align:center;margin:6px 0 2px;color:var(--mu);font-size:.9em}.payamt b{color:var(--g);font:700 1.3em Oswald;margin-inline-start:6px}
+.mns{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.mn2{font-size:.76em;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--sf2);color:var(--mu)}.mn2.ok{background:rgba(34,197,94,.16);color:#22c55e}.mn2.bad{background:rgba(239,68,68,.16);color:#ef4444}
 .paybox{background:var(--nb);border-radius:14px;padding:14px;margin:12px 0;box-shadow:inset 4px 4px 8px var(--nd),inset -4px -4px 8px var(--nl)}
 .paynum{font:700 24px Oswald;letter-spacing:.06em;color:var(--g);text-align:center;margin:6px 0}
 .paystep{font-size:.85em;color:var(--mu);margin:8px 0}
@@ -406,6 +410,7 @@ const TC={};const t=k=>{const a=TC[k]||(TC[k]=(TR[k]||k).split('|'));return a[S.
 const DS={l:0,th:'system',ac:'',fs:15,an:1,nt:1};
 const NT0=()=>[{k:'n1',r:0},{k:'n2',r:0},{k:'n3',r:0}];
 let S={...DS,...ld('gt_s2',{})},USERS={},B=[],U=null,NT=ld('gt_n2',null)||NT0(),RG=[];
+const DEF_PP={advOn:true,adv:500,advSp:{},cashOn:true,holdMin:30,refundHrs:12};let PP={...DEF_PP},PMODE='full';
 let FB=null,UID=null,SL=new Set(),PAYNUM={...DEFAULT_PAY},authReady=false,AUTHING=false,PENDNAME='',LDWAIT=false,unsubB=null,unsubSL=null,unsubCFG=null,cst=null,cbuf={};
 const clean=o=>JSON.parse(JSON.stringify(o));
 const cloudSet=o=>{if(!FB||!UID)return;FB.setDoc(FB.doc(FB.db,'users',UID),clean(o),{merge:true}).catch(e=>console.warn('cloud',e))};
@@ -420,10 +425,14 @@ async function saveBooking(b){const w=FB.writeBatch(FB.db);
  await w.commit()}
 function startSlots(){if(unsubSL)unsubSL();const d=new Date();d.setHours(0,0,0,0);let last='';
  unsubSL=FB.onSnapshot(FB.query(FB.collection(FB.db,'slots'),FB.where('ts','>=',d.getTime())),sn=>{const ids=sn.docs.map(x=>x.id).sort();const k=ids.join('|');SL=new Set(ids);if(k!==last){const first=last==='';last=k;if(!first&&R==='book')draw()}},e=>console.warn('slots',e))}
+const SWEPT=new Set();
+function sweepHolds(){if(!FB||!UID)return;B.forEach(b=>{if(b.status==='hold'&&b.hx&&b.hx<Date.now()&&!SWEPT.has(b.id)){SWEPT.add(b.id);const w=FB.writeBatch(FB.db);b.hrs.forEach(h=>w.delete(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h))));w.update(FB.doc(FB.db,'users',UID,'bookings',b.id),{status:'expired'});w.commit().catch(()=>SWEPT.delete(b.id))}})}
+setInterval(sweepHolds,30000);
 function startBookings(uid){if(unsubB)unsubB();
- unsubB=FB.onSnapshot(FB.collection(FB.db,'users',uid,'bookings'),sn=>{B=sn.docs.map(x=>x.data()).sort((a,b)=>(b.c||0)-(a.c||0));if(R==='profile'||R==='book')draw()},e=>console.warn('bookings',e))}
+ unsubB=FB.onSnapshot(FB.collection(FB.db,'users',uid,'bookings'),sn=>{B=sn.docs.map(x=>x.data()).sort((a,b)=>(b.c||0)-(a.c||0));sweepHolds();if(R==='profile'||R==='book')draw()},e=>console.warn('bookings',e))}
+function ppSet(d){const n=(v,f)=>(v!=null&&v!==''&&Number.isFinite(+v)&&+v>=0)?+v:f;PP={advOn:d.advOn!==false,adv:n(d.adv,DEF_PP.adv),advSp:(d.advSp&&typeof d.advSp==='object')?d.advSp:{},cashOn:d.cashOn!==false,holdMin:(+d.holdMin>0)?+d.holdMin:DEF_PP.holdMin,refundHrs:n(d.refundHrs,DEF_PP.refundHrs)}}
 function startPaymentCfg(){if(unsubCFG)unsubCFG();
- unsubCFG=FB.onSnapshot(FB.doc(FB.db,'config','payment'),sn=>{if(sn.exists()){const d=sn.data();PAYNUM={...DEFAULT_PAY,...Object.fromEntries(Object.entries(d).filter(([k,v])=>typeof v==='string'&&v.trim()))}}} ,e=>{console.warn('cfg',e)})}
+ unsubCFG=FB.onSnapshot(FB.doc(FB.db,'config','payment'),sn=>{if(sn.exists()){const d=sn.data();PAYNUM={...DEFAULT_PAY,...Object.fromEntries(Object.entries(d).filter(([k,v])=>typeof v==='string'&&v.trim()))};ppSet(d)}} ,e=>{console.warn('cfg',e)})}
 function readyAuth(){authReady=true;if(LDWAIT)$('#ld').classList.add('h')}
 async function onUser(user){
  if(!user){if(unsubB){unsubB();unsubB=null}U=null;UID=null;B=[];RG=[];USERS={};NT=NT0();chReset();readyAuth();AUTHING=false;refresh();return}
@@ -541,7 +550,7 @@ const dl=d=>d===0?t('today'):dt(d).toLocaleDateString(loc(),{weekday:'short',day
 const hh=h=>new Date(2000,0,1,h).toLocaleTimeString(loc(),{hour:'numeric'});
 const pl=()=>PL.find(p=>p.id===(U&&USERS[U.email]&&USERS[U.email].plan));
 const price=(s,h)=>{const o=PRX[s]&&PRX[s][h];return o!=null&&o!==''?+o:Math.round(SP[s].p*(h>=17?1.2:1))};
-const taken=(s,d,h)=>(d===0&&h<=new Date().getHours())||SL.has(slotId(s,dk(d),h))||B.some(b=>b.sp===s&&b.ds===dk(d)&&b.hrs.includes(h));
+const taken=(s,d,h)=>(d===0&&h<=new Date().getHours())||SL.has(slotId(s,dk(d),h))||B.some(b=>b.sp===s&&b.ds===dk(d)&&b.hrs.includes(h)&&!['cancelled','rejected','expired'].includes(b.status));
 let bk={sp:'football',day:0,sel:[],add:[],cp:0},R='home',PEND=null,SI=0,ST=null;
 const toast=m=>{const e=$('#ts');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2400)};
 const sub=()=>bk.sel.reduce((s,h)=>s+price(bk.sp,h),0)+bk.add.reduce((s,k)=>s+AD[k][1],0);
@@ -608,10 +617,10 @@ help(){return `<div class="wrap pg"><h2>${t('help')}</h2><p class="sub">${t('hlp
 <div class="bk" style="margin-top:20px"><div><h3 style="margin-bottom:10px">${t('secFaq')}</h3>${[1,2,3].map(i=>`<details><summary>${t('q'+i)}</summary><p>${t('a'+i)}</p></details>`).join('')}</div><div class="card"><input class="inp" id="hn" placeholder="${t('yname')}"><input class="inp" id="he" placeholder="${t('email')}"><textarea class="inp" id="hm" rows="4" placeholder="${t('ymsg')}"></textarea><button class="btn f" style="margin-top:8px" data-act="send">${t('send')}</button></div></div></div>`},
 profile(){if(!U)return `<div class="wrap pg"><div class="card" style="text-align:center;padding:44px 20px;max-width:480px;margin:auto"><div class="av" style="margin:0 auto 14px">${I('user')}</div><h2>${t('signin')}</h2><p class="sub">${t('needLogin')}</p><button class="btn f" data-act="auth" data-v="in">${t('signin')}</button><button class="btn o f" style="margin-top:8px" data-act="auth" data-v="up">${t('createT')}</button></div></div>`;
 const mine=B.filter(b=>b.u===U.email),hrs=mine.reduce((s,b)=>s+b.hrs.length,0),lv=hrs>=10?'lvG':hrs>=4?'lvS':'lvN';
-const stBadge=b=>{const m={pending:['stPending','pending'],paid:['stPaid','paid'],rejected:['stRejected','rejected'],free:['stFree','free']};const x=m[b.status]||m.free;return `<span class="stbadge ${x[1]}">${t(x[0])}</span>`};
+const stBadge=b=>{const m={pending:['stPending','pending'],paid:['stPaid','paid'],rejected:['stRejected','rejected'],free:['stFree','free'],adv:['stAdv','paid'],hold:['stHold','pending'],cancelled:['stCx','rejected'],expired:['stExp','rejected']};const x=m[b.status]||m.free;return `<span class="stbadge ${x[1]}">${t(x[0])}</span>`};
 return `<div class="wrap pg"><div class="card pf"><div class="av">${esc(U.name[0].toUpperCase())}</div><div style="flex:1;min-width:0"><h2 style="margin:0">${esc(U.name)}</h2><p style="color:var(--mu);overflow:hidden;text-overflow:ellipsis">${esc(U.email)}</p><span class="badge">${t(lv)} ${t('member')}</span> ${pl()?`<span class="badge">${t(pl().n)}</span>`:''}</div><a class="btn o" href="#settings">${I('gear')}${t('settings')}</a></div>
-<div class="g3" style="margin-top:14px">${[[mine.length,'st1'],[hrs,'st2'],0].map((x,i)=>`<div class="card"><b class="pr">${i<2?bn(x[0]):tk(mine.reduce((s,b)=>s+b.tot,0))}</b><br><span style="color:var(--mu)">${t(['st1','st2','st3'][i])}</span></div>`).join('')}</div>
-<h2 style="margin-top:30px">${t('myBk')}</h2>${mine.length?mine.map(b=>`<div class="card tk"><div class="bi">${I(SP[b.sp].i)}</div><div><b>${t(b.sp)}</b> · ${tk(b.tot)} ${stBadge(b)}<br><small style="color:var(--mu)">${new Date(b.ds).toLocaleDateString(loc(),{weekday:'short',day:'numeric',month:'short'})}, ${b.hrs.map(hh).join(', ')} · ${b.id}${b.txid?' · TX: '+esc(b.txid):''}</small></div><button class="ib" data-act="share" data-v="${b.id}" aria-label="${t('share')}">${I('share')}</button><button class="btn o sm" data-act="cancel" data-v="${b.id}">${t('cancel')}</button></div>`).join(''):`<div class="card" style="text-align:center;padding:36px"><p class="sub">${t('none')}</p><a class="btn" href="#book">${t('firstBk')}</a></div>`}</div>`},
+<div class="g3" style="margin-top:14px">${[[mine.length,'st1'],[hrs,'st2'],0].map((x,i)=>`<div class="card"><b class="pr">${i<2?bn(x[0]):tk(mine.filter(b=>!['cancelled','expired','rejected'].includes(b.status)).reduce((s,b)=>s+b.tot,0))}</b><br><span style="color:var(--mu)">${t(['st1','st2','st3'][i])}</span></div>`).join('')}</div>
+<h2 style="margin-top:30px">${t('myBk')}</h2>${mine.length?mine.map(b=>`<div class="card tk"><div class="bi">${I(SP[b.sp].i)}</div><div><b>${t(b.sp)}</b> · ${tk(b.tot)} ${stBadge(b)}<br><small style="color:var(--mu)">${new Date(b.ds).toLocaleDateString(loc(),{weekday:'short',day:'numeric',month:'short'})}, ${b.hrs.map(hh).join(', ')} · ${b.id}${b.txid?' · TX: '+esc(b.txid):''}</small>${bkMoney(b)}</div><button class="ib" data-act="share" data-v="${b.id}" aria-label="${t('share')}">${I('share')}</button>${['cancelled','expired','rejected'].includes(b.status)?'':`<button class="btn o sm" data-act="cancel" data-v="${b.id}">${t('cancel')}</button>`}</div>`).join(''):`<div class="card" style="text-align:center;padding:36px"><p class="sub">${t('none')}</p><a class="btn" href="#book">${t('firstBk')}</a></div>`}</div>`},
 settings(){const tg=(k,l)=>`<div class="tg"><span>${t(l)}</span><button class="swt ${S[k]?'on':''}" data-act="tgl" data-v="${k}" role="switch" aria-checked="${!!S[k]}" aria-label="${t(l)}"></button></div>`;
 return `<div class="wrap pg" style="max-width:760px"><h2>${t('settings')}</h2><p class="sub">${t('setS')}</p>
 <div class="card set"><h3>${I('globe')}${t('lang')}</h3><div class="lg">${LG.map((l,i)=>`<button class="chip ${S.l===i?'on':''}" data-act="lang" data-v="${i}"><span>${l[1]}</span>${S.l===i?I('check'):''}</button>`).join('')}</div></div>
@@ -673,24 +682,42 @@ function pswap(h,first){const a=$('#am');
  const nc=$('#nc');nc.classList.remove('d0','shake');nc.classList.add('out');setTimeout(()=>{nc.innerHTML=h;nc.classList.remove('out');nc.classList.add('in');setTimeout(()=>nc.classList.remove('in'),400)},280)}
 const pHead=()=>`<button class="rb cx" data-act="closeA" aria-label="x">${I('x')}</button><img src="${CFG.logo}" alt=""><div class="mn">Green Turf Sports Arena</div><span class="vb">${I('shield')}${t('merch')}</span><div class="amt">${tk(tot())}</div><div class="rf">${t(bk.sp)} · ${bk.sel.map(hh).join(', ')}</div>`;
 Object.assign(TR,{merch:'যাচাইকৃত মার্চেন্ট|Verified Merchant|تاجر موثّق|सत्यापित मर्चेंट|تصدیق شدہ مرچنٹ',sec:'সুরক্ষিত পেমেন্ট|Secure payment|دفع آمن|सुरक्षित पेमेंट|محفوظ ادائیگی'});
-function payUI(){xM();pswap(pHead()+`<h3>${t('paySelect')}</h3>`+PAYM.map((p,i)=>`<button class="pm" data-act="pm" data-v="${i}"><i style="background:${p[1]}">${p[2]}</i><b>${p[3]==='card'||p[3]==='cash'?t(p[3]):p[3]}</b></button>`).join('')+`<div class="demo">${I('lock')} ${t('sec')}</div>`,!$('#am').classList.contains('on'))}
+Object.assign(TR,{payHow:'কীভাবে পেমেন্ট করবেন?|How would you like to pay?',payAdv:'অগ্রিম পেমেন্ট|Advance payment',payAdvS:'এখন {a} দিন, বাকি {d} খেলা শেষে|Pay {a} now, remaining {d} after the game',payFull:'পুরো পেমেন্ট|Full payment',payNow:'এখন দিন|Pay now',payDue:'বাকি (খেলা শেষে)|Due after game',sendAmt:'এই পরিমাণ Send Money করুন|Send exactly|',cashD:'স্লটটি {m} মিনিটের জন্য হোল্ড থাকবে। এর মধ্যে অ্যাডমিন কনফার্ম করলে বুকিং নিশ্চিত হবে, না হলে স্লট আবার খালি হয়ে যাবে। টাকা মাঠে দিতে হবে।|The slot is held for {m} minutes. If the admin confirms it in that time the booking is confirmed, otherwise the slot is released. You pay at the turf.',cashBtn:'স্লট হোল্ড করুন|Hold this slot',holdT:'স্লট হোল্ড হয়েছে|Slot on hold',holdD:'{m} মিনিটের মধ্যে অ্যাডমিন কনফার্ম করবেন। প্রোফাইল থেকে স্টেটাস দেখুন।|The admin will confirm within {m} minutes. Check the status in your profile.',stAdv:'অগ্রিম পেইড|Advance paid',stHold:'হোল্ড|On hold',stCx:'বাতিল|Cancelled',stExp:'মেয়াদ শেষ|Expired',rfDone:'রিফান্ড দেওয়া হয়েছে|Refunded',rfPend:'রিফান্ড আসবে|Refund due',rfNo:'রিফান্ড নেই (দেরিতে বাতিল)|No refund (late cancel)',hExp:'হোল্ডের সময় শেষ|Hold expired',holdTill:'হোল্ড শেষ|Held until',paidAmt:'জমা|Paid',dueAmt:'বাকি|Due',payChk:'যাচাই চলছে|Verifying',cxRf:'বুকিং বাতিল করবেন? আপনি {a} রিফান্ড পাবেন।|Cancel this booking? You will get a {a} refund.',cxNoRf:'খেলার {h} ঘণ্টার কম সময় আছে, তাই {a} রিফান্ড হবে না। তবুও বাতিল করবেন?|Less than {h} hours to the game, so the {a} is non-refundable. Cancel anyway?',cxAsk:'বুকিং বাতিল করবেন?|Cancel this booking?'});
+const advAmt=()=>{const a=+((PP.advSp||{})[bk.sp])||+PP.adv||0;return Math.max(0,Math.min(Math.round(a),tot()))};
+const advOk=()=>PP.advOn&&advAmt()>0&&advAmt()<tot();
+const mAmt=()=>PMODE==='adv'&&advOk()?advAmt():tot();
+const startOf=b=>{const d=new Date(b.ds);d.setHours(Math.min(...b.hrs),0,0,0);return d.getTime()};
+const payVis=p=>p[0]==='card'?false:p[0]==='cash'?PP.cashOn:true;
+const payLine=()=>PMODE==='adv'&&advOk()?`<div class="advln"><span>${t('payNow')}<b>${tk(advAmt())}</b></span><span style="text-align:end">${t('payDue')}<b>${tk(tot()-advAmt())}</b></span></div>`:'';
+const bkPaid=b=>Array.isArray(b.pays)?(+b.pd||0):(b.status==='paid'||b.status==='free'?b.tot:0);
+const bkDue=b=>['cancelled','expired','rejected'].includes(b.status)?0:Math.max(0,b.tot-bkPaid(b));
+const bkMoney=b=>{const st=b.status,p=bkPaid(b),d=bkDue(b);let h='';
+ if(st==='cancelled'){const c=b.cx||{};if(c.amt)h=c.rf?(c.done?`<span class="mn2 ok">${t('rfDone')} ${tk(c.amt)}</span>`:`<span class="mn2">${t('rfPend')} ${tk(c.amt)}</span>`):`<span class="mn2 bad">${t('rfNo')}</span>`}
+ else if(st==='expired')h=`<span class="mn2 bad">${t('hExp')}</span>`;
+ else if(st==='hold')h=`<span class="mn2">${t('holdTill')} ${new Date(b.hx).toLocaleTimeString(loc(),{hour:'numeric',minute:'2-digit'})}</span>`;
+ else if(st!=='rejected'){if(p>0)h+=`<span class="mn2 ok">${t('paidAmt')} ${tk(p)}</span>`;if(st==='pending'&&b.pa)h+=`<span class="mn2">${t('payChk')} ${tk(b.pa)}</span>`;else if(d>0)h+=`<span class="mn2">${t('dueAmt')} ${tk(d)}</span>`}
+ return h?`<div class="mns">${h}</div>`:''};
+function payStart(){PMODE='full';if(!advOk())return payUI();xM();pswap(pHead()+`<h3>${t('payHow')}</h3><button class="pm pmx" data-act="pmode" data-v="adv"><i style="background:#16a34a">%</i><b>${t('payAdv')}<small>${t('payAdvS').replace('{a}',tk(advAmt())).replace('{d}',tk(tot()-advAmt()))}</small></b></button><button class="pm pmx" data-act="pmode" data-v="full"><i style="background:#2563eb">${'৳'}</i><b>${t('payFull')}<small>${tk(tot())}</small></b></button><div class="demo">${I('lock')} ${t('sec')}</div>`,!$('#am').classList.contains('on'))}
+const cashUI=()=>pswap(pHead()+`<div class="paybox"><div class="paystep" style="margin:0">${t('cashD').replace('{m}',PP.holdMin)}</div></div><button class="nbt" data-act="pnext" data-v="cash">${t('cashBtn')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`);
+function payUI(){xM();pswap(pHead()+payLine()+`<h3>${t('paySelect')}</h3>`+PAYM.map((p,i)=>!payVis(p)?'':`<button class="pm" data-act="pm" data-v="${i}"><i style="background:${p[1]}">${p[2]}</i><b>${p[3]==='card'||p[3]==='cash'?t(p[3]):p[3]}</b></button>`).join('')+`<div class="demo">${I('lock')} ${t('sec')}</div>`,!$('#am').classList.contains('on'))}
 function payNo(i){const p=PAYM[i],nm=p[3]==='card'||p[3]==='cash'?t(p[3]):p[3];PY={i,n:nm,key:p[0]};
- if(p[0]==='cash')return fin(nm,'free');
+ if(p[0]==='cash')return cashUI();
  if(p[0]==='card')return pswap(pHead()+`<div class="nf"><input id="p1" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456"></div><div style="display:flex;gap:10px"><div class="nf" style="flex:1"><input id="p2" maxlength="5" placeholder="MM/YY"></div><div class="nf" style="flex:1"><input id="p3" type="password" inputmode="numeric" maxlength="4" placeholder="CVC"></div></div>`+`<button class="nbt" data-act="pnext" data-v="ac">${t('conf')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`);
  const num=PAYNUM[p[0]]||DEFAULT_PAY[p[0]]||DEFAULT_PAY.bkash;
- pswap(pHead()+`<div class="paybox"><div style="text-align:center"><span class="paytype"><b style="background:${p[1]}">${p[2]}</b> ${p[3]}</span></div><div class="paystep">${t('payStep1')}</div><div class="paynum">${esc(num)}</div><button class="gbt" data-act="copynum" data-v="${esc(num)}">${I('card')}${t('copy')}</button></div><div class="paystep">${t('payStep2')}</div><div class="nf"><input id="txid" placeholder="${t('txid')}" autocomplete="off"></div><button class="nbt" data-act="pnext" data-v="tx">${t('submitPay')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`)}
+ pswap(pHead()+`<div class="paybox"><div style="text-align:center"><span class="paytype"><b style="background:${p[1]}">${p[2]}</b> ${p[3]}</span></div><div class="paystep">${t('payStep1')}</div><div class="payamt">${t('sendAmt')}<b>${tk(mAmt())}</b></div><div class="paynum">${esc(num)}</div><button class="gbt" data-act="copynum" data-v="${esc(num)}">${I('card')}${t('copy')}</button></div><div class="paystep">${t('payStep2')}</div><div class="nf"><input id="txid" placeholder="${t('txid')}" autocomplete="off"></div><button class="nbt" data-act="pnext" data-v="tx">${t('submitPay')}</button><a class="dm2" data-act="pay">${t('payM')}</a>`)}
 const pOtp=()=>pswap(pHead()+`<h3>${t('otpT')}</h3><p class="sub">${t('otpD')}</p><div class="nf"><input id="p1" class="otp" inputmode="numeric" maxlength="6" placeholder="••••••"></div><button class="nbt" data-act="pnext" data-v="otp">${t('conf')}</button>`);
 Object.assign(TR,{otpT:'ওটিপি যাচাই|Verify OTP|تحقق OTP|ओटीपी जाँचें|او ٹی پی کی تصدیق',otpD:'আপনার নম্বরে ৬ সংখ্যার কোড গেছে (ডেমো: যেকোনো ৬ সংখ্যা)|A 6-digit code was sent (demo: any 6 digits)|تم إرسال رمز مكون من 6 أرقام (تجريبي: أي 6 أرقام)|6 अंकों का कोड भेजा गया (डेमो: कोई भी 6 अंक)|6 ہندسوں کا کوڈ بھیجا گیا (ڈیمو: کوئی بھی 6 ہندسے)'});
 function pnext(v){const x=id=>(($('#'+id)||{}).value||'').replace(/\s/g,''),bad=m=>{toast(m);const nc=$('#nc');nc.classList.remove('shake');void nc.offsetWidth;nc.classList.add('shake')};
  if(v==='ac'){const card=PY.key==='card';if(card?(x('p1').length<13||!/^\d\d\/\d\d$/.test(x('p2'))||x('p3').length<3):!/^01\d{9}$/.test(x('p1')))return bad(t('eFill'));pOtp()}
  else if(v==='otp'){if(x('p1').length<6)return bad(t('eFill'));fin(PY.n,'paid')}
- else if(v==='tx'){const tx=x('txid');if(tx.length<6)return toast(t('txAsk'));fin(PY.n,'pending',tx)}}
+ else if(v==='tx'){const tx=x('txid');if(tx.length<6)return toast(t('txAsk'));fin(PY.n,'pending',tx)}
+ else if(v==='cash')fin(PY.n,'hold')}
 function fin(nm,status,txid){pswap(`<div class="lk"><svg class="ic" style="animation:spin 1s linear infinite"><use href="#i-ball"/></svg></div><h3>${t('proc')}</h3><p class="sub">${t('sec')}</p>`,!$('#am').classList.contains('on'));
- const b={id:'GT'+(100000+Math.floor(Math.random()*899999)),u:U.email,sp:bk.sp,ds:dk(bk.day),hrs:[...bk.sel],tot:tot(),pm:nm,status,txid:txid||''},t0=Date.now();
+ const b={id:'GT'+(100000+Math.floor(Math.random()*899999)),u:U.email,sp:bk.sp,ds:dk(bk.day),hrs:[...bk.sel],tot:tot(),pm:nm,status,txid:txid||'',mode:status==='hold'?'cash':(PMODE==='adv'&&advOk()?'adv':'full'),pa:status==='hold'?0:mAmt(),adv:advOk()?advAmt():0,pd:0,pays:[],...(status==='hold'?{hx:Date.now()+PP.holdMin*6e4}:{})},t0=Date.now();
  saveBooking(b).then(()=>new Promise(r=>setTimeout(r,Math.max(0,1600-(Date.now()-t0))))).then(()=>{
  NT.unshift({k:'done',x:b.id,r:0});sN();bk.sel=[];bk.add=[];bk.cp=0;hdr();
- const okBlock=`<div style="text-align:start;margin:14px 0"><div class="row"><span>${t('bid')}</span><b>${b.id}</b></div><div class="row"><span>${t('sportL')}</span><b>${t(b.sp)}</b></div><div class="row"><span>${t('timeL')}</span><b>${b.hrs.map(hh).join(', ')}</b></div><div class="row"><span>${t('payM')}</span><b>${esc(nm)}</b></div><div class="row"><span>${t('total')}</span><b>${tk(b.tot)}</b></div></div>`;
- if(status==='pending'){pswap(`<div class="ck" style="background:#f59e0b"><svg class="ic" viewBox="0 0 24 24" style="stroke:#fff"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg></div><h2>${t('pendingT')}</h2><p class="sub">${t('pendingD')}</p>`+okBlock+`<button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}
+ const okBlock=`<div style="text-align:start;margin:14px 0"><div class="row"><span>${t('bid')}</span><b>${b.id}</b></div><div class="row"><span>${t('sportL')}</span><b>${t(b.sp)}</b></div><div class="row"><span>${t('timeL')}</span><b>${b.hrs.map(hh).join(', ')}</b></div><div class="row"><span>${t('payM')}</span><b>${esc(nm)}</b></div><div class="row"><span>${t('total')}</span><b>${tk(b.tot)}</b></div>${b.mode==='adv'?`<div class="row"><span>${t('payNow')}</span><b>${tk(b.pa)}</b></div><div class="row"><span>${t('payDue')}</span><b>${tk(b.tot-b.pa)}</b></div>`:''}</div>`;
+ if(status==='pending'||status==='hold'){pswap(`<div class="ck" style="background:#f59e0b"><svg class="ic" viewBox="0 0 24 24" style="stroke:#fff"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg></div><h2>${t(status==='hold'?'holdT':'pendingT')}</h2><p class="sub">${status==='hold'?t('holdD').replace('{m}',PP.holdMin):t('pendingD')}</p>`+okBlock+`<button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}
  else{pswap(`<div class="ck"><svg class="ic" viewBox="0 0 24 24"><path class="ckd" d="M5 12l5 5 9-10"/></svg></div><h2>${t('done')}</h2>`+okBlock+`<button class="nbt" data-act="go" data-v="profile">${t('viewBk')}</button>`)}
  }).catch(err=>{console.warn(err);if(err&&err.code==='permission-denied'){bk.sel=[];closeA();draw();toast(t('slotGone'))}else{toast(t(fbErr(err)));payUI()}})}
 const SPI={football:'football,turf',cricket:'cricket,stadium',badminton:'badminton,court'};
@@ -707,7 +734,7 @@ go:v=>go(v),sport:v=>{bk.sp=v;bk.sel=[];go('book')},qgo:()=>{bk.sp=$('#qs').valu
 sp2:v=>{bk.sp=v;bk.sel=[];draw()},day:v=>{bk.day=+v;bk.sel=[];draw()},hr:v=>{const h=+v;bk.sel=bk.sel.includes(h)?bk.sel.filter(y=>y!==h):[...bk.sel,h].sort((a,b)=>a-b);draw()},
 addon:v=>{const i=bk.add.indexOf(v);i<0?bk.add.push(v):bk.add.splice(i,1);draw()},
 coupon:()=>{if($('#cpn').value.trim().toUpperCase()==='GREEN10'){bk.cp=1;toast(t('cOk'))}else{bk.cp=0;toast(t('cBad'))}draw()},
-pay:()=>need(payUI),pm:v=>payNo(+v),pnext:v=>pnext(v),copynum:v=>{try{navigator.clipboard.writeText(v).then(()=>toast(t('numCopied')),()=>toast(v))}catch(e){toast(v)}},
+pay:()=>need(payStart),pmode:v=>{PMODE=v==='adv'?'adv':'full';payUI()},pm:v=>payNo(+v),pnext:v=>pnext(v),copynum:v=>{try{navigator.clipboard.writeText(v).then(()=>toast(t('numCopied')),()=>toast(v))}catch(e){toast(v)}},
 slide:v=>{slideTo(SI+ +v);slideAuto()},dot:v=>{slideTo(+v);slideAuto()},
 lang:v=>{S.l=+v;sS();refresh();toast(LG[S.l][1])},theme:v=>{S.th=v;sS();refresh();toast(t('saved'))},themecycle:()=>ACT.theme({system:'light',light:'dark',dark:'system'}[S.th]),
 accent:v=>{S.ac=v;sS();refresh()},tgl:v=>{S[v]=S[v]?0:1;sS();refresh();toast(t(v==='an'?'anim':'notif')+': '+t(S[v]?'on':'off'))},
@@ -726,7 +753,13 @@ signout:async()=>{closeDD();closeD();flushCloud();try{await FB.signOut(FB.auth)}
 notif:v=>{NT[+v].r=1;sN();hdr();$('#m-nt').classList.add('on')},notifall:()=>{NT.forEach(n=>n.r=1);sN();hdr();$('#m-nt').classList.add('on')},
 reg:v=>need(()=>{const k=U.email+v,i=RG.indexOf(k);if(i<0){RG.push(k);toast(t('regOk'))}else RG.splice(i,1);sRG();draw()}),
 join:v=>need(()=>{USERS[U.email].plan=USERS[U.email].plan===v?'':v;sU();toast(t('joined'));draw()}),
-cancel:v=>{const b=B.find(x=>x.id===v);if(!b||!UID)return;const w=FB.writeBatch(FB.db);b.hrs.forEach(h=>w.delete(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h))));w.delete(FB.doc(FB.db,'users',UID,'bookings',v));w.commit().then(()=>toast(t('canceled'))).catch(e=>{console.warn(e);toast(t(fbErr(e)))})},
+cancel:v=>{const b=B.find(x=>x.id===v);if(!b||!UID)return;
+ const paid=bkPaid(b),amt=paid>0?paid:(b.status==='pending'?(+b.pa||0):0),rf=amt>0&&(startOf(b)-Date.now())>=PP.refundHrs*36e5;
+ const msg=amt>0?(rf?t('cxRf').replace('{a}',tk(amt)):t('cxNoRf').replace('{h}',PP.refundHrs).replace('{a}',tk(amt))):t('cxAsk');
+ if(!confirm(msg))return;
+ const w=FB.writeBatch(FB.db);b.hrs.forEach(h=>w.delete(FB.doc(FB.db,'slots',slotId(b.sp,b.ds,h))));
+ w.update(FB.doc(FB.db,'users',UID,'bookings',v),{status:'cancelled',cx:{ts:Date.now(),rf,amt,done:false}});
+ w.commit().then(()=>toast(t('canceled'))).catch(e=>{console.warn(e);toast(t(fbErr(e)))})},
 share:v=>{const b=B.find(x=>x.id===v),m=`Green Turf · ${t(b.sp)} · ${b.ds} · ${b.hrs.map(hh).join(', ')} · ${b.id}`;try{navigator.clipboard.writeText(m).then(()=>toast(t('copied')),()=>toast(m))}catch(e){toast(m)}},
 send:()=>{if(!$('#hn').value.trim()||!$('#hm').value.trim())return toast(t('eFill'));toast(t('sent'));$('#hn').value=$('#he').value=$('#hm').value=''},
 sub:()=>{const e=$('#nm').value.trim();if(!/^\S+@\S+\.\S+$/.test(e))return toast(t('eMail'));toast(t('subOk'));$('#nm').value=''},
